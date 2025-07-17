@@ -6,13 +6,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace TiktokGame2Server.Migrations
 {
     /// <inheritdoc />
-    public partial class initCreate : Migration
+    public partial class initcreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Players",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -20,7 +20,7 @@ namespace TiktokGame2Server.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Players", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,15 +29,16 @@ namespace TiktokGame2Server.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<string>(type: "text", nullable: true)
+                    Uid = table.Column<string>(type: "text", nullable: false),
+                    PlayerId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Accounts_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Accounts_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
                         principalColumn: "Id");
                 });
 
@@ -47,15 +48,15 @@ namespace TiktokGame2Server.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<string>(type: "text", nullable: true)
+                    PlayerId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Chapters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Chapters_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Chapters_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
                         principalColumn: "Id");
                 });
 
@@ -105,9 +106,9 @@ namespace TiktokGame2Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Accounts_UserId",
+                name: "IX_Accounts_PlayerId",
                 table: "Accounts",
-                column: "UserId");
+                column: "PlayerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChapterNodeStars_ChapterId",
@@ -120,9 +121,9 @@ namespace TiktokGame2Server.Migrations
                 column: "ChapterNodeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chapters_UserId",
+                name: "IX_Chapters_PlayerId",
                 table: "Chapters",
-                column: "UserId");
+                column: "PlayerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChaptersNodes_ChapterId",
@@ -146,7 +147,7 @@ namespace TiktokGame2Server.Migrations
                 name: "Chapters");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Players");
         }
     }
 }

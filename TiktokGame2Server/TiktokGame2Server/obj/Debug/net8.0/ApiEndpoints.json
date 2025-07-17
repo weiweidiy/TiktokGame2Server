@@ -1,29 +1,19 @@
 [
   {
-    "ContainingType": "TiktokGame2Server.Controllers.LoginController",
-    "Method": "Login",
-    "RelativePath": "Login/Login",
+    "ContainingType": "TiktokGame2Server.Controllers.AccountController",
+    "Method": "FastLogin",
+    "RelativePath": "Account/FastLogin",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "uid",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "accountDto",
+        "Type": "Tiktok.AccountDTO",
+        "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "Tiktok.LoginDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "TiktokGame2Server.Controllers.WeatherForecastController",

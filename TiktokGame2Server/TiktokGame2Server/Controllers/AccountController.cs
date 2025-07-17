@@ -3,69 +3,73 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tiktok;
 using TiktokGame2Server.Entities;
+using TiktokGame2Server.Others;
 
 namespace TiktokGame2Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AccountController(MyDbContext myDbContext) : Controller
+    public class AccountController(MyDbContext myDbContext, ITokenService tokenService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
+        private readonly ITokenService tokenService = tokenService;
+
+        //[HttpPost("FastLogin")]
+        //public virtual async Task<ActionResult<LoginDTO>> FastLogin(string uid)
+        //{
+        //    var loginDTO = new LoginDTO();
+        //    var userDTO = new UserDTO();
+        //    loginDTO.User = userDTO;
+
+        //    var userEntity = await myDbContext.Players.FindAsync(uid);
+        //    if (userEntity == null)
+        //    {
+        //        userEntity = new Player() { Id = uid, Name = uid };
+        //        try
+        //        {
+        //            myDbContext.Players.Add(userEntity);
+        //            myDbContext.SaveChanges();
+        //        }
+        //        catch
+        //        {
+        //            return BadRequest();
+        //        }
+        //    }
+
+        //    userDTO.Uid = userEntity?.Id;
+        //    userDTO.Username = userEntity?.Name;
+
+        //    return loginDTO;
+        //}
+
 
         [HttpPost("FastLogin")]
-        public virtual async Task<ActionResult<LoginDTO>> FastLogin(string uid)
+        public IActionResult FastLogin([FromBody]AccountDTO accountDto)
         {
-            var loginDTO = new LoginDTO();
-            var userDTO = new UserDTO();
-            loginDTO.User = userDTO;
+            // 判断是否存在，不存在则创建游客账号
+            
 
-            var userEntity = await myDbContext.Players.FindAsync(uid);
-            if (userEntity == null)
+            // 创建游客用户
+            var guestAccount = new Account
             {
-                userEntity = new Player() { Id = uid, Name = uid };
-                try
-                {
-                    myDbContext.Players.Add(userEntity);
-                    myDbContext.SaveChanges();
-                }
-                catch
-                {
-                    return BadRequest();
-                }
-            }
+                //Username = guestUsername,
+                //Password = null, // 游客不需要密码
+                Uid = accountDto.Uid,
+                Role = "Guest"
+            };
 
-            userDTO.Uid = userEntity?.Id;
-            userDTO.Username = userEntity?.Name;
+            myDbContext.Add(guestAccount);
+            myDbContext.SaveChanges();
 
-            return loginDTO;
+            // 生成JWT token
+            var token = tokenService.GenerateToken(guestAccount);
+
+            return Ok(new
+            {
+                Token = token,
+                Account = new { guestAccount.Id, guestAccount.Uid, guestAccount.Role }
+            });
         }
-
-
-        //public async Task<IActionResult> RegisterGuest(string deviceId)
-        //{
-        //    // 1. 查找用户
-        //    var account = await myDbContext.Players.FindAsync(deviceId);
-        //    // 或者按设备ID查找（如果我们没有把设备ID作为用户名，则按DeviceId查找）
-        //    // 2. 如果用户不存在，则创建
-        //    //if (account == null)
-        //    //{
-        //    //    account = new Account
-        //    //    {
-        //    //        UserName = deviceId,
-        //    //        DeviceId = deviceId
-        //    //    };
-        //    //    // 生成随机密码
-        //    //    var password = GenerateRandomPassword();
-        //    //    var result = await _userManager.CreateAsync(account, password);
-        //    //    if (!result.Succeeded)
-        //    //    {
-        //    //        return BadRequest(result.Errors);
-        //    //    }
-        //    //}
-        //    //// 3. 生成JWT Token
-        //    //var token = GenerateJwtToken(account);
-        //    return Ok(new { Token = token });
-        //}
 
     }
 

@@ -272,3 +272,15 @@ D:\Demos\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\
 D:\Demos\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\System.Reactive.dll
 D:\Demos\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\JFrame.dll
 D:\Demos\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\JFrame.pdb
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Newtonsoft.Json.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\System.Reactive.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\JFrame.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\JFrame.pdb
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
