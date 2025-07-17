@@ -61,3 +61,14 @@ C:\Users\JiChunWei\Desktop\JFrame\JFrame\JFrame\JFrame\obj\Debug\netstandard2.0\
 C:\Users\JiChunWei\Desktop\JFrame\JFrame\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.sourcelink.json
 C:\Users\JiChunWei\Desktop\JFrame\JFrame\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.dll
 C:\Users\JiChunWei\Desktop\JFrame\JFrame\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.pdb
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\bin\Debug\netstandard2.0\JFrame.deps.json
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\bin\Debug\netstandard2.0\JFrame.dll
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\bin\Debug\netstandard2.0\JFrame.pdb
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.csproj.AssemblyReference.cache
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.GeneratedMSBuildEditorConfig.editorconfig
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.AssemblyInfoInputs.cache
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.AssemblyInfo.cs
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.csproj.CoreCompileInputs.cache
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.sourcelink.json
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.dll
+D:\Demos\TiktokGame2Server\external\repo\JFrame\JFrame\obj\Debug\netstandard2.0\JFrame.pdb

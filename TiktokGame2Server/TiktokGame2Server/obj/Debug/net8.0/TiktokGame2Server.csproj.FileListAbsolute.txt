@@ -268,3 +268,7 @@ E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\obj\Debug
 E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\obj\Debug\net8.0\TiktokGame2Server.pdb
 E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\obj\Debug\net8.0\TiktokGame2Server.genruntimeconfig.cache
 E:\UnityProjects\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\obj\Debug\net8.0\ref\TiktokGame2Server.dll
+D:\Demos\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\Demos\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\System.Reactive.dll
+D:\Demos\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\JFrame.dll
+D:\Demos\TiktokGame2Server\TiktokGame2Server\TiktokGame2Server\bin\Debug\net8.0\JFrame.pdb
