@@ -1,7 +1,7 @@
 ﻿namespace TiktokGame2Server.Entities
 {
 
-    public class User
+    public class Player
     {
         public required string Id { get; set; }
         public string? Name { get; set; }         

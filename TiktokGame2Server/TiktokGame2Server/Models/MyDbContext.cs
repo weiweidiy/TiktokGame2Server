@@ -8,12 +8,20 @@ namespace TiktokGame2Server.Entities
 {
     public class MyDbContext(DbContextOptions<MyDbContext> options) : DbContext(options)/*, IGameDataStore*/
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<Player> Players { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Chapter> Chapters { get; set; }
 
         public DbSet<ChapterNode> ChaptersNodes { get; set; }
         public DbSet<ChapterNodeStar> ChapterNodeStars { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // 确保DeviceId唯一
+            //modelBuilder.Entity<Account>()
+            //    .HasIndex(u => u.PlayerId)
+            //    .IsUnique();
+        }
 
         //public Task ClearAsync()
         //{
@@ -34,8 +42,8 @@ namespace TiktokGame2Server.Entities
         //{
         //    //switch(nameof(T))
         //    //{
-        //    //    case nameof(User):
-        //    //        return Users.FindAsync(key).Result;
+        //    //    case nameof(Player):
+        //    //        return Players.FindAsync(key).Result;
         //    //}
         //    throw new NotImplementedException();
         //}
