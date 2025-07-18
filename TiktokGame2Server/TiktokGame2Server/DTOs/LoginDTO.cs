@@ -4,7 +4,7 @@ namespace Tiktok
 {
     public class LoginDTO
     {
-        public UserDTO? User { get; set; }
+        public PlayerDTO? User { get; set; }
 
     }
 

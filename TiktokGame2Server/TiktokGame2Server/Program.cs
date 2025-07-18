@@ -34,7 +34,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddTransient<ITokenService, TokenService>();
-
+builder.Services.AddScoped<IAccountService, AccountService>();
 //builder.Services.AddIdentity<Account, IdentityRole>(options =>
 //{
 //    options.User.RequireUniqueEmail = false; // 不要求唯一邮箱，也不要求提供邮箱

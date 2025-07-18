@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Tiktok;
 using TiktokGame2Server.Entities;
 using TiktokGame2Server.Others;
@@ -9,69 +10,38 @@ namespace TiktokGame2Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AccountController(MyDbContext myDbContext, ITokenService tokenService) : Controller
+    public class AccountController(MyDbContext myDbContext, ITokenService tokenService, IAccountService accountService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         private readonly ITokenService tokenService = tokenService;
-
-        //[HttpPost("FastLogin")]
-        //public virtual async Task<ActionResult<LoginDTO>> FastLogin(string uid)
-        //{
-        //    var loginDTO = new LoginDTO();
-        //    var userDTO = new UserDTO();
-        //    loginDTO.User = userDTO;
-
-        //    var userEntity = await myDbContext.Players.FindAsync(uid);
-        //    if (userEntity == null)
-        //    {
-        //        userEntity = new Player() { Id = uid, Name = uid };
-        //        try
-        //        {
-        //            myDbContext.Players.Add(userEntity);
-        //            myDbContext.SaveChanges();
-        //        }
-        //        catch
-        //        {
-        //            return BadRequest();
-        //        }
-        //    }
-
-        //    userDTO.Uid = userEntity?.Id;
-        //    userDTO.Username = userEntity?.Name;
-
-        //    return loginDTO;
-        //}
-
+        IAccountService accountService = accountService;
 
         [HttpPost("FastLogin")]
-        public IActionResult FastLogin([FromBody]AccountDTO accountDto)
+        public async Task<IActionResult> FastLogin([FromBody] AccountDTO accountDto)
         {
-            // 判断是否存在，不存在则创建游客账号
-            
-
-            // 创建游客用户
-            var guestAccount = new Account
+            if (accountDto == null || string.IsNullOrEmpty(accountDto.Uid))
             {
-                //Username = guestUsername,
-                //Password = null, // 游客不需要密码
-                Uid = accountDto.Uid,
-                Role = "Guest"
-            };
+                return BadRequest("Invalid account data.");
+            }
 
-            myDbContext.Add(guestAccount);
-            myDbContext.SaveChanges();
+            // 将 Account account = await GetAccount(accountDto.Uid); 改为可空类型
+            Account? account = await accountService.GetAccountAsync(accountDto.Uid);
+            // 检查是否存在该账号
+            if (account == null)
+                account = await accountService.CreateAccountAsync(accountDto.Uid, "Guest");
+
+            if (account == null)
+                return BadRequest("create account failed");
 
             // 生成JWT token
-            var token = tokenService.GenerateToken(guestAccount);
+            var token = tokenService.GenerateToken(account);
 
-            return Ok(new
+            return Ok(new AccountDTO
             {
                 Token = token,
-                Account = new { guestAccount.Id, guestAccount.Uid, guestAccount.Role }
+                Uid = account.Uid
+                //Account = new { account.Id, account.Uid, account.Role }
             });
         }
-
     }
-
-
 }
