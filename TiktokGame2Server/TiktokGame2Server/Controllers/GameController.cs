@@ -9,11 +9,13 @@ namespace TiktokGame2Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GameController(MyDbContext myDbContext, ITokenService tokenService, IPlayerService playerService) : Controller
+    public class GameController(MyDbContext myDbContext, ITokenService tokenService, IPlayerService playerService
+        , IChapterService chapterService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         ITokenService tokenService = tokenService;
         IPlayerService playerService = playerService;
+        IChapterService chapterService = chapterService;
 
         [HttpPost("EnterGame")]
         public async Task<ActionResult<GameDTO>> EnterGame([FromQuery] GameDTO gameDTO)
@@ -35,7 +37,7 @@ namespace TiktokGame2Server.Controllers
             }
 
             // 检查账号是否存在
-            var account = await myDbContext.Accounts.Where(a => a.Uid == accountUid).FirstOrDefaultAsync();
+            var account = await myDbContext.Accounts.Include(a => a.Player).Where(a => a.Uid == accountUid).FirstOrDefaultAsync();
             if (account == null)
             {
                 return NotFound("账号不存在");
@@ -46,10 +48,12 @@ namespace TiktokGame2Server.Controllers
             if (player == null)
             {
                 player = await playerService.CreatePlayerAsync(Guid.NewGuid().ToString(), accountUid, account.Id);
+                await chapterService.CreateChaptersAsync(player.Id); // 创建章节
+
             }
 
             // 构造UserDTO
-            var userDto = new PlayerDTO
+            var playerDto = new PlayerDTO
             {
                 Uid = player.Uid,
                 Username = player.Name
@@ -64,7 +68,8 @@ namespace TiktokGame2Server.Controllers
 
             var gameDto = new GameDTO
             {
-                //PlayerDTO = userDto,
+                AccountDTO = accountDto,
+                PlayerDTO = playerDto,
                 //ChapterDTO = chapterDto
             };
 

@@ -4,7 +4,7 @@ namespace TiktokGame2Server.Others
 {
     public interface IPlayerService
     {
-        Task<Player?> GetPlayerAsync(string playerId);
-        Task<Player> CreatePlayerAsync(string playerId, string name, int accountId);
+        Task<Player?> GetPlayerAsync(string playerUid);
+        Task<Player> CreatePlayerAsync(string playerUid, string name, int accountId);
     }
 }

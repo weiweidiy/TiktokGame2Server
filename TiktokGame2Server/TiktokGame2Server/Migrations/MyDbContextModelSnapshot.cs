@@ -33,12 +33,6 @@ namespace TiktokGame2Server.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("PlayerId1")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text");
@@ -48,8 +42,6 @@ namespace TiktokGame2Server.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlayerId1");
 
                     b.ToTable("Accounts");
                 });
@@ -62,10 +54,16 @@ namespace TiktokGame2Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("PlayerId")
+                    b.Property<int>("ChapterId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChapterId")
+                        .IsUnique();
 
                     b.HasIndex("PlayerId");
 
@@ -139,23 +137,19 @@ namespace TiktokGame2Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId")
+                        .IsUnique();
+
                     b.ToTable("Players");
-                });
-
-            modelBuilder.Entity("TiktokGame2Server.Entities.Account", b =>
-                {
-                    b.HasOne("TiktokGame2Server.Entities.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId1");
-
-                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.Chapter", b =>
                 {
                     b.HasOne("TiktokGame2Server.Entities.Player", null)
                         .WithMany("Chapters")
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.ChapterNode", b =>
@@ -178,6 +172,22 @@ namespace TiktokGame2Server.Migrations
                         .IsRequired();
 
                     b.Navigation("ChapterNode");
+                });
+
+            modelBuilder.Entity("TiktokGame2Server.Entities.Player", b =>
+                {
+                    b.HasOne("TiktokGame2Server.Entities.Account", "Account")
+                        .WithOne("Player")
+                        .HasForeignKey("TiktokGame2Server.Entities.Player", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("TiktokGame2Server.Entities.Account", b =>
+                {
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.Chapter", b =>

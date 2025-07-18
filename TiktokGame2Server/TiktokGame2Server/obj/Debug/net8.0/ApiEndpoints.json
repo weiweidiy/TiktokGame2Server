@@ -17,8 +17,8 @@
   },
   {
     "ContainingType": "TiktokGame2Server.Controllers.GameController",
-    "Method": "GetGameData",
-    "RelativePath": "Game/GetGameData",
+    "Method": "EnterGame",
+    "RelativePath": "Game/EnterGame",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -30,6 +30,16 @@
       },
       {
         "Name": "AccountDTO.Token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PlayerDTO.Uid",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PlayerDTO.Username",
         "Type": "System.String",
         "IsRequired": false
       }

@@ -12,8 +12,8 @@ using TiktokGame2Server.Entities;
 namespace TiktokGame2Server.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250718062839_inticreate")]
-    partial class inticreate
+    [Migration("20250718153456_update")]
+    partial class update
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,9 +36,6 @@ namespace TiktokGame2Server.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("PlayerId")
-                        .HasColumnType("text");
-
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text");
@@ -48,8 +45,6 @@ namespace TiktokGame2Server.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
 
                     b.ToTable("Accounts");
                 });
@@ -62,10 +57,16 @@ namespace TiktokGame2Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("PlayerId")
-                        .HasColumnType("text");
+                    b.Property<int>("ChapterId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChapterId")
+                        .IsUnique();
 
                     b.HasIndex("PlayerId");
 
@@ -121,31 +122,37 @@ namespace TiktokGame2Server.Migrations
 
             modelBuilder.Entity("TiktokGame2Server.Entities.Player", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<string>("Uid")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId")
+                        .IsUnique();
+
                     b.ToTable("Players");
-                });
-
-            modelBuilder.Entity("TiktokGame2Server.Entities.Account", b =>
-                {
-                    b.HasOne("TiktokGame2Server.Entities.Player", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId");
-
-                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.Chapter", b =>
                 {
                     b.HasOne("TiktokGame2Server.Entities.Player", null)
                         .WithMany("Chapters")
-                        .HasForeignKey("PlayerId");
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.ChapterNode", b =>
@@ -168,6 +175,22 @@ namespace TiktokGame2Server.Migrations
                         .IsRequired();
 
                     b.Navigation("ChapterNode");
+                });
+
+            modelBuilder.Entity("TiktokGame2Server.Entities.Player", b =>
+                {
+                    b.HasOne("TiktokGame2Server.Entities.Account", "Account")
+                        .WithOne("Player")
+                        .HasForeignKey("TiktokGame2Server.Entities.Player", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("TiktokGame2Server.Entities.Account", b =>
+                {
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.Chapter", b =>

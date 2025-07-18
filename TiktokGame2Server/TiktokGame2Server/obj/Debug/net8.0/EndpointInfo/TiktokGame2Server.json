@@ -36,7 +36,7 @@
         }
       }
     },
-    "/Game/GetGameData": {
+    "/Game/EnterGame": {
       "post": {
         "tags": [
           "Game"
@@ -51,6 +51,20 @@
           },
           {
             "name": "AccountDTO.Token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PlayerDTO.Uid",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PlayerDTO.Username",
             "in": "query",
             "schema": {
               "type": "string"
@@ -186,6 +200,23 @@
         "properties": {
           "accountDTO": {
             "$ref": "#/components/schemas/AccountDTO"
+          },
+          "playerDTO": {
+            "$ref": "#/components/schemas/PlayerDTO"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlayerDTO": {
+        "type": "object",
+        "properties": {
+          "uid": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

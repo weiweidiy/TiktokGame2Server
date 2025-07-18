@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace TiktokGame2Server.Migrations
 {
     /// <inheritdoc />
-    public partial class inticreate : Migration
+    public partial class initCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +16,11 @@ namespace TiktokGame2Server.Migrations
                 name: "Players",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Uid = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    AccountId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,16 +34,17 @@ namespace TiktokGame2Server.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Uid = table.Column<string>(type: "text", nullable: false),
-                    PlayerId = table.Column<string>(type: "text", nullable: true),
                     Role = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    PlayerId = table.Column<int>(type: "integer", nullable: true),
+                    PlayerId1 = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Accounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Accounts_Players_PlayerId",
-                        column: x => x.PlayerId,
+                        name: "FK_Accounts_Players_PlayerId1",
+                        column: x => x.PlayerId1,
                         principalTable: "Players",
                         principalColumn: "Id");
                 });
@@ -51,7 +55,7 @@ namespace TiktokGame2Server.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PlayerId = table.Column<string>(type: "text", nullable: true)
+                    PlayerId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -109,9 +113,9 @@ namespace TiktokGame2Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Accounts_PlayerId",
+                name: "IX_Accounts_PlayerId1",
                 table: "Accounts",
-                column: "PlayerId");
+                column: "PlayerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChapterNodeStars_ChapterId",

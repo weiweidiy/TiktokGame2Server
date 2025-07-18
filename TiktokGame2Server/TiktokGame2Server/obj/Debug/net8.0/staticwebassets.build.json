@@ -1,1 +1,11 @@
-{"Version":1,"Hash":"nH0ovnAYxypZr98hQ7IYMghwAol45ZaFfZRDcugIUwY=","Source":"TiktokGame2Server","BasePath":"_content/TiktokGame2Server","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
+{
+  "Version": 1,
+  "Hash": "sfstKyJQb/Pvp6pejHB43Ky4O5o3Oh3caP5T5yAxD8w=",
+  "Source": "TiktokGame2Server",
+  "BasePath": "_content/TiktokGame2Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
