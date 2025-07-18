@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TiktokGame2Server.Entities;
@@ -11,9 +12,11 @@ using TiktokGame2Server.Entities;
 namespace TiktokGame2Server.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250718123723_addAttr2")]
+    partial class addAttr2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,11 +36,11 @@ namespace TiktokGame2Server.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("integer");
+                    b.Property<string>("PlayerId")
+                        .HasColumnType("text");
 
-                    b.Property<int?>("PlayerId1")
-                        .HasColumnType("integer");
+                    b.Property<string>("PlayerId1")
+                        .HasColumnType("text");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -62,8 +65,8 @@ namespace TiktokGame2Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("PlayerId")
-                        .HasColumnType("integer");
+                    b.Property<string>("PlayerId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -121,20 +124,13 @@ namespace TiktokGame2Server.Migrations
 
             modelBuilder.Entity("TiktokGame2Server.Entities.Player", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<int>("AccountId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Uid")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

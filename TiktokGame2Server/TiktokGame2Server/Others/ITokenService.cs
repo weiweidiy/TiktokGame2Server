@@ -8,4 +8,6 @@ namespace TiktokGame2Server.Others
 
         bool ValidateToken(string token);
     }
+
+
 }

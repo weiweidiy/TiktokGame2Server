@@ -3,8 +3,12 @@
 
     public class Player
     {
-        public required string Id { get; set; }
+        public int Id { get; set; }
+
+        public string Uid { get; set; } 
         public string? Name { get; set; }         
+
+        public int AccountId { get; set; }
         public ICollection<Chapter> Chapters { get; set; }
     }
 

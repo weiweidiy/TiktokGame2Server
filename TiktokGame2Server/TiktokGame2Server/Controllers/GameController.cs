@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using Tiktok;
 using TiktokGame2Server.Entities;
 using TiktokGame2Server.Others; // 假设TokenService在此命名空间
@@ -7,13 +9,14 @@ namespace TiktokGame2Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GameController(MyDbContext myDbContext, ITokenService tokenService) : Controller
+    public class GameController(MyDbContext myDbContext, ITokenService tokenService, IPlayerService playerService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         ITokenService tokenService = tokenService;
+        IPlayerService playerService = playerService;
 
         [HttpPost("EnterGame")]
-        public ActionResult<GameDTO> EnterGame([FromQuery] GameDTO gameDTO)
+        public async Task<ActionResult<GameDTO>> EnterGame([FromQuery] GameDTO gameDTO)
         {
             var accountDto = gameDTO.AccountDTO;
             var accountUid = accountDto?.Uid;
@@ -26,26 +29,29 @@ namespace TiktokGame2Server.Controllers
                 return Unauthorized("Token无效或未提供");
             }
 
-            // 查询玩家
-            var player = myDbContext.Players
-                .Where(p => p.Id == accountUid)
-                .Select(p => new Player
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Chapters = p.Chapters
-                })
-                .FirstOrDefault();
+            if (string.IsNullOrEmpty(accountUid))
+            {
+                return BadRequest("账号Uid不能为空");
+            }
 
+            // 检查账号是否存在
+            var account = await myDbContext.Accounts.Where(a => a.Uid == accountUid).FirstOrDefaultAsync();
+            if (account == null)
+            {
+                return NotFound("账号不存在");
+            }
+
+            // 检查账号是否已绑定玩家
+            var player = account.Player;
             if (player == null)
             {
-                return NotFound("玩家不存在");
+                player = await playerService.CreatePlayerAsync(Guid.NewGuid().ToString(), accountUid, account.Id);
             }
 
             // 构造UserDTO
             var userDto = new PlayerDTO
             {
-                Uid = player.Id,
+                Uid = player.Uid,
                 Username = player.Name
             };
 
