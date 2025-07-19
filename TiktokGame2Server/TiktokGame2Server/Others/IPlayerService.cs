@@ -6,5 +6,6 @@ namespace TiktokGame2Server.Others
     {
         Task<Player?> GetPlayerAsync(string playerUid);
         Task<Player> CreatePlayerAsync(string playerUid, string name, int accountId);
+        Task<Player?> GetPlayerByAccountIdAsync(int id);
     }
 }

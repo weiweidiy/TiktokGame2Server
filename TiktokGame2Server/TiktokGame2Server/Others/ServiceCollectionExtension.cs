@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi.Models;
 
 namespace TiktokGame2Server.Others
 {
@@ -10,6 +11,39 @@ namespace TiktokGame2Server.Others
     }
     public static class ServiceCollectionExtension
     {
+        public static void AddSwaggerWithJwt(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+
+                // 添加JWT认证
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "请输入JWT Token，格式为：Bearer {token}",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
+            });
+        }
+
         public static IServiceCollection AddAuthorize(this IServiceCollection services)
         {
             services.AddAuthorization(options =>

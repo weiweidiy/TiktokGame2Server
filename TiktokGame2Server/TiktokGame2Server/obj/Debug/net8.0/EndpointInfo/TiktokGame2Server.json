@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "TiktokGame2Server",
-    "version": "1.0"
+    "title": "API",
+    "version": "v1"
   },
   "paths": {
     "/Account/FastLogin": {
@@ -36,40 +36,41 @@
         }
       }
     },
-    "/Game/EnterGame": {
+    "/api/Fight/Fight": {
+      "post": {
+        "tags": [
+          "Fight"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FightDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FightDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FightDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Game/EnterGame": {
       "post": {
         "tags": [
           "Game"
-        ],
-        "parameters": [
-          {
-            "name": "AccountDTO.Uid",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "AccountDTO.Token",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "PlayerDTO.Uid",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "PlayerDTO.Username",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
         ],
         "responses": {
           "200": {
@@ -195,28 +196,42 @@
         "type": "integer",
         "format": "int32"
       },
-      "GameDTO": {
+      "FightDTO": {
         "type": "object",
         "properties": {
-          "accountDTO": {
-            "$ref": "#/components/schemas/AccountDTO"
+          "levelNodeId": {
+            "type": "integer",
+            "format": "int32"
           },
-          "playerDTO": {
-            "$ref": "#/components/schemas/PlayerDTO"
+          "levelNodeDTO": {
+            "$ref": "#/components/schemas/LevelNodeDTO"
           }
         },
         "additionalProperties": false
       },
-      "PlayerDTO": {
+      "GameDTO": {
         "type": "object",
         "properties": {
-          "uid": {
-            "type": "string",
+          "levelNodesDTO": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LevelNodeDTO"
+            },
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "LevelNodeDTO": {
+        "type": "object",
+        "properties": {
+          "nodeId": {
+            "type": "integer",
+            "format": "int32"
           },
-          "username": {
-            "type": "string",
-            "nullable": true
+          "process": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -243,6 +258,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "请输入JWT Token，格式为：Bearer {token}",
+        "name": "Authorization",
+        "in": "header"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

@@ -10,14 +10,11 @@ namespace TiktokGame2Server.Entities
     {
         public DbSet<Player> Players { get; set; }
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<Chapter> Chapters { get; set; }
-
-        public DbSet<ChapterNode> ChaptersNodes { get; set; }
-        public DbSet<ChapterNodeStar> ChapterNodeStars { get; set; }
+        public DbSet<LevelNode> LevelNodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Chapter>().HasIndex(c => c.ChapterId).IsUnique();
+            modelBuilder.Entity<LevelNode>().HasIndex(c => c.NodeId).IsUnique();
 
             // 确保DeviceId唯一
             //modelBuilder.Entity<Account>()

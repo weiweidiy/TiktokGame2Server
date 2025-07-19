@@ -16,47 +16,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "TiktokGame2Server.Controllers.GameController",
-    "Method": "EnterGame",
-    "RelativePath": "Game/EnterGame",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "AccountDTO.Uid",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "AccountDTO.Token",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "PlayerDTO.Uid",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "PlayerDTO.Username",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Tiktok.GameDTO",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
     "ContainingType": "TiktokGame2Server.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",
@@ -76,5 +35,41 @@
       }
     ],
     "EndpointName": "GetWeatherForecast"
+  },
+  {
+    "ContainingType": "TiktokGame2Server.Controllers.FightController",
+    "Method": "Fight",
+    "RelativePath": "api/Fight/Fight",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fightDTO",
+        "Type": "Tiktok.FightDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TiktokGame2Server.Controllers.GameController",
+    "Method": "EnterGame",
+    "RelativePath": "api/Game/EnterGame",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Tiktok.GameDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

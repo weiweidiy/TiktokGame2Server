@@ -10,11 +10,13 @@ namespace TiktokGame2Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AccountController(MyDbContext myDbContext, ITokenService tokenService, IAccountService accountService) : Controller
+    public class AccountController(MyDbContext myDbContext, ITokenService tokenService
+        , IAccountService accountService, IPlayerService playerService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         private readonly ITokenService tokenService = tokenService;
         IAccountService accountService = accountService;
+        IPlayerService playerService = playerService;
 
         [HttpPost("FastLogin")]
         public async Task<IActionResult> FastLogin([FromBody] AccountDTO accountDto)
@@ -26,15 +28,31 @@ namespace TiktokGame2Server.Controllers
 
             // 将 Account account = await GetAccount(accountDto.Uid); 改为可空类型
             Account? account = await accountService.GetAccountAsync(accountDto.Uid);
+            Player? player = null;
             // 检查是否存在该账号
             if (account == null)
+            {
                 account = await accountService.CreateAccountAsync(accountDto.Uid, "Guest");
+                player = await playerService.CreatePlayerAsync(Guid.NewGuid().ToString(), account.Uid, account.Id);
+            }
+            else
+            {
+                // 如果账号已存在，获取绑定的玩家
+                player = await playerService.GetPlayerByAccountIdAsync(account.Id);
+            }
 
             if (account == null)
                 return BadRequest("create account failed");
 
+
+            // 检查玩家是否存在
+            if (player == null)
+            {
+                return NotFound("玩家不存在");
+            }
+
             // 生成JWT token
-            var token = tokenService.GenerateToken(account);
+            var token = tokenService.GenerateToken(account, player);
 
             return Ok(new AccountDTO
             {

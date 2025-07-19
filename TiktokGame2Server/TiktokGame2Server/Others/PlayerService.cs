@@ -26,6 +26,11 @@ namespace TiktokGame2Server.Others
             await _dbContext.SaveChangesAsync();
             return player;
         }
+
+        public async Task<Player?> GetPlayerByAccountIdAsync(int accountId)
+        {
+            return await _dbContext.Players.FirstOrDefaultAsync(p => p.AccountId == accountId);
+        }
     }
 
     

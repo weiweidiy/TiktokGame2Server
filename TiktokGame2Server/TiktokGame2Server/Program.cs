@@ -33,10 +33,14 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+
+
+builder.Services.AddSwaggerWithJwt();
+
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
-builder.Services.AddScoped<IChapterService, ChapterService>();
+builder.Services.AddScoped<ILevelNodesService, LevelNodeService>();
 //builder.Services.AddIdentity<Account, IdentityRole>(options =>
 //{
 //    options.User.RequireUniqueEmail = false; // 不要求唯一邮箱，也不要求提供邮箱
@@ -68,6 +72,8 @@ builder.Services.AddDbContext<MyDbContext>(options => options.UseNpgsql("Server=
 
 
 var app = builder.Build();
+
+app.UseMiddleware<TokenAuthMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

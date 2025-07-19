@@ -8,28 +8,23 @@ using TiktokGame2Server.Others; // 假设TokenService在此命名空间
 namespace TiktokGame2Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class GameController(MyDbContext myDbContext, ITokenService tokenService, IPlayerService playerService
-        , IChapterService chapterService) : Controller
+        , ILevelNodesService levelNodeService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         ITokenService tokenService = tokenService;
         IPlayerService playerService = playerService;
-        IChapterService chapterService = chapterService;
+        ILevelNodesService chapterService = levelNodeService;
 
         [HttpPost("EnterGame")]
-        public async Task<ActionResult<GameDTO>> EnterGame([FromQuery] GameDTO gameDTO)
+        public async Task<ActionResult<GameDTO>> EnterGame()
         {
-            var accountDto = gameDTO.AccountDTO;
-            var accountUid = accountDto?.Uid;
-            var token = accountDto?.Token;
-
-            // 获取请求头中的token
-            //var token = Request.Headers["Authorization"].FirstOrDefault();
-            if (string.IsNullOrEmpty(token) || !tokenService.ValidateToken(token))
-            {
-                return Unauthorized("Token无效或未提供");
-            }
+            //从token解析中获取账号Uid
+            var token = Request.Headers["Authorization"].FirstOrDefault();
+            var accountUid = tokenService.GetAccountUidFromToken(token);
+            var playerUid = tokenService.GetPlayerUidFromToken(token);
+            var playerId = tokenService.GetPlayerIdFromToken(token) ?? 0;
 
             if (string.IsNullOrEmpty(accountUid))
             {
@@ -43,34 +38,19 @@ namespace TiktokGame2Server.Controllers
                 return NotFound("账号不存在");
             }
 
-            // 检查账号是否已绑定玩家
-            var player = account.Player;
-            if (player == null)
-            {
-                player = await playerService.CreatePlayerAsync(Guid.NewGuid().ToString(), accountUid, account.Id);
-                await chapterService.CreateChaptersAsync(player.Id); // 创建章节
 
-            }
-
-            // 构造UserDTO
-            var playerDto = new PlayerDTO
+            // 获取玩家的关卡节点
+            var levelNodes = await chapterService.GetLevelNodesAsync(playerId);
+            var levelNodeDtos = levelNodes?.Select(n => new LevelNodeDTO
             {
-                Uid = player.Uid,
-                Username = player.Name
-            };
+                NodeId = n.NodeId,
+                Process = n.Process,
+            }).ToList();
 
-            // 构造ChapterDTO（假设ChapterDTO有合适的构造方式）
-            var chapterDto = new ChapterDTO
-            {
-                // 这里根据你的ChapterDTO结构填充
-                // 例如：Chapters = player.Chapters.Select(...)
-            };
 
             var gameDto = new GameDTO
             {
-                AccountDTO = accountDto,
-                PlayerDTO = playerDto,
-                //ChapterDTO = chapterDto
+                LevelNodesDTO = levelNodeDtos ?? new List<LevelNodeDTO>()
             };
 
             return Ok(gameDto);
