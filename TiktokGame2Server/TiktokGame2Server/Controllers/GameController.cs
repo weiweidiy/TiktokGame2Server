@@ -10,12 +10,14 @@ namespace TiktokGame2Server.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class GameController(MyDbContext myDbContext, ITokenService tokenService, IPlayerService playerService
-        , ILevelNodesService levelNodeService) : Controller
+        , ILevelNodesService levelNodeService
+        , ISamuraiService samuraiService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         ITokenService tokenService = tokenService;
         IPlayerService playerService = playerService;
-        ILevelNodesService chapterService = levelNodeService;
+        ILevelNodesService levelNodeService = levelNodeService;
+        ISamuraiService samuraiService = samuraiService;
 
         [HttpPost("EnterGame")]
         public async Task<ActionResult<GameDTO>> EnterGame()
@@ -40,13 +42,28 @@ namespace TiktokGame2Server.Controllers
 
 
             // 获取玩家的关卡节点
-            var levelNodes = await chapterService.GetLevelNodesAsync(playerId);
+            var levelNodes = await levelNodeService.GetLevelNodesAsync(playerId);
             var levelNodeDtos = levelNodes?.Select(n => new LevelNodeDTO
             {
-                NodeId = n.NodeUid,
+                Uid = n.NodeUid,
                 Process = n.Process,
             }).ToList();
 
+
+            //获取玩家samurai
+            var samurais = await samuraiService.GetAllSamuraiAsync(playerId);
+            if (samurais == null)
+            {
+                samurais = new List<Samurai>();
+                var defaultSamurai = await samuraiService.AddSamuraiAsync("DefaultSamurai", playerId);
+                samurais.Add(defaultSamurai);
+            }
+            var samuraisDTO = samurais?.Select(n => new SamuraiDTO
+            {
+                Uid = n.Uid,
+                Level = n.Level,
+                Experience = n.Experience,
+            }).ToList();
 
             var gameDto = new GameDTO
             {

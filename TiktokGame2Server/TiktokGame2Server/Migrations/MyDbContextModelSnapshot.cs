@@ -100,6 +100,35 @@ namespace TiktokGame2Server.Migrations
                     b.ToTable("Players");
                 });
 
+            modelBuilder.Entity("TiktokGame2Server.Entities.Samurai", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Uid")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Uid", "PlayerId")
+                        .IsUnique();
+
+                    b.ToTable("Samurais");
+                });
+
             modelBuilder.Entity("TiktokGame2Server.Entities.LevelNode", b =>
                 {
                     b.HasOne("TiktokGame2Server.Entities.Player", null)

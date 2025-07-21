@@ -12,9 +12,12 @@ namespace TiktokGame2Server.Entities
         public DbSet<Account> Accounts { get; set; }
         public DbSet<LevelNode> LevelNodes { get; set; }
 
+        public DbSet<Samurai> Samurais { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LevelNode>().HasIndex(c => new { c.NodeUid, c.PlayerId }).IsUnique();
+            modelBuilder.Entity<Samurai>().HasIndex(c => new { c.Uid, c.PlayerId }).IsUnique();
 
             // 确保DeviceId唯一
             //modelBuilder.Entity<Account>()

@@ -221,6 +221,13 @@
               "$ref": "#/components/schemas/LevelNodeDTO"
             },
             "nullable": true
+          },
+          "SamuraisDTO": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Samurai"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -228,7 +235,7 @@
       "LevelNodeDTO": {
         "type": "object",
         "properties": {
-          "NodeId": {
+          "Uid": {
             "type": "string",
             "nullable": true
           },
@@ -249,6 +256,32 @@
           "Username": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Samurai": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Uid": {
+            "type": "string",
+            "nullable": true
+          },
+          "Level": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Experience": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "PlayerId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

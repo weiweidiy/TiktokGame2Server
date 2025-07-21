@@ -1,3 +1,5 @@
+using JFramework;
+using JFramework.Game;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -52,10 +54,17 @@ builder.WebHost.ConfigureKestrel(options =>
 
 builder.Services.AddSwaggerWithJwt();
 
+
+builder.Services.AddScoped<IDeserializer, JsonNetDeserilizer>();
+builder.Services.AddScoped<IConfigLoader, LocalFileConfigLoader>();
+builder.Services.AddScoped<TiktokConfigService>();
+
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ILevelNodesService, LevelNodeService>();
+builder.Services.AddScoped<ISamuraiService, SamuraiService>();
+
 //builder.Services.AddIdentity<Account, IdentityRole>(options =>
 //{
 //    options.User.RequireUniqueEmail = false; // 不要求唯一邮箱，也不要求提供邮箱

@@ -11,14 +11,6 @@ namespace TiktokGame2Server.Others
             _dbContext = dbContext;
         }
 
-        //public async Task<LevelNode?> GetLevelNodeAsync(int nodeId, int playerId)
-        //{
-        //    // 查找对应的 LevelNode
-        //    var levelNode = await _dbContext.LevelNodes
-        //        .FirstOrDefaultAsync(n => n.NodeUid == nodeId && n.PlayerId == playerId);
-        //    return levelNode;
-        //}
-
         /// <summary>
         /// 获取玩家的关卡节点信息
         /// </summary>

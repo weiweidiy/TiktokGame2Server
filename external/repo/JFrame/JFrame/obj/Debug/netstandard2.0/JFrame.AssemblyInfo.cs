@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JFrame")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20c0a6d4d30476a575644c63e8a476c21e72c0d6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9f7023c48864ff8690773b4e9ac22b890829d64d")]
 [assembly: System.Reflection.AssemblyProductAttribute("JFrame")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JFrame")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
