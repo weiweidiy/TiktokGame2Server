@@ -2,7 +2,7 @@
 {
     public class FightDTO 
     {
-        public int LevelNodeId { get; set; }
+        public required string LevelNodeId { get; set; }
 
         public LevelNodeDTO? LevelNodeDTO { get; set; }
     }

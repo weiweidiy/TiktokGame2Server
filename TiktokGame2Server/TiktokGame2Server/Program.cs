@@ -35,6 +35,21 @@ builder.Services.AddAuthentication(options =>
 });
 
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null; // 保持原样
+    // 或 options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; // 首字母小写
+});
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(7289, listenOptions =>
+    {
+        listenOptions.UseHttps(); // 默认使用开发证书
+    });
+    options.ListenAnyIP(5289); // http
+});
+
 builder.Services.AddSwaggerWithJwt();
 
 builder.Services.AddTransient<ITokenService, TokenService>();

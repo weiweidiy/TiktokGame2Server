@@ -2,7 +2,7 @@
 {
     public class LevelNodeDTO
     {
-        public int NodeId { get; set; }
+        public required string NodeId { get; set; }
         public int Process { get; set; }
 
         //public int PlayerId { get; set; }

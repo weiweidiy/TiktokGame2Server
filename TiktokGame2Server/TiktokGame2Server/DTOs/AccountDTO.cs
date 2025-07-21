@@ -8,7 +8,7 @@ namespace Tiktok
     {
         public string Uid { get; set; }
 
-        public string Token { get; set; }
+        public string? Token { get; set; }
     }
 
 

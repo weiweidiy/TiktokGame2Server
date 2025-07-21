@@ -35,9 +35,13 @@ namespace TiktokGame2Server.Controllers
                 return NotFound("关卡节点不存在或未找到");
             }
 
-            var levelNodeDTO = new LevelNodeDTO();
-            levelNodeDTO.NodeId = levelNode.Id;
-            levelNodeDTO.Process = levelNode.Process;
+            var levelNodeDTO = new LevelNodeDTO
+            {
+                NodeId = levelNode.NodeUid,
+                Process = levelNode.Process
+
+            };
+               
 
             fightDTO.LevelNodeDTO = levelNodeDTO;
             return Ok(fightDTO);

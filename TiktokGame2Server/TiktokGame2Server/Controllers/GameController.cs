@@ -43,13 +43,18 @@ namespace TiktokGame2Server.Controllers
             var levelNodes = await chapterService.GetLevelNodesAsync(playerId);
             var levelNodeDtos = levelNodes?.Select(n => new LevelNodeDTO
             {
-                NodeId = n.NodeId,
+                NodeId = n.NodeUid,
                 Process = n.Process,
             }).ToList();
 
 
             var gameDto = new GameDTO
             {
+                PlayerDTO = new PlayerDTO
+                {
+                    Uid = playerUid,
+                    Username = account.Player?.Name 
+                },
                 LevelNodesDTO = levelNodeDtos ?? new List<LevelNodeDTO>()
             };
 

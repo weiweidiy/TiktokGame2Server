@@ -7,7 +7,7 @@
     {
         public int Id { get; set; }
 
-        public int NodeId { get; set; }
+        public required string NodeUid { get; set; }
 
         public int Process { get; set; }
 

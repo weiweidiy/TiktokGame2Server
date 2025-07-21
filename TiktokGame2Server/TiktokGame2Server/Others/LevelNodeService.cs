@@ -11,13 +11,13 @@ namespace TiktokGame2Server.Others
             _dbContext = dbContext;
         }
 
-        public async Task<LevelNode?> GetLevelNodeAsync(int nodeId, int playerId)
-        {
-            // 查找对应的 LevelNode
-            var levelNode = await _dbContext.LevelNodes
-                .FirstOrDefaultAsync(n => n.NodeId == nodeId && n.PlayerId == playerId);
-            return levelNode;
-        }
+        //public async Task<LevelNode?> GetLevelNodeAsync(int nodeId, int playerId)
+        //{
+        //    // 查找对应的 LevelNode
+        //    var levelNode = await _dbContext.LevelNodes
+        //        .FirstOrDefaultAsync(n => n.NodeUid == nodeId && n.PlayerId == playerId);
+        //    return levelNode;
+        //}
 
         /// <summary>
         /// 获取玩家的关卡节点信息
@@ -40,16 +40,18 @@ namespace TiktokGame2Server.Others
         /// <param name="nodeId"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        public async Task<LevelNode> LevelNodeVictoryAsync(int nodeId, int playerId)
+        public async Task<LevelNode> LevelNodeVictoryAsync(string nodeId, int playerId)
         {
             // 查找对应的 LevelNode
-            var levelNode = _dbContext.LevelNodes.FirstOrDefault(n => n.NodeId == nodeId && n.PlayerId == playerId);
+            var levelNode = _dbContext.LevelNodes.FirstOrDefault(n => n.NodeUid == nodeId && n.PlayerId == playerId);
             if (levelNode == null)
             {
+                // to do: 验证前置节点是否完成
+
                 //添加一个新的 LevelNode
                 levelNode = new LevelNode
                 {
-                    NodeId = nodeId,
+                    NodeUid = nodeId,
                     PlayerId = playerId,
                     Process = 0
                 };
@@ -67,7 +69,7 @@ namespace TiktokGame2Server.Others
             return levelNode;
         }
 
-        int QueryLevelNodeMaxProcess(int nodeId)
+        int QueryLevelNodeMaxProcess(string nodeId)
         {
             //测试数据，临时硬编码
             return 3;

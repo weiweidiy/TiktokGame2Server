@@ -141,11 +141,11 @@
       "AccountDTO": {
         "type": "object",
         "properties": {
-          "uid": {
+          "Uid": {
             "type": "string",
             "nullable": true
           },
-          "token": {
+          "Token": {
             "type": "string",
             "nullable": true
           }
@@ -155,27 +155,27 @@
       "DateOnly": {
         "type": "object",
         "properties": {
-          "year": {
+          "Year": {
             "type": "integer",
             "format": "int32"
           },
-          "month": {
+          "Month": {
             "type": "integer",
             "format": "int32"
           },
-          "day": {
+          "Day": {
             "type": "integer",
             "format": "int32"
           },
-          "dayOfWeek": {
+          "DayOfWeek": {
             "$ref": "#/components/schemas/DayOfWeek"
           },
-          "dayOfYear": {
+          "DayOfYear": {
             "type": "integer",
             "format": "int32",
             "readOnly": true
           },
-          "dayNumber": {
+          "DayNumber": {
             "type": "integer",
             "format": "int32",
             "readOnly": true
@@ -199,11 +199,11 @@
       "FightDTO": {
         "type": "object",
         "properties": {
-          "levelNodeId": {
-            "type": "integer",
-            "format": "int32"
+          "LevelNodeId": {
+            "type": "string",
+            "nullable": true
           },
-          "levelNodeDTO": {
+          "LevelNodeDTO": {
             "$ref": "#/components/schemas/LevelNodeDTO"
           }
         },
@@ -212,7 +212,10 @@
       "GameDTO": {
         "type": "object",
         "properties": {
-          "levelNodesDTO": {
+          "PlayerDTO": {
+            "$ref": "#/components/schemas/PlayerDTO"
+          },
+          "LevelNodesDTO": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LevelNodeDTO"
@@ -225,13 +228,27 @@
       "LevelNodeDTO": {
         "type": "object",
         "properties": {
-          "nodeId": {
-            "type": "integer",
-            "format": "int32"
+          "NodeId": {
+            "type": "string",
+            "nullable": true
           },
-          "process": {
+          "Process": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PlayerDTO": {
+        "type": "object",
+        "properties": {
+          "Uid": {
+            "type": "string",
+            "nullable": true
+          },
+          "Username": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -239,19 +256,19 @@
       "WeatherForecast": {
         "type": "object",
         "properties": {
-          "date": {
+          "Date": {
             "$ref": "#/components/schemas/DateOnly"
           },
-          "temperatureC": {
+          "TemperatureC": {
             "type": "integer",
             "format": "int32"
           },
-          "temperatureF": {
+          "TemperatureF": {
             "type": "integer",
             "format": "int32",
             "readOnly": true
           },
-          "summary": {
+          "Summary": {
             "type": "string",
             "nullable": true
           }

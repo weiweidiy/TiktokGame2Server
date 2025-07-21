@@ -4,7 +4,7 @@ namespace TiktokGame2Server.Others
 {
     public interface ILevelNodesService
     {
-        Task<LevelNode?> GetLevelNodeAsync(int levelNodeId, int playerId);
+        //Task<LevelNode?> GetLevelNodeAsync(int levelNodeId, int playerId);
         Task<List<LevelNode>?> GetLevelNodesAsync(int playerId);
 
         /// <summary>
@@ -13,7 +13,7 @@ namespace TiktokGame2Server.Others
         /// <param name="nodeId"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        Task<LevelNode> LevelNodeVictoryAsync(int nodeId, int playerId);
+        Task<LevelNode> LevelNodeVictoryAsync(string nodeId, int playerId);
 
     }
 }
