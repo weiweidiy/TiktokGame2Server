@@ -27,7 +27,7 @@ namespace TiktokGame2Server.Controllers
             var playerId = tokenService.GetPlayerIdFromToken(token) ?? 0;
 
             //需要打的关卡节点ID
-            var levelNodeId = fightDTO.LevelNodeId;
+            var levelNodeId = fightDTO.LevelNodeUid;
             var levelNode = await levelNodeService.LevelNodeVictoryAsync(levelNodeId, playerId);
             //如果levelNode为null，说明关卡节点不存在或未找到
             if (levelNode == null)
@@ -37,7 +37,7 @@ namespace TiktokGame2Server.Controllers
 
             var levelNodeDTO = new LevelNodeDTO
             {
-                Uid = levelNode.NodeUid,
+                Uid = levelNode.Uid,
                 Process = levelNode.Process
 
             };

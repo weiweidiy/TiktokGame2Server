@@ -35,7 +35,7 @@ namespace TiktokGame2Server.Others
         public async Task<LevelNode> LevelNodeVictoryAsync(string nodeId, int playerId)
         {
             // 查找对应的 LevelNode
-            var levelNode = _dbContext.LevelNodes.FirstOrDefault(n => n.NodeUid == nodeId && n.PlayerId == playerId);
+            var levelNode = _dbContext.LevelNodes.FirstOrDefault(n => n.Uid == nodeId && n.PlayerId == playerId);
             if (levelNode == null)
             {
                 // to do: 验证前置节点是否完成
@@ -43,7 +43,7 @@ namespace TiktokGame2Server.Others
                 //添加一个新的 LevelNode
                 levelNode = new LevelNode
                 {
-                    NodeUid = nodeId,
+                    Uid = nodeId,
                     PlayerId = playerId,
                     Process = 0
                 };

@@ -199,7 +199,7 @@
       "FightDTO": {
         "type": "object",
         "properties": {
-          "LevelNodeId": {
+          "LevelNodeUid": {
             "type": "string",
             "nullable": true
           },

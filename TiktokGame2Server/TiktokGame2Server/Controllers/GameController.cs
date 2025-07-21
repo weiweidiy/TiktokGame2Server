@@ -45,14 +45,14 @@ namespace TiktokGame2Server.Controllers
             var levelNodes = await levelNodeService.GetLevelNodesAsync(playerId);
             var levelNodeDtos = levelNodes?.Select(n => new LevelNodeDTO
             {
-                Uid = n.NodeUid,
+                Uid = n.Uid,
                 Process = n.Process,
             }).ToList();
 
 
             //获取玩家samurai
             var samurais = await samuraiService.GetAllSamuraiAsync(playerId);
-            if (samurais == null)
+            if (samurais == null || samurais.Count == 0)
             {
                 samurais = new List<Samurai>();
                 var defaultSamurai = await samuraiService.AddSamuraiAsync("DefaultSamurai", playerId);
@@ -64,6 +64,8 @@ namespace TiktokGame2Server.Controllers
                 Level = n.Level,
                 Experience = n.Experience,
             }).ToList();
+
+
 
             var gameDto = new GameDTO
             {

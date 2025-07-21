@@ -16,7 +16,7 @@ namespace TiktokGame2Server.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LevelNode>().HasIndex(c => new { c.NodeUid, c.PlayerId }).IsUnique();
+            modelBuilder.Entity<LevelNode>().HasIndex(c => new { c.Uid, c.PlayerId }).IsUnique();
             modelBuilder.Entity<Samurai>().HasIndex(c => new { c.Uid, c.PlayerId }).IsUnique();
 
             // 确保DeviceId唯一
