@@ -152,6 +152,20 @@
         },
         "additionalProperties": false
       },
+      "ActionEffectInfo": {
+        "type": "object",
+        "properties": {
+          "TargetUid": {
+            "type": "string",
+            "nullable": true
+          },
+          "Value": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "DateOnly": {
         "type": "object",
         "properties": {
@@ -278,6 +292,10 @@
             "type": "string",
             "nullable": true
           },
+          "SortIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
           "CurFrame": {
             "type": "integer",
             "format": "int32"
@@ -295,7 +313,7 @@
             "additionalProperties": {
               "type": "array",
               "items": {
-                "$ref": "#/components/schemas/StringInt32KeyValuePair"
+                "$ref": "#/components/schemas/ActionEffectInfo"
               },
               "nullable": true
             },
@@ -369,20 +387,6 @@
             "format": "int32"
           },
           "Experience": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "StringInt32KeyValuePair": {
-        "type": "object",
-        "properties": {
-          "Key": {
-            "type": "string",
-            "nullable": true
-          },
-          "Value": {
             "type": "integer",
             "format": "int32"
           }
