@@ -131,7 +131,7 @@ namespace TiktokGame2Server.Controllers
                     first = await samuraiService.AddSamuraiAsync(tiktokConfigService.GetDefaultSamuraiBusinessId(), playerId);
                 }
 
-                var defaultFormation = await formationService.AddFormationAsync(formationType, tiktokConfigService.GetDefaultFormationPoint(), first.Id);
+                var defaultFormation = await formationService.AddFormationAsync(formationType, tiktokConfigService.GetDefaultFormationPoint(), first.Id, playerId);
                 formations.Add(defaultFormation);
             }
             var formationsDTO = formations?.Select(n => new FormationDTO

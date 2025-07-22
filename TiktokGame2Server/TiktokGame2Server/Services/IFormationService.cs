@@ -16,7 +16,7 @@ namespace TiktokGame2Server.Others
         /// <param name="playerId"></param>
         /// <param name="formation"></param>
         /// <returns></returns>
-        Task<Formation> AddFormationAsync(int formationType, int formationPoint, int samuraiId);
+        Task<Formation> AddFormationAsync(int formationType, int formationPoint, int samuraiId, int playerId);
 
         /// <summary>
         /// 删除一个点位的配置

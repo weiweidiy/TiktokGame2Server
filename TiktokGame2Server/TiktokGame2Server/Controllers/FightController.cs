@@ -71,7 +71,7 @@ namespace TiktokGame2Server.Controllers
             };
 
             fightDTO.LevelNodeDTO = levelNodeDTO;
-            fightDTO.ReportData = reportData;
+            fightDTO.ReportData = reportData ?? new JFramework.Game.JCombatTurnBasedReportData();
 
             return Ok(fightDTO);
 

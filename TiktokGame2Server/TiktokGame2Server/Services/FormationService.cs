@@ -46,11 +46,11 @@ namespace TiktokGame2Server.Others
         /// <param name="formationPoint"></param>
         /// <param name="samuraiId"></param>
         /// <returns></returns>
-        public async Task<Formation> AddFormationAsync(int formationType, int formationPoint, int samuraiId)
+        public async Task<Formation> AddFormationAsync(int formationType, int formationPoint, int samuraiId, int playerId)
         {
             //先查询是否存在相同的阵型和位置
             var existingFormation = await _dbContext.Formations
-                .FirstOrDefaultAsync(f => f.FormationType == formationType && f.FormationPoint == formationPoint);
+                .FirstOrDefaultAsync(f => f.FormationType == formationType && f.FormationPoint == formationPoint && f.SamuraiId == samuraiId && f.PlayerId == playerId);
 
             //如果存在，则修改对应的samuraiId
             if (existingFormation != null)
@@ -67,7 +67,8 @@ namespace TiktokGame2Server.Others
                 {
                     FormationType = formationType,
                     FormationPoint = formationPoint,
-                    SamuraiId = samuraiId
+                    SamuraiId = samuraiId,
+                    PlayerId = playerId
                 };
                 _dbContext.Formations.Add(formation);
                 await _dbContext.SaveChangesAsync();
