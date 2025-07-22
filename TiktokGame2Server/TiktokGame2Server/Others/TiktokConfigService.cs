@@ -10,11 +10,14 @@ namespace TiktokGame2Server.Others
             // 可以在这里添加额外的初始化逻辑
         }
 
+        public string GetDefaultSamuraiBusinessId() => "1";
 
-        public string GetDefaultFirstNodeBusinessId()
-        {
-            return "1";
-        }
+        public int GetDefaultFormationPoint() => 4;
+        public int GetAtkFormationType() => 1;
+
+        public int GetDefFormationType() => 2;
+
+        public string GetDefaultFirstNodeBusinessId() => "1";
 
         /// <summary>
         /// 判断是否是新关卡的第一个节点

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TiktokGame2Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ad440636072de5516b3b81a2bb82f310aed0358")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd21914107aae8d99933b592253a91e869152d75")]
 [assembly: System.Reflection.AssemblyProductAttribute("TiktokGame2Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TiktokGame2Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

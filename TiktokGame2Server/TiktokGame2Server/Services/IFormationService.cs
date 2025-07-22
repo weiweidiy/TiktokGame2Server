@@ -25,5 +25,8 @@ namespace TiktokGame2Server.Others
         /// <param name="formationPoint"></param>
         /// <returns></returns>
         Task<bool> DeleteFormationAsync(int formationType, int formationPoint);
+
+
+        Task<int> GetFormationPoint(int formationType, int samuraiId);
     }
 }

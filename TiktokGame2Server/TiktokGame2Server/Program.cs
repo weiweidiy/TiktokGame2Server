@@ -55,6 +55,10 @@ builder.WebHost.ConfigureKestrel(options =>
 builder.Services.AddSwaggerWithJwt();
 
 
+
+builder.Services.AddDbContext<MyDbContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=MyDb;UserId=postgres;Password=123321qweasd;"));
+
+
 builder.Services.AddSingleton<IDeserializer, JsonNetDeserilizer>();
 builder.Services.AddSingleton<IConfigLoader, LocalFileConfigLoader>();
 builder.Services.AddSingleton<TiktokConfigService>();
@@ -68,17 +72,6 @@ builder.Services.AddScoped<ISamuraiService, SamuraiService>();
 builder.Services.AddScoped<IFormationService, FormationService>();
 builder.Services.AddScoped<ILevelNodeCombatService, LevelNodeCombatService>();
 
-//builder.Services.AddIdentity<Account, IdentityRole>(options =>
-//{
-//    options.User.RequireUniqueEmail = false; // 不要求唯一邮箱，也不要求提供邮箱
-//});
-
-
-//builder.Services.adda
-
-
-
-builder.Services.AddDbContext<MyDbContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=MyDb;UserId=postgres;Password=123321qweasd;"));
 
 // 配置JWT认证
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

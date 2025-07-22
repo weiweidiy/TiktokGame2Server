@@ -22,6 +22,24 @@ namespace TiktokGame2Server.Others
         }
 
         /// <summary>
+        /// 根据阵型类型和武士ID获取阵型点位
+        /// </summary>
+        /// <param name="formationType"></param>
+        /// <param name="samuraiId"></param>
+        /// <returns></returns>
+        public async Task<int> GetFormationPoint(int formationType, int samuraiId)
+        {
+            // 查找指定阵型类型和武士ID的阵型点位
+            var formation = await _dbContext.Formations
+                .FirstOrDefaultAsync(f => f.FormationType == formationType && f.SamuraiId == samuraiId);
+            if (formation != null)
+            {
+                return formation.FormationPoint;
+            }
+            return -1; // 如果没有找到，返回-1表示未设置点位
+        }
+
+        /// <summary>
         /// 添加一个阵型点位数据
         /// </summary>
         /// <param name="formationType"></param>
