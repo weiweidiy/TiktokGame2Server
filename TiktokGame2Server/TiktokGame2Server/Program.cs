@@ -66,6 +66,7 @@ builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ILevelNodesService, LevelNodeService>();
 builder.Services.AddScoped<ISamuraiService, SamuraiService>();
 builder.Services.AddScoped<IFormationService, FormationService>();
+builder.Services.AddScoped<ILevelNodeCombatService, LevelNodeCombatService>();
 
 //builder.Services.AddIdentity<Account, IdentityRole>(options =>
 //{

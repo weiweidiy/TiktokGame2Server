@@ -199,9 +199,12 @@
       "FightDTO": {
         "type": "object",
         "properties": {
-          "LevelNodeUid": {
+          "LevelNodeBusinessId": {
             "type": "string",
             "nullable": true
+          },
+          "ReportData": {
+            "$ref": "#/components/schemas/JCombatTurnBasedReportData"
           },
           "LevelNodeDTO": {
             "$ref": "#/components/schemas/LevelNodeDTO"
@@ -268,6 +271,56 @@
         },
         "additionalProperties": false
       },
+      "JCombatTurnBasedEvent": {
+        "type": "object",
+        "properties": {
+          "Uid": {
+            "type": "string",
+            "nullable": true
+          },
+          "CurFrame": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "CasterUid": {
+            "type": "string",
+            "nullable": true
+          },
+          "CastActionUid": {
+            "type": "string",
+            "nullable": true
+          },
+          "ActionEffect": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/StringInt32KeyValuePair"
+              },
+              "nullable": true
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JCombatTurnBasedReportData": {
+        "type": "object",
+        "properties": {
+          "winnerTeamUid": {
+            "type": "string",
+            "nullable": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JCombatTurnBasedEvent"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "LevelNodeDTO": {
         "type": "object",
         "properties": {
@@ -316,6 +369,20 @@
             "format": "int32"
           },
           "Experience": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StringInt32KeyValuePair": {
+        "type": "object",
+        "properties": {
+          "Key": {
+            "type": "string",
+            "nullable": true
+          },
+          "Value": {
             "type": "integer",
             "format": "int32"
           }

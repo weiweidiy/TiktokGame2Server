@@ -99,7 +99,7 @@ namespace JFramework.Game
             // 1. 创建表实例（无需强制转换）
             var table = Activator.CreateInstance(tableInfo.TableType);
 
-            // 2. 加载原始数据 可能失败
+            // 2. 加载原始数据
             var data = await loader.LoadBytesAsync(basePath + tableInfo.Path + extend);
 
             object itemList = null;

@@ -4,7 +4,19 @@ namespace TiktokGame2Server.Others
 {
     public interface ILevelNodesService
     {
-        //Task<LevelNode?> GetLevelNodeAsync(int levelNodeId, int playerId);
+        /// <summary>
+        /// 获取指定玩家的关卡节点
+        /// </summary>
+        /// <param name="levelNodeBusinessId"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        Task<LevelNode?> GetLevelNodeAsync(string levelNodeBusinessId, int playerId);
+
+        /// <summary>
+        /// 获取指定玩家的所有关卡节点
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
         Task<List<LevelNode>?> GetLevelNodesAsync(int playerId);
 
         /// <summary>
