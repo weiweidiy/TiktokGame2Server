@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public required string Uid { get; set; }
+        public required string BusinessId { get; set; }
 
         public int Level { get; set; } = 1;
 
@@ -14,7 +14,7 @@
         /// 外键，关联玩家
         /// </summary>·
         public int PlayerId { get; set; }
+
+        public Player? Player { get; set; } 
     }
-
-
 }

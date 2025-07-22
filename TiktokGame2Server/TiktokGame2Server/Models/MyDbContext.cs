@@ -14,10 +14,13 @@ namespace TiktokGame2Server.Entities
 
         public DbSet<Samurai> Samurais { get; set; }
 
+        public DbSet<Formation> Formations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<LevelNode>().HasIndex(c => new { c.Uid, c.PlayerId }).IsUnique();
-            modelBuilder.Entity<Samurai>().HasIndex(c => new { c.Uid, c.PlayerId }).IsUnique();
+            modelBuilder.Entity<LevelNode>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
+            modelBuilder.Entity<Samurai>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
+            modelBuilder.Entity<Formation>().HasIndex(c => new { c.FormationType, c.FormationPoint, c.SamuraiId }).IsUnique();
 
             // 确保DeviceId唯一
             //modelBuilder.Entity<Account>()

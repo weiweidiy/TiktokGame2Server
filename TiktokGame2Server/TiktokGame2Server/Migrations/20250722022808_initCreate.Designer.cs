@@ -12,8 +12,8 @@ using TiktokGame2Server.Entities;
 namespace TiktokGame2Server.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250719053043_update3")]
-    partial class update3
+    [Migration("20250722022808_initCreate")]
+    partial class initCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,21 +57,22 @@ namespace TiktokGame2Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("NodeId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("PlayerId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Process")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Uid")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("NodeId")
-                        .IsUnique();
-
                     b.HasIndex("PlayerId");
+
+                    b.HasIndex("Uid", "PlayerId")
+                        .IsUnique();
 
                     b.ToTable("LevelNodes");
                 });
@@ -100,6 +101,35 @@ namespace TiktokGame2Server.Migrations
                         .IsUnique();
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("TiktokGame2Server.Entities.Samurai", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Experience")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Uid")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Uid", "PlayerId")
+                        .IsUnique();
+
+                    b.ToTable("Samurais");
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.LevelNode", b =>

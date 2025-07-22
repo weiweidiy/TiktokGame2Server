@@ -37,7 +37,7 @@ namespace TiktokGame2Server.Controllers
 
             var levelNodeDTO = new LevelNodeDTO
             {
-                Uid = levelNode.Uid,
+                BusinessId = levelNode.BusinessId,
                 Process = levelNode.Process
 
             };

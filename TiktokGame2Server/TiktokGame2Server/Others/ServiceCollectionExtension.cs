@@ -74,7 +74,7 @@ namespace TiktokGame2Server.Others
                 //    policy.RequireAuthenticatedUser();
                 //    policy.RequireAssertion(context =>
                 //    {
-                //        var hireDateClaim = context.User.FindFirst(c => c.Type == "HireDate");
+                //        var hireDateClaim = context.User.FindFirst(c => c.FormationType == "HireDate");
                 //        if (hireDateClaim == null) return false;
 
                 //        var hireDate = DateTime.Parse(hireDateClaim.Value);

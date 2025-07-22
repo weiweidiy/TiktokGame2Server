@@ -55,15 +55,17 @@ builder.WebHost.ConfigureKestrel(options =>
 builder.Services.AddSwaggerWithJwt();
 
 
-builder.Services.AddScoped<IDeserializer, JsonNetDeserilizer>();
-builder.Services.AddScoped<IConfigLoader, LocalFileConfigLoader>();
-builder.Services.AddScoped<TiktokConfigService>();
+builder.Services.AddSingleton<IDeserializer, JsonNetDeserilizer>();
+builder.Services.AddSingleton<IConfigLoader, LocalFileConfigLoader>();
+builder.Services.AddSingleton<TiktokConfigService>();
 
-builder.Services.AddTransient<ITokenService, TokenService>();
+
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<ILevelNodesService, LevelNodeService>();
 builder.Services.AddScoped<ISamuraiService, SamuraiService>();
+builder.Services.AddScoped<IFormationService, FormationService>();
 
 //builder.Services.AddIdentity<Account, IdentityRole>(options =>
 //{
@@ -96,6 +98,10 @@ builder.Services.AddDbContext<MyDbContext>(options => options.UseNpgsql("Server=
 
 
 var app = builder.Build();
+
+
+var configService = app.Services.GetRequiredService<TiktokConfigService>();
+await configService.PreloadAllAsync("D:/Demos/TiktokGame2/Assets/Downloads/GameRes/Dynamic/Configs/", ".json"); // Èç¹û Main ÊÇ async Task
 
 app.UseMiddleware<TokenAuthMiddleware>();
 

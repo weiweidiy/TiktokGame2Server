@@ -26,7 +26,7 @@ namespace TiktokGame2Server.Controllers
                 return BadRequest("Invalid account data.");
             }
 
-            // 将 Account account = await GetAccount(accountDto.Uid); 改为可空类型
+            // 将 Account account = await GetAccount(accountDto.FormationType); 改为可空类型
             Account? account = await accountService.GetAccountAsync(accountDto.Uid);
             Player? player = null;
             // 检查是否存在该账号
@@ -58,7 +58,7 @@ namespace TiktokGame2Server.Controllers
             {
                 Token = token,
                 Uid = account.Uid
-                //Account = new { account.Id, account.Uid, account.Role }
+                //Account = new { account.Id, account.FormationType, account.Role }
             });
         }
     }

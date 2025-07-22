@@ -209,6 +209,28 @@
         },
         "additionalProperties": false
       },
+      "FormationDTO": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "FormationType": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "FormationPoint": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "SamuraiId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "GameDTO": {
         "type": "object",
         "properties": {
@@ -225,7 +247,21 @@
           "SamuraisDTO": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Samurai"
+              "$ref": "#/components/schemas/SamuraiDTO"
+            },
+            "nullable": true
+          },
+          "AtkFormationDTO": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormationDTO"
+            },
+            "nullable": true
+          },
+          "DefFormationDTO": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormationDTO"
             },
             "nullable": true
           }
@@ -235,7 +271,11 @@
       "LevelNodeDTO": {
         "type": "object",
         "properties": {
-          "Uid": {
+          "Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "BusinessId": {
             "type": "string",
             "nullable": true
           },
@@ -260,14 +300,14 @@
         },
         "additionalProperties": false
       },
-      "Samurai": {
+      "SamuraiDTO": {
         "type": "object",
         "properties": {
           "Id": {
             "type": "integer",
             "format": "int32"
           },
-          "Uid": {
+          "BusinessId": {
             "type": "string",
             "nullable": true
           },
@@ -276,10 +316,6 @@
             "format": "int32"
           },
           "Experience": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "PlayerId": {
             "type": "integer",
             "format": "int32"
           }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JFramework;
+using Microsoft.EntityFrameworkCore;
 using TiktokGame2Server.Entities;
 
 namespace TiktokGame2Server.Others
@@ -6,9 +7,11 @@ namespace TiktokGame2Server.Others
     public class LevelNodeService : ILevelNodesService
     {
         private readonly MyDbContext _dbContext;
-        public LevelNodeService(MyDbContext dbContext)
+        private readonly TiktokConfigService tiktokConfigService;
+        public LevelNodeService(MyDbContext dbContext, TiktokConfigService tiktokConfigService)
         {
             _dbContext = dbContext;
+            this.tiktokConfigService = tiktokConfigService;
         }
 
         /// <summary>
@@ -29,13 +32,16 @@ namespace TiktokGame2Server.Others
         /// <summary>
         /// 玩家通过指定节点胜利（即完成该节点）
         /// </summary>
-        /// <param name="nodeId"></param>
+        /// <param name="nodeUid"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        public async Task<LevelNode> LevelNodeVictoryAsync(string nodeId, int playerId)
+        public async Task<LevelNode> LevelNodeVictoryAsync(string nodeUid, int playerId)
         {
+            if(!CheckUid(nodeUid))
+                throw new ArgumentException($"节点 {nodeUid} 不存在或无效。");
+
             // 查找对应的 LevelNode
-            var levelNode = _dbContext.LevelNodes.FirstOrDefault(n => n.Uid == nodeId && n.PlayerId == playerId);
+            var levelNode = _dbContext.LevelNodes.FirstOrDefault(n => n.BusinessId == nodeUid && n.PlayerId == playerId);
             if (levelNode == null)
             {
                 // to do: 验证前置节点是否完成
@@ -43,14 +49,14 @@ namespace TiktokGame2Server.Others
                 //添加一个新的 LevelNode
                 levelNode = new LevelNode
                 {
-                    Uid = nodeId,
+                    BusinessId = nodeUid,
                     PlayerId = playerId,
                     Process = 0
                 };
                 _dbContext.LevelNodes.Add(levelNode);
             }
             // 更新 LevelNode 的 Process 状态 process小于3，则+1
-            if (levelNode.Process < QueryLevelNodeMaxProcess(nodeId))
+            if (levelNode.Process < QueryLevelNodeMaxProcess(nodeUid))
             {
                 levelNode.Process++;
             }
@@ -59,6 +65,13 @@ namespace TiktokGame2Server.Others
             await _dbContext.SaveChangesAsync();
 
             return levelNode;
+        }
+
+        bool CheckUid(string nodeUid)
+        {
+            var cfg = tiktokConfigService.Get<LevelsNodesCfgData>(nodeUid);
+            //测试数据，临时硬编码
+            return nodeUid.StartsWith("Node");
         }
 
         int QueryLevelNodeMaxProcess(string nodeId)

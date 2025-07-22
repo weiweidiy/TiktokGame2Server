@@ -3763,23 +3763,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\weiwei\\.nuget\\packages\\": {},
+    "C:\\Users\\JiChunWei\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\UnityProjects\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server.csproj",
+      "projectUniqueName": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server.csproj",
       "projectName": "TiktokGame2Server",
-      "projectPath": "E:\\UnityProjects\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server.csproj",
-      "packagesPath": "C:\\Users\\weiwei\\.nuget\\packages\\",
-      "outputPath": "E:\\UnityProjects\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\obj\\",
+      "projectPath": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server.csproj",
+      "packagesPath": "C:\\Users\\JiChunWei\\.nuget\\packages\\",
+      "outputPath": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\weiwei\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\JiChunWei\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3794,8 +3794,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "E:\\UnityProjects\\TiktokGame2Server\\external\\repo\\JFrame\\JFrame\\JFrame.csproj": {
-              "projectPath": "E:\\UnityProjects\\TiktokGame2Server\\external\\repo\\JFrame\\JFrame\\JFrame.csproj"
+            "D:\\Demos\\TiktokGame2Server\\external\\repo\\JFrame\\JFrame\\JFrame.csproj": {
+              "projectPath": "D:\\Demos\\TiktokGame2Server\\external\\repo\\JFrame\\JFrame\\JFrame.csproj"
             }
           }
         }

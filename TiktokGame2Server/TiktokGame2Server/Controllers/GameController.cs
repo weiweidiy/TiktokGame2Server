@@ -9,15 +9,19 @@ namespace TiktokGame2Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class GameController(MyDbContext myDbContext, ITokenService tokenService, IPlayerService playerService
+    public class GameController(MyDbContext myDbContext
+        , ITokenService tokenService
+        , IPlayerService playerService
         , ILevelNodesService levelNodeService
-        , ISamuraiService samuraiService) : Controller
+        , ISamuraiService samuraiService
+        , IFormationService formationService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         ITokenService tokenService = tokenService;
         IPlayerService playerService = playerService;
         ILevelNodesService levelNodeService = levelNodeService;
         ISamuraiService samuraiService = samuraiService;
+        IFormationService formationService = formationService;
 
         [HttpPost("EnterGame")]
         public async Task<ActionResult<GameDTO>> EnterGame()
@@ -41,43 +45,113 @@ namespace TiktokGame2Server.Controllers
             }
 
 
-            // 获取玩家的关卡节点
-            var levelNodes = await levelNodeService.GetLevelNodesAsync(playerId);
-            var levelNodeDtos = levelNodes?.Select(n => new LevelNodeDTO
-            {
-                Uid = n.Uid,
-                Process = n.Process,
-            }).ToList();
-
-
-            //获取玩家samurai
-            var samurais = await samuraiService.GetAllSamuraiAsync(playerId);
-            if (samurais == null || samurais.Count == 0)
-            {
-                samurais = new List<Samurai>();
-                var defaultSamurai = await samuraiService.AddSamuraiAsync("DefaultSamurai", playerId);
-                samurais.Add(defaultSamurai);
-            }
-            var samuraisDTO = samurais?.Select(n => new SamuraiDTO
-            {
-                Uid = n.Uid,
-                Level = n.Level,
-                Experience = n.Experience,
-            }).ToList();
-
-
-
+            //游戏登录数据汇总对象
             var gameDto = new GameDTO
             {
                 PlayerDTO = new PlayerDTO
                 {
                     Uid = playerUid,
-                    Username = account.Player?.Name 
+                    Username = account.Player?.Name
                 },
-                LevelNodesDTO = levelNodeDtos ?? new List<LevelNodeDTO>()
+                LevelNodesDTO = await GetLevelNodeDTOs(playerId),
+                SamuraisDTO = await GetSamuraiDTOs(playerId),
+                AtkFormationDTO = await GetFormationDTOs(playerId, 1),
+                DefFormationDTO = await GetFormationDTOs(playerId, 2),
             };
 
             return Ok(gameDto);
+        }
+
+        /// <summary>
+        /// 获取玩家的关卡节点信息
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        async Task<List<LevelNodeDTO>> GetLevelNodeDTOs(int playerId)
+        {
+            // 获取玩家的关卡节点
+            var levelNodes = await levelNodeService.GetLevelNodesAsync(playerId);
+            var levelNodeDtos = levelNodes?.Select(n => new LevelNodeDTO
+            {
+                Id = n.Id,
+                BusinessId = n.BusinessId,
+                Process = n.Process,
+            }).ToList();
+
+            return levelNodeDtos ?? new List<LevelNodeDTO>();
+        }
+
+        /// <summary>
+        /// 获取玩家的武士信息
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        async Task<List<SamuraiDTO>> GetSamuraiDTOs(int playerId)
+        {
+            //获取玩家samurai
+            var samurais = await samuraiService.GetAllSamuraiAsync(playerId);
+            if (samurais == null || samurais.Count == 0)
+            {
+                samurais = new List<Samurai>();
+                var defaultSamurai = await samuraiService.AddSamuraiAsync(GetDefaultSamuraiBusinessId(), playerId);
+                samurais.Add(defaultSamurai);
+            }
+            var samuraisDTO = samurais?.Select(n => new SamuraiDTO
+            {
+                Id = n.Id,
+                BusinessId = n.BusinessId,
+                Level = n.Level,
+                Experience = n.Experience,
+            }).ToList();
+
+            return samuraisDTO ?? new List<SamuraiDTO>();
+        }
+
+        /// <summary>
+        /// 获取玩家的阵型信息
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="formationType"></param>
+        /// <returns></returns>
+        async Task<List<FormationDTO>> GetFormationDTOs(int playerId, int formationType)
+        {
+            //获取玩家formation
+            var formations = await formationService.GetFormationAsync(formationType, playerId);
+            if (formations == null || formations.Count == 0)
+            {
+                formations = new List<Formation>();
+
+                //获取所有武士
+                var samurais = await samuraiService.GetAllSamuraiAsync(playerId);
+                var first = samurais.FirstOrDefault();
+                if(first == null)
+                {
+                    first = await samuraiService.AddSamuraiAsync(GetDefaultSamuraiBusinessId(), playerId);
+                }
+
+                var defaultFormation = await formationService.AddFormationAsync(formationType, GetDefaultFormationPoint(), first.Id);
+                formations.Add(defaultFormation);
+            }
+            var formationsDTO = formations?.Select(n => new FormationDTO
+            {
+                Id = n.Id,
+                FormationType = n.FormationType,
+                FormationPoint = n.FormationPoint,
+                SamuraiId = n.SamuraiId,
+            }).ToList();
+            return formationsDTO ?? new List<FormationDTO>();
+        }
+
+        string GetDefaultSamuraiBusinessId()
+        {
+            // 默认武士的UID
+            return "1";
+        }
+
+        int GetDefaultFormationPoint()
+        {
+            // 默认阵型的点数
+            return 4;
         }
     }
 }

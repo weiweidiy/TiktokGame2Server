@@ -2,7 +2,8 @@
 {
     public class LevelNodeDTO
     {
-        public required string Uid { get; set; }
+        public int Id { get; set; }
+        public required string BusinessId { get; set; }
         public int Process { get; set; }
 
         //public int PlayerId { get; set; }

@@ -7,7 +7,10 @@
     {
         public int Id { get; set; }
 
-        public required string Uid { get; set; }
+        /// <summary>
+        /// 业务ID
+        /// </summary>
+        public required string BusinessId { get; set; }
 
         public int Process { get; set; }
 

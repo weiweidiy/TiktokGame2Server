@@ -7,6 +7,10 @@ namespace Tiktok
         public PlayerDTO PlayerDTO { get; set; }
         public List<LevelNodeDTO>? LevelNodesDTO { get; set; }
 
-        public List<Samurai>? SamuraisDTO { get; set; } = new List<Samurai>();
+        public List<SamuraiDTO>? SamuraisDTO { get; set; } = new List<SamuraiDTO>();
+
+        public List<FormationDTO>? AtkFormationDTO { get; set; } = new List<FormationDTO>();
+
+        public List<FormationDTO>? DefFormationDTO { get; set; } = new List<FormationDTO>();
     }
 }
