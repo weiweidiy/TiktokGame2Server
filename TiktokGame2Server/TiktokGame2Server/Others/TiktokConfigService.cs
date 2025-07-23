@@ -1,5 +1,6 @@
 ﻿using JFramework;
 using JFramework.Game;
+using static TiktokGame2Server.Others.LevelNodeCombatService;
 
 namespace TiktokGame2Server.Others
 {
@@ -70,5 +71,7 @@ namespace TiktokGame2Server.Others
             var levelCfg = Get<LevelsCfgData>(levelBusinessId);
             return levelCfg.Pre;
         }
+
+
     }
 }
