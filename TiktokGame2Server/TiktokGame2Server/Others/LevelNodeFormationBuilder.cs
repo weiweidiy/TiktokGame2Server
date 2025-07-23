@@ -4,7 +4,7 @@ namespace TiktokGame2Server.Others
 {
     public class LevelNodeFormationBuilder : JCombatFormationBuilder
     {
-        public LevelNodeFormationBuilder(IJCombatUnitBuilder unitBuilder) : base(unitBuilder)
+        public LevelNodeFormationBuilder(string levelNodeBusinessId, IJCombatUnitBuilder unitBuilder) : base(unitBuilder)
         {
 
         }

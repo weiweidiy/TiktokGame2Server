@@ -1,15 +1,39 @@
-﻿using JFramework.Game;
+﻿using JFramework;
+using JFramework.Game;
+using static TiktokGame2Server.Others.LevelNodeCombatService;
 
 namespace TiktokGame2Server.Others
 {
-    public class PlayerUnitBuilder : IJCombatUnitBuilder
+    public class PlayerUnitBuilder : JCombatBaseUnitBuilder
     {
-        public JCombatUnitInfo Build(int samuraiId)
+        public PlayerUnitBuilder(IJCombatAttrBuilder attrBuilder, IJCombatActionBuilder actionBuilder) : base(attrBuilder, actionBuilder)
         {
-            var info = new JCombatUnitInfo();
-            info.Uid = "unit1";
-            info.AttrList = new FakeAttrFacotry().Create();
-            return info;
+        }
+    }
+
+    public class PlayerAttrBuilder : IJCombatAttrBuilder
+    {
+        public List<IUnique> Create(int key)
+        {
+            return new FakeAttrFacotry().Create();
+        }
+    }
+
+    public class PlayerActionsBuilder : IJCombatActionBuilder
+    {
+        public List<IJCombatAction> Create(int key)
+        {
+            var result = new List<IJCombatAction>();
+
+            var finder1 = new JCombatDefaultFinder();
+            var executor1 = new JCombatExecutorDamage(finder1);
+            var lstExecutor1 = new List<IJCombatExecutor>();
+            lstExecutor1.Add(executor1);
+
+            var action = new TiktokJCombatAction(Guid.NewGuid().ToString(), lstExecutor1);
+            result.Add(action);
+
+            return result;
         }
     }
 }
