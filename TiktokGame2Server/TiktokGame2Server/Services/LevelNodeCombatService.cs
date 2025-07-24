@@ -41,7 +41,7 @@ namespace TiktokGame2Server.Others
             var levelodeFormationInfos = levelNodeFormationBuilder.Build();
 
             //创建阵型点位查询构建器
-            var lst = new List<TiktokJCombatForamtionInfo>();
+            var lst = new List<JCombatFormationInfo>();
             lst.AddRange(playerFormationInfos);
             lst.AddRange(levelodeFormationInfos);
             var formationBuilder = new TiktokSeatFuncBuilder(lst);
@@ -53,9 +53,9 @@ namespace TiktokGame2Server.Others
             JCombatTeam team2;
             JCombatTurnBasedEventRecorder eventRecorder;
             JCombatTurnBasedActionSelector actionSelector;
-            JCombatTurnBasedRunner<TiktokJCombatUnitData> combatRunner;
+            JCombatTurnBasedRunner combatRunner;
             IJCombatTurnBasedAttrNameQuery attrNameQuery;
-            JCombatTurnBasedReport<TiktokJCombatUnitData> report;
+            JCombatTurnBasedReport report;
 
             //创建帧记录器
             frameRecorder = new JCombatTurnBasedFrameRecorder(19); //从0开始，共20回合
@@ -99,13 +99,13 @@ namespace TiktokGame2Server.Others
             runables.Add(team2);
 
             turnbasedCombat = new JCombatTurnBased(actionSelector, frameRecorder, jcombatQuery, runables);
-            combatRunner = new JCombatTurnBasedRunner<TiktokJCombatUnitData>(turnbasedCombat, jcombatQuery, eventRecorder, report);
+            combatRunner = new JCombatTurnBasedRunner(turnbasedCombat, jcombatQuery, eventRecorder, report);
 
             await combatRunner.Run();
 
             var result = combatRunner.GetReport();
 
-            return result.GetCombatReportData();
+            return result.GetCombatReportData<TiktokJCombatUnitData>();
         }
 
 
@@ -170,8 +170,8 @@ namespace TiktokGame2Server.Others
 
     public class TiktokSeatFuncBuilder : IJCombatSeatDelegateBuilder
     {
-        List<TiktokJCombatForamtionInfo> formations;
-        public TiktokSeatFuncBuilder(List<TiktokJCombatForamtionInfo> formations) => this.formations = formations;
+        List<JCombatFormationInfo> formations;
+        public TiktokSeatFuncBuilder(List<JCombatFormationInfo> formations) => this.formations = formations;
 
         public Func<string, int> Build()
         {
@@ -188,23 +188,35 @@ namespace TiktokGame2Server.Others
         }
     }
 
-    public class TiktokJCombatUnitData : JCombatUnitData
+    public class TiktokJCombatUnitData : IJCombatUnitData
     {
+        public string Uid { get ; set; }
+        public int Seat { get; set; }
         public int SamuraiId { get; set; }
-
     }
 
-    public class TiktokJCombatTurnBasedReport : JCombatTurnBasedReport<TiktokJCombatUnitData>
+    public class TiktokJCombatTurnBasedReport : JCombatTurnBasedReport
     {
         public TiktokJCombatTurnBasedReport(IJCombatSeatBasedQuery jcombatQuery) : base(jcombatQuery)
         {
         }
 
-        protected override TiktokJCombatUnitData CreateUnitData(IJCombatUnit unit)
+        protected override T CreateUnitData<T>(IJCombatUnit unit)
         {
-            var baseData = base.CreateUnitData(unit);
-            baseData.SamuraiId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiId;
-            return baseData;
+            return new TiktokJCombatUnitData
+            {
+                Uid = unit.Uid,
+                Seat = seatQuery.GetSeat(unit.Uid),
+                SamuraiId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiId
+            } as T;
+            //var baseData = new TiktokJCombatUnitData
+            //{
+            //    Uid = unit.Uid,
+            //    Seat = seatQuery.GetSeat(unit.Uid),
+            //    SamuraiId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiId
+            //};
+            ////baseData.SamuraiId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiId;
+            //return baseData as T;
         }
     }
 }

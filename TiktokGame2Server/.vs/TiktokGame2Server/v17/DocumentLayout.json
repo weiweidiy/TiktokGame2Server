@@ -7,6 +7,25 @@
       "RelativeMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|solutionrelative:tiktokgame2server\\services\\levelnodecombatservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|d:\\demos\\tiktokgame2server\\tiktokgame2server\\tiktokgame2server\\dtos\\fightdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|solutionrelative:tiktokgame2server\\dtos\\fightdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43ED39EB-AE7E-472A-B64B-2D96FF8637E9}|..\\external\\repo\\JFrame\\JFrame\\JFrame.csproj|d:\\demos\\tiktokgame2server\\external\\repo\\jframe\\jframe\\game\\combat\\combatturnbased\\jcombatturnbasedunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|d:\\demos\\tiktokgame2server\\tiktokgame2server\\tiktokgame2server\\others\\levelnodeformationbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|solutionrelative:tiktokgame2server\\others\\levelnodeformationbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|d:\\demos\\tiktokgame2server\\tiktokgame2server\\tiktokgame2server\\others\\levelnodeunitbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|solutionrelative:tiktokgame2server\\others\\levelnodeunitbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|d:\\demos\\tiktokgame2server\\tiktokgame2server\\tiktokgame2server\\others\\playerunitbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|solutionrelative:tiktokgame2server\\others\\playerunitbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|d:\\demos\\tiktokgame2server\\tiktokgame2server\\tiktokgame2server\\services\\iformationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{46FC9AFD-C1AE-41AC-A244-2CB8E9CC9A5E}|TiktokGame2Server\\TiktokGame2Server.csproj|solutionrelative:tiktokgame2server\\services\\iformationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -18,8 +37,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FightDTO.cs",
+              "DocumentMoniker": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\DTOs\\FightDTO.cs",
+              "RelativeDocumentMoniker": "TiktokGame2Server\\DTOs\\FightDTO.cs",
+              "ToolTip": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\DTOs\\FightDTO.cs",
+              "RelativeToolTip": "TiktokGame2Server\\DTOs\\FightDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T08:56:31.826Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -28,14 +60,66 @@
               "RelativeDocumentMoniker": "TiktokGame2Server\\Services\\LevelNodeCombatService.cs",
               "ToolTip": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Services\\LevelNodeCombatService.cs",
               "RelativeToolTip": "TiktokGame2Server\\Services\\LevelNodeCombatService.cs",
-              "ViewState": "AgIAALkAAAAAAAAAAAAAAM0AAABBAAAAAAAAAA==",
+              "ViewState": "AgIAALgAAAAAAAAAAAAqwNcAAABuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T06:30:26.023Z",
+              "WhenOpened": "2025-07-24T08:49:02.623Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "JCombatTurnBasedUnit.cs",
+              "DocumentMoniker": "D:\\Demos\\TiktokGame2Server\\external\\repo\\JFrame\\JFrame\\Game\\Combat\\CombatTurnBased\\JCombatTurnBasedUnit.cs",
+              "RelativeDocumentMoniker": "..\\external\\repo\\JFrame\\JFrame\\Game\\Combat\\CombatTurnBased\\JCombatTurnBasedUnit.cs",
+              "ToolTip": "D:\\Demos\\TiktokGame2Server\\external\\repo\\JFrame\\JFrame\\Game\\Combat\\CombatTurnBased\\JCombatTurnBasedUnit.cs",
+              "RelativeToolTip": "..\\external\\repo\\JFrame\\JFrame\\Game\\Combat\\CombatTurnBased\\JCombatTurnBasedUnit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T08:21:12.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LevelNodeFormationBuilder.cs",
+              "DocumentMoniker": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Others\\LevelNodeFormationBuilder.cs",
+              "RelativeDocumentMoniker": "TiktokGame2Server\\Others\\LevelNodeFormationBuilder.cs",
+              "ToolTip": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Others\\LevelNodeFormationBuilder.cs",
+              "RelativeToolTip": "TiktokGame2Server\\Others\\LevelNodeFormationBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T08:13:46.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LevelNodeUnitBuilder.cs",
+              "DocumentMoniker": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Others\\LevelNodeUnitBuilder.cs",
+              "RelativeDocumentMoniker": "TiktokGame2Server\\Others\\LevelNodeUnitBuilder.cs",
+              "ToolTip": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Others\\LevelNodeUnitBuilder.cs",
+              "RelativeToolTip": "TiktokGame2Server\\Others\\LevelNodeUnitBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T07:58:38.151Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PlayerUnitBuilder.cs",
+              "DocumentMoniker": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Others\\PlayerUnitBuilder.cs",
+              "RelativeDocumentMoniker": "TiktokGame2Server\\Others\\PlayerUnitBuilder.cs",
+              "ToolTip": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Others\\PlayerUnitBuilder.cs",
+              "RelativeToolTip": "TiktokGame2Server\\Others\\PlayerUnitBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-24T07:57:38.141Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "IFormationService.cs",
               "DocumentMoniker": "D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Services\\IFormationService.cs",
               "RelativeDocumentMoniker": "TiktokGame2Server\\Services\\IFormationService.cs",

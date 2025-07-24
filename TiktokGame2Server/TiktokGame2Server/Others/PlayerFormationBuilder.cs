@@ -1,18 +1,19 @@
-﻿using JFramework.Game;
+﻿using JFramework;
+using JFramework.Game;
 using TiktokGame2Server.Entities;
 
 namespace TiktokGame2Server.Others
 {
-    public class PlayerFormationBuilder : JCombatFormationBuilder<TiktokJCombatForamtionInfo, TiktokJCombatUnitInfo>
+    public class PlayerFormationBuilder : JCombatFormationBuilder
     {
         List<Formation> playerFormation;
-        public PlayerFormationBuilder(List<Formation> playerFormation, IJCombatUnitBuilder<TiktokJCombatUnitInfo> unitBuilder):base(unitBuilder)
+        public PlayerFormationBuilder(List<Formation> playerFormation, IJCombatUnitBuilder unitBuilder):base(unitBuilder)
         {
             this.playerFormation = playerFormation ?? throw new ArgumentNullException(nameof(playerFormation));
         }
-        public override List<TiktokJCombatForamtionInfo> Build()
+        public override List<JCombatFormationInfo> Build()
         {
-            return playerFormation.Select(f => new TiktokJCombatForamtionInfo
+            return playerFormation.Select(f => new JCombatFormationInfo
             {
                 Point = f.FormationPoint,
                 UnitInfo = unitBuilder.Build(f.SamuraiId)               
@@ -20,7 +21,7 @@ namespace TiktokGame2Server.Others
         }
     }
 
-    public class  TiktokJCombatForamtionInfo : JCombatFormationInfo<TiktokJCombatUnitInfo>
+    public class  TiktokJCombatForamtionInfo : JCombatFormationInfo
     {
     }
 
