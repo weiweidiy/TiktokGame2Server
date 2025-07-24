@@ -1,31 +1,22 @@
-﻿using JFramework;
-using JFramework.Game;
-using TiktokGame2Server.Entities;
+﻿using JFramework.Game;
 
 namespace TiktokGame2Server.Others
 {
-    public class PlayerFormationBuilder : JCombatFormationBuilder
+public partial class LevelNodeCombatService
     {
-        List<Formation> playerFormation;
-        public PlayerFormationBuilder(List<Formation> playerFormation, IJCombatUnitBuilder unitBuilder):base(unitBuilder)
+        public class TiktokAttrNameQuery : IJCombatTurnBasedAttrNameQuery
         {
-            this.playerFormation = playerFormation ?? throw new ArgumentNullException(nameof(playerFormation));
-        }
-        public override List<JCombatFormationInfo> Build()
-        {
-            return playerFormation.Select(f => new JCombatFormationInfo
+            public string GetActionPointName()
             {
-                Point = f.FormationPoint,
-                UnitInfo = unitBuilder.Build(f.SamuraiId)               
-            }).ToList();
+                return "Speed";
+            }
+
+            public string GetHpAttrName()
+            {
+                return "Hp";
+            }
         }
-    }
 
-
-    public class TiktokJCombatUnitInfo : JCombatUnitInfo
-    {
-        public int SamuraiId { get; set; }
-        public int SoldierId { get; set; }
     }
 }
 

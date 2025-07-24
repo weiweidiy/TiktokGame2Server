@@ -43,7 +43,7 @@ namespace TiktokGame2Server.Others
             var lstExecutor1 = new List<IJCombatExecutor>();
             lstExecutor1.Add(executor1);
 
-            var action = new TiktokJCombatAction(Guid.NewGuid().ToString(), lstExecutor1);
+            var action = new JCombatActionBase(Guid.NewGuid().ToString(), null, lstExecutor1);
             result.Add(action);
 
             return result;
