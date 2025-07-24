@@ -1,5 +1,6 @@
 ﻿using JFramework.Game;
 using Newtonsoft.Json;
+using TiktokGame2Server.Others;
 
 namespace Tiktok
 {
@@ -8,7 +9,7 @@ namespace Tiktok
     {
         public required string LevelNodeBusinessId { get; set; }
 
-        public  JCombatTurnBasedReportData? ReportData { get; set; }
+        public  JCombatTurnBasedReportData<TiktokJCombatUnitData>? ReportData { get; set; }
 
         public  LevelNodeDTO? LevelNodeDTO { get; set; }
 

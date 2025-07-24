@@ -4,10 +4,17 @@ using static TiktokGame2Server.Others.LevelNodeCombatService;
 
 namespace TiktokGame2Server.Others
 {
-    public class LevelNodeUnitBuilder : JCombatBaseUnitBuilder
+    public class LevelNodeUnitBuilder : JCombatBaseUnitBuilder<TiktokJCombatUnitInfo>
     {
         public LevelNodeUnitBuilder(IJCombatAttrBuilder attrBuilder, IJCombatActionBuilder actionBuilder) : base(attrBuilder, actionBuilder)
         {
+        }
+
+        protected override TiktokJCombatUnitInfo Create(int key)
+        {
+            var unitInfo = base.Create(key);
+            unitInfo.SamuraiId = key; // 假设key是武士的ID
+            return unitInfo;
         }
     }
 

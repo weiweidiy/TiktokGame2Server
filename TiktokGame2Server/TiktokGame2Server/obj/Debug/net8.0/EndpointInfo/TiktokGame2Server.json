@@ -218,7 +218,7 @@
             "nullable": true
           },
           "ReportData": {
-            "$ref": "#/components/schemas/JCombatTurnBasedReportData"
+            "$ref": "#/components/schemas/TiktokJCombatUnitDataJCombatTurnBasedReportData"
           },
           "LevelNodeDTO": {
             "$ref": "#/components/schemas/LevelNodeDTO"
@@ -322,23 +322,6 @@
         },
         "additionalProperties": false
       },
-      "JCombatTurnBasedReportData": {
-        "type": "object",
-        "properties": {
-          "winnerTeamUid": {
-            "type": "string",
-            "nullable": true
-          },
-          "events": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/JCombatTurnBasedEvent"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "LevelNodeDTO": {
         "type": "object",
         "properties": {
@@ -389,6 +372,52 @@
           "Experience": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TiktokJCombatUnitData": {
+        "type": "object",
+        "properties": {
+          "Uid": {
+            "type": "string",
+            "nullable": true
+          },
+          "Seat": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "SamuraiId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "TiktokJCombatUnitDataJCombatTurnBasedReportData": {
+        "type": "object",
+        "properties": {
+          "FormationData": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/TiktokJCombatUnitData"
+              },
+              "nullable": true
+            },
+            "nullable": true
+          },
+          "winnerTeamUid": {
+            "type": "string",
+            "nullable": true
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JCombatTurnBasedEvent"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

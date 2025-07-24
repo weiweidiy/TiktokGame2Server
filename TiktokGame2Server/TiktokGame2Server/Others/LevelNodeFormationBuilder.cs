@@ -2,24 +2,24 @@
 
 namespace TiktokGame2Server.Others
 {
-    public class LevelNodeFormationBuilder : JCombatFormationBuilder
+    public class LevelNodeFormationBuilder : JCombatFormationBuilder<TiktokJCombatForamtionInfo, TiktokJCombatUnitInfo>
     {
-        public LevelNodeFormationBuilder(string levelNodeBusinessId, IJCombatUnitBuilder unitBuilder) : base(unitBuilder)
+        public LevelNodeFormationBuilder(string levelNodeBusinessId, IJCombatUnitBuilder<TiktokJCombatUnitInfo> unitBuilder) : base(unitBuilder)
         {
 
         }
 
-        public override List<JCombatFormationInfo> Build()
+        public override List<TiktokJCombatForamtionInfo> Build()
         {
             //fake data
-            var fakeResult = new List<JCombatFormationInfo>();
+            var fakeResult = new List<TiktokJCombatForamtionInfo>();
 
-            var formation = new JCombatFormationInfo();
+            var formation = new TiktokJCombatForamtionInfo();
             formation.Point = 1;
             formation.UnitInfo = unitBuilder.Build(2); //这里是配置表中的id
             fakeResult.Add(formation);
 
-            var formation2 = new JCombatFormationInfo();
+            var formation2 = new TiktokJCombatForamtionInfo();
             formation2.Point = 2;
             formation2.UnitInfo = unitBuilder.Build(3); //这里是配置表中的id
             fakeResult.Add(formation2);

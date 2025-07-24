@@ -25,8 +25,8 @@ namespace TiktokGame2Server.Others
         ///// 阵型查询列表
         ///// </summary>
         //List<JCombatFormationInfo> lstFormationQuery = null;
-        public async Task<JCombatTurnBasedReportData> GetReport(int playerId, string levelNodeBusinessId)
-        {        
+        public async Task<JCombatTurnBasedReportData<TiktokJCombatUnitData>> GetReport(int playerId, string levelNodeBusinessId)
+        {
             //创建阵型查询列表（包含玩家阵型和NPC阵型）
             var playerFormations = await formationService.GetFormationAsync(tiktokConfigService.GetAtkFormationType(), playerId);
             if (playerFormations == null || playerFormations.Count == 0)
@@ -41,10 +41,10 @@ namespace TiktokGame2Server.Others
             var levelodeFormationInfos = levelNodeFormationBuilder.Build();
 
             //创建阵型点位查询构建器
-            var lst = new List<JCombatFormationInfo>();
+            var lst = new List<TiktokJCombatForamtionInfo>();
             lst.AddRange(playerFormationInfos);
             lst.AddRange(levelodeFormationInfos);
-            var formationBuilder = new JCombatSeatDelegateBuilder(lst);
+            var formationBuilder = new TiktokSeatFuncBuilder(lst);
 
             JCombatTurnBased turnbasedCombat;
             JCombatTurnBasedFrameRecorder frameRecorder;
@@ -53,56 +53,53 @@ namespace TiktokGame2Server.Others
             JCombatTeam team2;
             JCombatTurnBasedEventRecorder eventRecorder;
             JCombatTurnBasedActionSelector actionSelector;
-            //Func<IUnique, string> funcAttr = (attr) => attr.Uid;
-            JCombatTurnBasedRunner combatRunner;
-            Func<IJCombatUnit, string> funcUnit = (unit) => unit.Uid;
-            Func<IJCombatTeam, string> funcTeam = (team) => team.Uid;
-            Func<JCombatTurnBasedEvent, string> funcEvent = (e) => e.Uid;
+            JCombatTurnBasedRunner<TiktokJCombatUnitData> combatRunner;
+            IJCombatTurnBasedAttrNameQuery attrNameQuery;
+            JCombatTurnBasedReport<TiktokJCombatUnitData> report;
 
             //创建帧记录器
             frameRecorder = new JCombatTurnBasedFrameRecorder(19); //从0开始，共20回合
-
             //查询工具，funcSeat 可以替换成 formationBuilder
-            jcombatQuery = new JCombatSeatBasedQuery(formationBuilder, funcTeam, funcUnit, frameRecorder);
-
-            eventRecorder = new TiktokEventRecorder(frameRecorder, funcEvent);
+            jcombatQuery = new JCombatSeatBasedQuery(formationBuilder, frameRecorder);
+            eventRecorder = new TiktokEventRecorder(frameRecorder);
+            attrNameQuery = new TiktokAttrNameQuery();
+            report = new TiktokJCombatTurnBasedReport(jcombatQuery);
 
             //创建玩家unit对象
             var playerUnits = new List<IJCombatUnit>();
             foreach (var formationInfo in playerFormationInfos)
             {
                 //队伍1
-                var unit1 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, new FakeAttrNameQuery(), eventRecorder);
+                var unit1 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, attrNameQuery, eventRecorder);
                 playerUnits.Add(unit1);
             }
-            team1 = new JCombatTeam("team1", playerUnits, funcUnit);
+            team1 = new JCombatTeam("team1", playerUnits);
 
             //创建levelnode unit对象
             var levelNodeUnits = new List<IJCombatUnit>();
             foreach (var formationInfo in levelodeFormationInfos)
             {
                 //队伍2 从配置表获取武士点位
-                var unit2 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, new FakeAttrNameQuery(), eventRecorder);
+                var unit2 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, attrNameQuery, eventRecorder);
                 levelNodeUnits.Add(unit2);
             }
-            team2 = new JCombatTeam("team2", levelNodeUnits, funcUnit);
+            team2 = new JCombatTeam("team2", levelNodeUnits);
 
             var lstTeams = new List<IJCombatTeam>();
             lstTeams.Add(team1);
             lstTeams.Add(team2);
 
-
+            //设置双方队伍
             jcombatQuery.SetTeams(lstTeams);
 
-            actionSelector = new JCombatTurnBasedActionSelector(jcombatQuery.GetUnits().OfType<IJCombatTurnBasedUnit>().ToList(), funcUnit);
+            actionSelector = new JCombatTurnBasedActionSelector(jcombatQuery.GetUnits().OfType<IJCombatTurnBasedUnit>().ToList());
 
             var runables = new List<IRunable>();
             runables.Add(team1);
             runables.Add(team2);
 
             turnbasedCombat = new JCombatTurnBased(actionSelector, frameRecorder, jcombatQuery, runables);
-
-            combatRunner = new JCombatTurnBasedRunner(turnbasedCombat, jcombatQuery, eventRecorder, new JCombatTurnBasedReport());
+            combatRunner = new JCombatTurnBasedRunner<TiktokJCombatUnitData>(turnbasedCombat, jcombatQuery, eventRecorder, report);
 
             await combatRunner.Run();
 
@@ -110,9 +107,9 @@ namespace TiktokGame2Server.Others
 
             return result.GetCombatReportData();
         }
-       
 
-        public class FakeAttrNameQuery : IJCombatTurnBasedAttrNameQuery
+
+        public class TiktokAttrNameQuery : IJCombatTurnBasedAttrNameQuery
         {
             public string GetActionPointName()
             {
@@ -127,14 +124,14 @@ namespace TiktokGame2Server.Others
 
         public class TiktokEventRecorder : JCombatTurnBasedEventRecorder
         {
-            public TiktokEventRecorder(IJCombatFrameRecorder frameRecorder, Func<JCombatTurnBasedEvent, string> keySelector) : base(frameRecorder, keySelector)
+            public TiktokEventRecorder(IJCombatFrameRecorder frameRecorder) : base(frameRecorder)
             {
             }
         }
 
         public class TiktokJCombatAction : JCombatActionBase
         {
-            public TiktokJCombatAction( string uid, List<IJCombatExecutor> executors) : base( uid, null, executors)
+            public TiktokJCombatAction(string uid, List<IJCombatExecutor> executors) : base(uid, null, executors)
             {
             }
         }
@@ -168,6 +165,46 @@ namespace TiktokGame2Server.Others
             result.Add(speed);
 
             return result;
+        }
+    }
+
+    public class TiktokSeatFuncBuilder : IJCombatSeatDelegateBuilder
+    {
+        List<TiktokJCombatForamtionInfo> formations;
+        public TiktokSeatFuncBuilder(List<TiktokJCombatForamtionInfo> formations) => this.formations = formations;
+
+        public Func<string, int> Build()
+        {
+            return (unitUid) => // to do: 需要所有的战斗单位（包括NPC）
+            {
+                //从atkFormations中获取对应的阵型点位
+                if (formations == null || formations.Count == 0)
+                {
+                    throw new Exception("没有可用的阵型");
+                }
+                var formation = formations.FirstOrDefault(f => f.UnitInfo.Uid == unitUid);
+                return formation?.Point ?? -1; // 如果没有找到对应的阵型点位，返回-1
+            };
+        }
+    }
+
+    public class TiktokJCombatUnitData : JCombatUnitData
+    {
+        public int SamuraiId { get; set; }
+
+    }
+
+    public class TiktokJCombatTurnBasedReport : JCombatTurnBasedReport<TiktokJCombatUnitData>
+    {
+        public TiktokJCombatTurnBasedReport(IJCombatSeatBasedQuery jcombatQuery) : base(jcombatQuery)
+        {
+        }
+
+        protected override TiktokJCombatUnitData CreateUnitData(IJCombatUnit unit)
+        {
+            var baseData = base.CreateUnitData(unit);
+            baseData.SamuraiId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiId;
+            return baseData;
         }
     }
 }
