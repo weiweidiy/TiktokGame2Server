@@ -11,10 +11,13 @@ namespace JFramework
     {
         public TiktokGenConfigManager(IConfigLoader loader, IDeserializer deserializer) : base(loader)
         {
+          RegisterTable<FormationsTable, FormationsCfgData>(nameof(FormationsTable), deserializer);
+          RegisterTable<FormationUnitsTable, FormationUnitsCfgData>(nameof(FormationUnitsTable), deserializer);
           RegisterTable<LevelsTable, LevelsCfgData>(nameof(LevelsTable), deserializer);
           RegisterTable<LevelsNodesTable, LevelsNodesCfgData>(nameof(LevelsNodesTable), deserializer);
           RegisterTable<PrefabsTable, PrefabsCfgData>(nameof(PrefabsTable), deserializer);
           RegisterTable<SamuraiTable, SamuraiCfgData>(nameof(SamuraiTable), deserializer);
+          RegisterTable<SoldiersTable, SoldiersCfgData>(nameof(SoldiersTable), deserializer);
         }
     }
 

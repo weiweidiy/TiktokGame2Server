@@ -36,7 +36,7 @@ namespace TiktokGame2Server.Others
 
             //构建双方阵型信息
             var playerFormationBuilder = new PlayerFormationBuilder(playerFormations, new PlayerUnitBuilder(new PlayerAttrBuilder(), new PlayerActionsBuilder()));
-            var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId, new LevelNodeUnitBuilder(new LevelNodeAttrBuilder(), new LevelNodeActionsBuilder()));
+            var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId, new LevelNodeUnitBuilder(new LevelNodeAttrBuilder(), new LevelNodeActionsBuilder()),tiktokConfigService);
             var playerFormationInfos = playerFormationBuilder.Build();
             var levelodeFormationInfos = levelNodeFormationBuilder.Build();
 
@@ -108,50 +108,6 @@ namespace TiktokGame2Server.Others
             return result.GetCombatReportData<TiktokJCombatUnitData>();
         }
 
-        //public class TiktokEventRecorder : JCombatTurnBasedEventRecorder
-        //{
-        //    public TiktokEventRecorder(IJCombatFrameRecorder frameRecorder) : base(frameRecorder)
-        //    {
-        //    }
-        //}
-
-        //public class TiktokJCombatAction : JCombatActionBase
-        //{
-        //    public TiktokJCombatAction(string uid, List<IJCombatExecutor> executors) : base(uid, null, executors)
-        //    {
-        //    }
-        //}
-
-    }
-
-    public class FakeAttrFacotry : IJCombatUnitAttrFactory
-    {
-        public List<IUnique> Create()
-        {
-            var result = new List<IUnique>();
-
-            var hp = new GameAttributeInt("Hp", 100, 100);
-            var speed = new GameAttributeInt("Speed", 50, 50);
-            result.Add(hp);
-            result.Add(speed);
-
-            return result;
-        }
-    }
-
-    public class FakeAttrFacotry2 : IJCombatUnitAttrFactory
-    {
-        public List<IUnique> Create()
-        {
-            var result = new List<IUnique>();
-
-            var hp = new GameAttributeInt("Hp", 200, 200);
-            var speed = new GameAttributeInt("Speed", 40, 60);
-            result.Add(hp);
-            result.Add(speed);
-
-            return result;
-        }
     }
 
     

@@ -38,7 +38,7 @@ namespace TiktokGame2Server.Others
         /// <param name="playerId"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<Samurai> AddSamuraiAsync(string samuraiUid, int playerId)
+        public async Task<Samurai> AddSamuraiAsync(string samuraiUid, string soldierUid, int playerId)
         {
             if(!CheckUid(samuraiUid))
                 throw new ArgumentException($"武士 {samuraiUid} 配置数据不存在或无效。");
@@ -47,6 +47,7 @@ namespace TiktokGame2Server.Others
             {
                 BusinessId = samuraiUid,
                 PlayerId = playerId,
+                SoldierUid = soldierUid
             };
             _dbContext.Samurais.Add(samurai);
             await _dbContext.SaveChangesAsync();

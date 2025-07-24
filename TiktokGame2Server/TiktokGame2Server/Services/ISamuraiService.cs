@@ -25,7 +25,7 @@ namespace TiktokGame2Server.Others
         /// <param name="samuraiBusinessId"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        Task<Samurai> AddSamuraiAsync(string samuraiBusinessId, int playerId);
+        Task<Samurai> AddSamuraiAsync(string samuraiBusinessId, string soldierUid, int playerId);
 
         /// <summary>
         /// 删除指定的武士

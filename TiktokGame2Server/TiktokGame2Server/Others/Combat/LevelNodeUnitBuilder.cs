@@ -17,7 +17,8 @@ namespace TiktokGame2Server.Others
                 Uid = Guid.NewGuid().ToString(),
                 AttrList = attrBuilder.Create(key),
                 Actions = actionBuilder.Create(key),
-                SamuraiId = key
+                SamuraiId = key,
+                SoldierId = key + 1000 // 假设士兵ID是武士ID加1000
             };
 
             return unitInfo;

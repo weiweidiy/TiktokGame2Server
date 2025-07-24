@@ -7,32 +7,29 @@ using JFramework.Game;
 
 namespace JFramework
 {
-    public partial class SamuraiTable : BaseConfigTable<SamuraiCfgData>
+    public partial class SoldiersTable : BaseConfigTable<SoldiersCfgData>
     {
     }
 
-    public class SamuraiCfgData : IUnique
+    public class SoldiersCfgData : IUnique
     {
         //唯一标识
         public string Uid{ get;set;} 
 
-        //名字
-        public string Name;
+        //兵种Uid
+        public string Soldier;
 
-        //武力
-        public int Power;
+        //攻击力
+        public int Atk;
 
-        //守备
+        //防御力
         public int Def;
 
-        //智力
-        public int Intel;
+        //生命力
+        public int Hp;
 
         //速度
         public int Speed;
-
-        //默认兵种
-        public string SoldierUid;
 
     }
 }

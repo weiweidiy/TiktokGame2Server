@@ -390,6 +390,10 @@
           "SamuraiId": {
             "type": "integer",
             "format": "int32"
+          },
+          "SoldierId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

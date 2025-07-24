@@ -10,6 +10,8 @@
 
         public int Experience { get; set; } = 0;
 
+        public required string SoldierUid { get; set; } 
+
         /// <summary>
         /// 外键，关联玩家
         /// </summary>·

@@ -40,5 +40,8 @@ namespace JFramework
         //成就预制体Uid
         public string StarPrefabUid;
 
+        //阵型Uid
+        public string FormationUid;
+
     }
 }

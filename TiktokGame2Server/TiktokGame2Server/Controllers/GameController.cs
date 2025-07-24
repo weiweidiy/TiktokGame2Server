@@ -95,7 +95,8 @@ namespace TiktokGame2Server.Controllers
             if (samurais == null || samurais.Count == 0)
             {
                 samurais = new List<Samurai>();
-                var defaultSamurai = await samuraiService.AddSamuraiAsync(tiktokConfigService.GetDefaultSamuraiBusinessId(), playerId);
+                var defaultSamurai = await samuraiService.AddSamuraiAsync(tiktokConfigService.GetDefaultSamuraiBusinessId()
+                    , tiktokConfigService.GetDefaultSoldierBusinessId(tiktokConfigService.GetDefaultSamuraiBusinessId()), playerId);
                 samurais.Add(defaultSamurai);
             }
             var samuraisDTO = samurais?.Select(n => new SamuraiDTO
@@ -128,7 +129,8 @@ namespace TiktokGame2Server.Controllers
                 var first = samurais.FirstOrDefault();
                 if(first == null)
                 {
-                    first = await samuraiService.AddSamuraiAsync(tiktokConfigService.GetDefaultSamuraiBusinessId(), playerId);
+                    first = await samuraiService.AddSamuraiAsync(tiktokConfigService.GetDefaultSamuraiBusinessId()
+                            , tiktokConfigService.GetDefaultSoldierBusinessId(tiktokConfigService.GetDefaultSamuraiBusinessId()), playerId);
                 }
 
                 var defaultFormation = await formationService.AddFormationAsync(formationType, tiktokConfigService.GetDefaultFormationPoint(), first.Id, playerId);
