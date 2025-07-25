@@ -12,6 +12,12 @@ namespace TiktokGame2Server.Others
         }
 
         public string GetDefaultSamuraiBusinessId() => "1";
+        public int GetDefaultFormationPoint() => 4;
+        public int GetAtkFormationType() => 1;
+
+        public int GetDefFormationType() => 2;
+
+        public string GetDefaultFirstNodeBusinessId() => "1";
 
         /// <summary>
         /// 根据武士BusinessId获取默认的SoldierBusinessId
@@ -28,13 +34,6 @@ namespace TiktokGame2Server.Others
             }
             return samuraiCfg.SoldierUid;
         }
-
-        public int GetDefaultFormationPoint() => 4;
-        public int GetAtkFormationType() => 1;
-
-        public int GetDefFormationType() => 2;
-
-        public string GetDefaultFirstNodeBusinessId() => "1";
 
         /// <summary>
         /// 判断是否是新关卡的第一个节点
@@ -144,6 +143,76 @@ namespace TiktokGame2Server.Others
         {
             var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
             return formationUnitCfg.SoldierUid;
+        }
+
+        /// <summary>
+        /// 获取武士的战斗力
+        /// </summary>
+        /// <param name="samuraiBusinessId"></param>
+        /// <returns></returns>
+        public int GetSamuraiPower(string samuraiBusinessId)
+        {
+            return Get<SamuraiCfgData>(samuraiBusinessId)?.Power ?? 0;
+        }
+
+        /// <summary>
+        /// 获取武士守备力
+        /// </summary>
+        /// <param name="samuraiBusinessId"></param>
+        /// <returns></returns>
+        public int GetSamuraiDef(string samuraiBusinessId)
+        {
+            return Get<SamuraiCfgData>(samuraiBusinessId)?.Def ?? 0;
+        }
+
+        /// <summary>
+        /// 获取武士的智力
+        /// </summary>
+        /// <param name="samuraiBusinessId"></param>
+        /// <returns></returns>
+        public int GetSamuraiInt(string samuraiBusinessId)
+        {
+            return Get<SamuraiCfgData>(samuraiBusinessId)?.Intel ?? 0;
+        }
+
+        /// <summary>
+        /// 获取武士的速度
+        /// </summary>
+        /// <param name="samuraiBusinessId"></param>
+        /// <returns></returns>
+        public int GetSamuraiSpeed(string samuraiBusinessId)
+        {
+            return Get<SamuraiCfgData>(samuraiBusinessId)?.Speed ?? 0;
+        }
+
+        /// <summary>
+        /// 获取兵种的攻击力
+        /// </summary>
+        /// <param name="soldierBusinessId"></param>
+        /// <returns></returns>
+        public int GetSoldierAttack(string soldierBusinessId)
+        {
+            return Get<SoldiersCfgData>(soldierBusinessId)?.Atk ?? 0;
+        }
+
+        /// <summary>
+        /// 获取兵种的防御力
+        /// </summary>
+        /// <param name="soldierBusinessId"></param>
+        /// <returns></returns>
+        public int GetSoldierDefence(string soldierBusinessId)
+        {
+            return Get<SoldiersCfgData>(soldierBusinessId)?.Def ?? 0;
+        }
+
+        /// <summary>
+        /// 获取兵种速度
+        /// </summary>
+        /// <param name="soldierBusinessId"></param>
+        /// <returns></returns>
+        public int GetSoldierSpeed(string soldierBusinessId)
+        {
+            return Get<SoldiersCfgData>(soldierBusinessId)?.Speed ?? 0;
         }
     }
 }
