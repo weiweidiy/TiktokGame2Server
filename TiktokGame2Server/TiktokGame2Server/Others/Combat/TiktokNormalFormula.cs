@@ -1,29 +1,19 @@
 ﻿using JFramework.Game;
-using TiktokGame2Server.Entities;
-using static TiktokGame2Server.Others.LevelNodeCombatService;
 
 namespace TiktokGame2Server.Others
 {
-    public class PlayerUnitBuilder : JCombatBaseUnitBuilder
+    /// <summary>
+    /// 常用的伤害计算公式，攻击-防御
+    /// </summary>
+    public class TiktokNormalFormula : JCombatFormula
     {
-        Samurai samurai;
-        public PlayerUnitBuilder(IJCombatAttrBuilder attrBuilder, IJCombatActionBuilder actionBuilder, Samurai samurai) : base(attrBuilder, actionBuilder)
+        public override int CalcHitValue(IJAttributeableUnit target)
         {
-            this.samurai = samurai;
-        }
-
-        public override IJCombatUnitInfo Build()
-        {
-            var unitInfo = new TiktokJCombatUnitInfo
-            {
-                Uid = Guid.NewGuid().ToString(),
-                AttrList = attrBuilder.Create(),
-                Actions = actionBuilder.Create(),
-                SamuraiBusinessId = samurai.BusinessId,
-                SoldierBusinessId = samurai.SoldierUid,
-            };
-
-            return unitInfo;
+            //伤害= 释放者攻击力 * 释放者Power - 目标防御力 * 目标Def
+            var caster = query.GetUnit(GetOwner().GetCaster());
+            var atk = caster.GetAttribute("Atk") as GameAttributeInt;
+            var targetDef = target.GetAttribute("Def") as GameAttributeInt;
+            return atk.CurValue - targetDef.CurValue;
         }
     }
 }

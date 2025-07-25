@@ -14,8 +14,8 @@ namespace TiktokGame2Server.Others
             {
                 Uid = unit.Uid,
                 Seat = seatQuery.GetSeat(unit.Uid),
-                SamuraiId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiId,
-                SoldierId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SoldierId
+                SamuraiBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiBusinessId,
+                SoldierBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SoldierBusinessId
             } as T;
         }
     }
@@ -24,8 +24,8 @@ namespace TiktokGame2Server.Others
     {
         public string Uid { get; set; }
         public int Seat { get; set; }
-        public int SamuraiId { get; set; }
-        public int SoldierId { get; set; } // 可能需要在其他地方使用
+        public string SamuraiBusinessId { get; set; }
+        public string SoldierBusinessId { get; set; } // 可能需要在其他地方使用
     }
 }
 

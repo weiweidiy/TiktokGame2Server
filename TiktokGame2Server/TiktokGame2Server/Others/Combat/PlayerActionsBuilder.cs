@@ -1,29 +1,31 @@
 ﻿using JFramework.Game;
-using TiktokGame2Server.Entities;
-using static TiktokGame2Server.Others.LevelNodeCombatService;
 
 namespace TiktokGame2Server.Others
 {
-    public class PlayerUnitBuilder : JCombatBaseUnitBuilder
+    public class PlayerActionsBuilder : IJCombatActionBuilder
     {
-        Samurai samurai;
-        public PlayerUnitBuilder(IJCombatAttrBuilder attrBuilder, IJCombatActionBuilder actionBuilder, Samurai samurai) : base(attrBuilder, actionBuilder)
+        int playerId;
+        int samuraiId;
+        public PlayerActionsBuilder(int playerId, int samuraiId)
         {
-            this.samurai = samurai;
+            this.playerId = playerId;
+            this.samuraiId = samuraiId;
         }
 
-        public override IJCombatUnitInfo Build()
+        public List<IJCombatAction> Create()
         {
-            var unitInfo = new TiktokJCombatUnitInfo
-            {
-                Uid = Guid.NewGuid().ToString(),
-                AttrList = attrBuilder.Create(),
-                Actions = actionBuilder.Create(),
-                SamuraiBusinessId = samurai.BusinessId,
-                SoldierBusinessId = samurai.SoldierUid,
-            };
+            var result = new List<IJCombatAction>();
 
-            return unitInfo;
+            var finder1 = new JCombatDefaultFinder();
+            var formular = new TiktokNormalFormula();
+            var executor1 = new JCombatExecutorDamage(finder1, formular);
+            var lstExecutor1 = new List<IJCombatExecutor>();
+            lstExecutor1.Add(executor1);
+
+            var action = new JCombatActionBase(Guid.NewGuid().ToString(), null, lstExecutor1);
+            result.Add(action);
+
+            return result;
         }
     }
 }

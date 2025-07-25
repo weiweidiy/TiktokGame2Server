@@ -387,13 +387,13 @@
             "type": "integer",
             "format": "int32"
           },
-          "SamuraiId": {
-            "type": "integer",
-            "format": "int32"
+          "SamuraiBusinessId": {
+            "type": "string",
+            "nullable": true
           },
-          "SoldierId": {
-            "type": "integer",
-            "format": "int32"
+          "SoldierBusinessId": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

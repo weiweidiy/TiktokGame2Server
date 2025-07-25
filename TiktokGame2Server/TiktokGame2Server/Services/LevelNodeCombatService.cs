@@ -35,8 +35,8 @@ namespace TiktokGame2Server.Others
             }
 
             //构建双方阵型信息
-            var playerFormationBuilder = new PlayerFormationBuilder(playerFormations, new PlayerUnitBuilder(new PlayerAttrBuilder(), new PlayerActionsBuilder()));
-            var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId, new LevelNodeUnitBuilder(new LevelNodeAttrBuilder(), new LevelNodeActionsBuilder()),tiktokConfigService);
+            var playerFormationBuilder = new PlayerFormationBuilder(playerFormations);
+            var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId,tiktokConfigService);
             var playerFormationInfos = playerFormationBuilder.Build();
             var levelodeFormationInfos = levelNodeFormationBuilder.Build();
 

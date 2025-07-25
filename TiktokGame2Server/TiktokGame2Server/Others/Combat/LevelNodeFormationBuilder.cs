@@ -2,17 +2,17 @@
 
 namespace TiktokGame2Server.Others
 {
-    public class LevelNodeFormationBuilder : JCombatFormationBuilder
+    public class LevelNodeFormationBuilder : IJCombatFormationBuilder
     {
         TiktokConfigService tiktokConfigService;
         string levelNodeBusinessId;
-        public LevelNodeFormationBuilder(string levelNodeBusinessId, IJCombatUnitBuilder unitBuilder, TiktokConfigService tiktokConfigService) : base(unitBuilder)
+        public LevelNodeFormationBuilder(string levelNodeBusinessId,  TiktokConfigService tiktokConfigService) 
         {
             this.tiktokConfigService = tiktokConfigService;
             this.levelNodeBusinessId = levelNodeBusinessId;
         }
 
-        public override List<JCombatFormationInfo> Build()
+        public List<JCombatFormationInfo> Build()
         {
             //fake data
             var fakeResult = new List<JCombatFormationInfo>();
@@ -20,12 +20,17 @@ namespace TiktokGame2Server.Others
             var formationCfg = tiktokConfigService.GetLevelNodeFormation(levelNodeBusinessId);
             for(int i = 0; i < formationCfg.Length; i++)
             {
-                if (formationCfg[i] == "0")
+                var formationUnitBusinessId = formationCfg[i];
+                if (formationUnitBusinessId == "0")
                     continue;
 
+                var unitBuilder = new LevelNodeUnitBuilder(new LevelNodeAttrBuilder(formationUnitBusinessId)
+                        , new LevelNodeActionsBuilder(formationUnitBusinessId)
+                        , formationUnitBusinessId, tiktokConfigService);
+
                 var formation = new JCombatFormationInfo();
-                formation.Point = i ; 
-                formation.UnitInfo = unitBuilder.Build(int.Parse(formationCfg[i])); //这里是配置表中的id
+                formation.Point = i ;
+                formation.UnitInfo = unitBuilder.Build(); // unitBuilder.Build(int.Parse(formationCfg[i])); //这里是配置表中的id
                 fakeResult.Add(formation);
             }
 

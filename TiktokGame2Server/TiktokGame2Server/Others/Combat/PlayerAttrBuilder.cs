@@ -1,29 +1,30 @@
-﻿using JFramework.Game;
-using TiktokGame2Server.Entities;
-using static TiktokGame2Server.Others.LevelNodeCombatService;
+﻿using JFramework;
+using JFramework.Game;
 
 namespace TiktokGame2Server.Others
 {
-    public class PlayerUnitBuilder : JCombatBaseUnitBuilder
+    public class PlayerAttrBuilder : IJCombatAttrBuilder
     {
-        Samurai samurai;
-        public PlayerUnitBuilder(IJCombatAttrBuilder attrBuilder, IJCombatActionBuilder actionBuilder, Samurai samurai) : base(attrBuilder, actionBuilder)
-        {
-            this.samurai = samurai;
+        int playerId;
+        int samuraiId;
+        public PlayerAttrBuilder(int playerId, int samuraiId) { 
+            this.playerId = playerId;
+            this.samuraiId = samuraiId;
         }
-
-        public override IJCombatUnitInfo Build()
+        public List<IUnique> Create()
         {
-            var unitInfo = new TiktokJCombatUnitInfo
-            {
-                Uid = Guid.NewGuid().ToString(),
-                AttrList = attrBuilder.Create(),
-                Actions = actionBuilder.Create(),
-                SamuraiBusinessId = samurai.BusinessId,
-                SoldierBusinessId = samurai.SoldierUid,
-            };
+            var result = new List<IUnique>();
 
-            return unitInfo;
+            var hp = new GameAttributeInt("Hp", 1001, 1001);
+            var atk = new GameAttributeInt("Atk", 70, 70);
+            var def = new GameAttributeInt("Def", 10, 10);
+            var speed = new GameAttributeInt("Speed", 50, 50);
+            result.Add(hp);
+            result.Add(speed);
+            result.Add(atk);
+            result.Add(def);
+
+            return result;
         }
     }
 }

@@ -1,51 +1,43 @@
-﻿using JFramework;
-using JFramework.Game;
+﻿using JFramework.Game;
 using static TiktokGame2Server.Others.LevelNodeCombatService;
 
 namespace TiktokGame2Server.Others
 {
     public class LevelNodeUnitBuilder : JCombatBaseUnitBuilder
     {
-        public LevelNodeUnitBuilder(IJCombatAttrBuilder attrBuilder, IJCombatActionBuilder actionBuilder) : base(attrBuilder, actionBuilder)
+        //string levelNodeBusinessId;
+        string formationUnitBusinessId;
+        TiktokConfigService tiktokConfigService;
+        public LevelNodeUnitBuilder(IJCombatAttrBuilder attrBuilder, IJCombatActionBuilder actionBuilder
+            ,string formationUnitBusinessId, /*string levelNodeBusinessId,*/ TiktokConfigService tiktokConfigService) : base(attrBuilder, actionBuilder)
         {
+            //this.levelNodeBusinessId = levelNodeBusinessId;
+            this.formationUnitBusinessId = formationUnitBusinessId;
+            this.tiktokConfigService = tiktokConfigService;
         }
 
-        protected override IJCombatUnitInfo Create(int key)
+        public override IJCombatUnitInfo Build()
         {
             var unitInfo = new TiktokJCombatUnitInfo
             {
                 Uid = Guid.NewGuid().ToString(),
-                AttrList = attrBuilder.Create(key),
-                Actions = actionBuilder.Create(key),
-                SamuraiId = key,
-                SoldierId = key + 1000 // 假设士兵ID是武士ID加1000
+                AttrList = attrBuilder.Create(),
+                Actions = actionBuilder.Create(),
+                SamuraiBusinessId = GetSamuraiBusinessId(formationUnitBusinessId),
+                SoldierBusinessId = GetSamuraiBusinessId(formationUnitBusinessId),
             };
 
             return unitInfo;
         }
-    }
 
-    public class LevelNodeAttrBuilder : IJCombatAttrBuilder
-    {
-        public List<IUnique> Create(int key)
+        string GetSamuraiBusinessId(string formationUnitBusinessId)
         {
-            return new FakeAttrFacotry2().Create();
+            return tiktokConfigService.GetFormationUnitSamuraiBusinessId(formationUnitBusinessId);
         }
-    }
 
-    public class LevelNodeActionsBuilder : IJCombatActionBuilder
-    {
-        public List<IJCombatAction> Create(int key)
+        string GetSoldierBusinessId(string formationUnitBusinessId)
         {
-            var result = new List<IJCombatAction>();
-
-            var finder1 = new JCombatDefaultFinder();
-            var executor1 = new JCombatExecutorDamage(finder1);
-            var lstExecutor1 = new List<IJCombatExecutor>();
-            lstExecutor1.Add(executor1);
-            var action1 = new JCombatActionBase(Guid.NewGuid().ToString(), null, lstExecutor1);
-            result.Add(action1);
-            return result;
+            return tiktokConfigService.GetFormationUnitSoldierBusinessId(formationUnitBusinessId);
         }
     }
 }

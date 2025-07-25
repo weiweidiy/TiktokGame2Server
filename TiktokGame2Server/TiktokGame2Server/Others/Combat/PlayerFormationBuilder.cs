@@ -4,19 +4,27 @@ using TiktokGame2Server.Entities;
 
 namespace TiktokGame2Server.Others
 {
-    public class PlayerFormationBuilder : JCombatFormationBuilder
+    public class PlayerFormationBuilder : IJCombatFormationBuilder
     {
         List<Formation> playerFormation;
-        public PlayerFormationBuilder(List<Formation> playerFormation, IJCombatUnitBuilder unitBuilder):base(unitBuilder)
+
+        public PlayerFormationBuilder(List<Formation> playerFormation)
         {
             this.playerFormation = playerFormation ?? throw new ArgumentNullException(nameof(playerFormation));
         }
-        public override List<JCombatFormationInfo> Build()
+
+        public List<JCombatFormationInfo> Build()
         {
-            return playerFormation.Select(f => new JCombatFormationInfo
+            return playerFormation.Select(f =>
             {
-                Point = f.FormationPoint,
-                UnitInfo = unitBuilder.Build(f.SamuraiId)               
+                var builder = new PlayerUnitBuilder(new PlayerAttrBuilder(f.PlayerId, f.SamuraiId), new PlayerActionsBuilder(f.PlayerId, f.SamuraiId), f.Samurai);
+                var info = new JCombatFormationInfo
+                {
+                    Point = f.FormationPoint,
+                    UnitInfo = builder.Build()
+                };
+
+                return info;
             }).ToList();
         }
     }
@@ -24,8 +32,8 @@ namespace TiktokGame2Server.Others
 
     public class TiktokJCombatUnitInfo : JCombatUnitInfo
     {
-        public int SamuraiId { get; set; }
-        public int SoldierId { get; set; }
+        public string SamuraiBusinessId { get; set; }
+        public string SoldierBusinessId { get; set; }
     }
 }
 

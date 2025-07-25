@@ -15,6 +15,7 @@ namespace TiktokGame2Server.Others
             // 查找指定玩家的阵型
             var formations = await _dbContext.Formations
                 .Where(f => f.FormationType == formationType && f.PlayerId == playerId)
+                .Include(f => f.Samurai)
                 .ToListAsync();
             return formations;
 

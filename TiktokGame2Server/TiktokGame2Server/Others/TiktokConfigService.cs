@@ -123,5 +123,27 @@ namespace TiktokGame2Server.Others
             var foramtionCfg = Get<FormationsCfgData>(formationUid);
             return foramtionCfg.UnitsUid.ToArray();
         }
+
+        /// <summary>
+        /// 获取阵型单位的武士id
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public string GetFormationUnitSamuraiBusinessId(string formationUnitBusinessId)
+        {
+            var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
+            return formationUnitCfg.SamuraiUid;
+        }
+
+        /// <summary>
+        /// 获取阵型单位的兵种id
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public string GetFormationUnitSoldierBusinessId(string formationUnitBusinessId)
+        {
+            var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
+            return formationUnitCfg.SoldierUid;
+        }
     }
 }
