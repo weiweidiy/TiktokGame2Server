@@ -17,7 +17,7 @@ namespace TiktokGame2Server.Others
 
             var hp = new GameAttributeInt("Hp", 1001, 1001);
             var atk = new GameAttributeInt("Atk", 70, 70);
-            var def = new GameAttributeInt("Def", 10, 10);
+            var def = new GameAttributeInt("Def", 20, 20);
             var speed = new GameAttributeInt("Speed", 50, 50);
             result.Add(hp);
             result.Add(speed);

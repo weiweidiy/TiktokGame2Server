@@ -98,7 +98,7 @@ var configService = app.Services.GetRequiredService<TiktokConfigService>();
 
 //"D:/Demos/TiktokGame2/Assets/Downloads/GameRes/Dynamic/Configs/"
 //"E:/UnityProjects/TiktokGame2/Assets/Downloads/GameRes/Dynamic/Configs/"
-await configService.PreloadAllAsync("E:/UnityProjects/TiktokGame2/Assets/Downloads/GameRes/Dynamic/Configs/", ".json"); // 如果 Main 是 async Task
+await configService.PreloadAllAsync("D:/Demos/TiktokGame2/Assets/Downloads/GameRes/Dynamic/Configs/", ".json"); // 如果 Main 是 async Task
 
 app.UseMiddleware<TokenAuthMiddleware>();
 
