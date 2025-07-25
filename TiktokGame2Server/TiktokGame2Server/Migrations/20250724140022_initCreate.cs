@@ -78,6 +78,7 @@ namespace TiktokGame2Server.Migrations
                     BusinessId = table.Column<string>(type: "text", nullable: false),
                     Level = table.Column<int>(type: "integer", nullable: false),
                     Experience = table.Column<int>(type: "integer", nullable: false),
+                    SoldierUid = table.Column<string>(type: "text", nullable: false),
                     PlayerId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
