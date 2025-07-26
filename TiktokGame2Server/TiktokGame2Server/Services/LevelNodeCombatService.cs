@@ -34,9 +34,16 @@ namespace TiktokGame2Server.Others
                 throw new Exception("玩家没有可用的阵型");
             }
 
+            JCombatTurnBasedFrameRecorder frameRecorder;
+            JCombatTurnBasedEventRecorder eventRecorder;
+
+            //创建帧记录器
+            frameRecorder = new JCombatTurnBasedFrameRecorder(19); //从0开始，共20回合
+            eventRecorder = new JCombatTurnBasedEventRecorder(frameRecorder);
+
             //构建双方阵型信息
-            var playerFormationBuilder = new PlayerFormationBuilder(playerFormations);
-            var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId,tiktokConfigService);
+            var playerFormationBuilder = new PlayerFormationBuilder(playerFormations, eventRecorder);
+            var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId,tiktokConfigService, eventRecorder);
             var playerFormationInfos = playerFormationBuilder.Build();
             var levelodeFormationInfos = levelNodeFormationBuilder.Build();
 
@@ -47,21 +54,19 @@ namespace TiktokGame2Server.Others
             var formationBuilder = new JCombatSeatFuncBuilder(lst);
 
             JCombatTurnBased turnbasedCombat;
-            JCombatTurnBasedFrameRecorder frameRecorder;
+
             JCombatSeatBasedQuery jcombatQuery;
             JCombatTeam team1;
             JCombatTeam team2;
-            JCombatTurnBasedEventRecorder eventRecorder;
+
             JCombatTurnBasedActionSelector actionSelector;
             JCombatTurnBasedRunner combatRunner;
             IJCombatTurnBasedAttrNameQuery attrNameQuery;
             JCombatTurnBasedReportBuilder report;
 
-            //创建帧记录器
-            frameRecorder = new JCombatTurnBasedFrameRecorder(19); //从0开始，共20回合
             //查询工具，funcSeat 可以替换成 formationBuilder
             jcombatQuery = new JCombatSeatBasedQuery(formationBuilder, frameRecorder);
-            eventRecorder = new JCombatTurnBasedEventRecorder(frameRecorder);
+  
             attrNameQuery = new TiktokAttrNameQuery();
             report = new TiktokJCombatTurnBasedReport(jcombatQuery);
 
@@ -70,7 +75,7 @@ namespace TiktokGame2Server.Others
             foreach (var formationInfo in playerFormationInfos)
             {
                 //队伍1
-                var unit1 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, attrNameQuery, eventRecorder);
+                var unit1 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, attrNameQuery/*, eventRecorder*/);
                 playerUnits.Add(unit1);
             }
             team1 = new JCombatTeam("team1", playerUnits);
@@ -80,7 +85,7 @@ namespace TiktokGame2Server.Others
             foreach (var formationInfo in levelodeFormationInfos)
             {
                 //队伍2 从配置表获取武士点位
-                var unit2 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, attrNameQuery, eventRecorder);
+                var unit2 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, attrNameQuery/*, eventRecorder*/);
                 levelNodeUnits.Add(unit2);
             }
             team2 = new JCombatTeam("team2", levelNodeUnits);

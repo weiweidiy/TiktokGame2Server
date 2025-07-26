@@ -6,26 +6,49 @@ namespace TiktokGame2Server.Others
     {
         int playerId;
         int samuraiId;
-        public PlayerActionsBuilder(int playerId, int samuraiId)
+        IJCombatTurnBasedEventRecorder recorder;
+        public PlayerActionsBuilder(int playerId, int samuraiId, IJCombatTurnBasedEventRecorder recorder)
         {
             this.playerId = playerId;
             this.samuraiId = samuraiId;
+            this.recorder = recorder;
         }
 
         public List<IJCombatAction> Create()
         {
             var result = new List<IJCombatAction>();
 
-            var finder1 = new JCombatDefaultFinder();
-            var formular = new TiktokNormalFormula();
-            var executor1 = new JCombatExecutorDamage(finder1, formular);
-            var lstExecutor1 = new List<IJCombatExecutor>();
-            lstExecutor1.Add(executor1);
+            var actionBusinessIds = GetActionsBusiness(playerId, samuraiId);
 
-            var action = new JCombatActionBase(Guid.NewGuid().ToString(), null, lstExecutor1);
-            result.Add(action);
+            foreach(var actionBusinessId in actionBusinessIds)
+            {
+                var finder1 = new JCombatDefaultFinder();
+                var formular = new TiktokNormalFormula();
+                var executor1 = new JCombatExecutorDamage(finder1, formular);
+                var lstExecutor1 = new List<IJCombatExecutor>();
+                lstExecutor1.Add(executor1);
+
+                var actionInfo = new TiktokJCombatActionInfo();
+                actionInfo.Uid = Guid.NewGuid().ToString();
+                actionInfo.ActionBusinessId = actionBusinessId;
+                actionInfo.Executors = lstExecutor1;
+
+                var action1 = new JCombatActionBase(actionInfo, recorder);
+                result.Add(action1);
+            }
 
             return result;
+        }
+
+        private List<string> GetActionsBusiness(int playerId, int samuraiId)
+        {
+            var result = new List<string>();
+            // 这里可以根据playerId和samuraiId获取对应的技能或动作
+            // 例如，可以从数据库或配置文件中获取
+            // 这里简单示例添加一个动作
+            result.Add("ActionPlayer");
+            return result;
+
         }
     }
 }
