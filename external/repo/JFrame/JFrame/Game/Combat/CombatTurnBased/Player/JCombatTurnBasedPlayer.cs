@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JFramework.Game
 {
     public class JCombatTurnBasedPlayer<T> : JCombatBasePlayer<T> where T : IJCombatUnitData
     {
-        public JCombatTurnBasedPlayer(JCombatTurnBasedReportData<T> reportData, ICombatAnimationPlayer animationPlayer, IObjectPool objPool = null) : base(reportData, animationPlayer,objPool)
+        public JCombatTurnBasedPlayer(JCombatTurnBasedReportData<T> reportData, IJCombatAnimationPlayer animationPlayer, IObjectPool objPool = null) : base(reportData, animationPlayer,objPool)
         {
         }
 
-        protected override async void OnStartPlay(List<JCombatTurnBasedEvent> events)
+        protected override async Task OnStartPlayActionEvents(List<JCombatTurnBasedEvent> events)
         {
             var que = new Queue<JCombatTurnBasedEvent>(events);
 

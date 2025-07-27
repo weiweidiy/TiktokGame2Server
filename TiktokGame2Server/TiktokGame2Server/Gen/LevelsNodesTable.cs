@@ -34,5 +34,8 @@ namespace JFramework
         //阵型Uid
         public string FormationUid;
 
+        //场景Uid
+        public string CombatSceneUid;
+
     }
 }

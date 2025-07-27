@@ -25,7 +25,7 @@ namespace TiktokGame2Server.Others
         ///// 阵型查询列表
         ///// </summary>
         //List<JCombatFormationInfo> lstFormationQuery = null;
-        public async Task<JCombatTurnBasedReportData<TiktokJCombatUnitData>> GetReport(int playerId, string levelNodeBusinessId)
+        public async Task<TiktokJCombatTurnBasedReportData> GetReport(int playerId, string levelNodeBusinessId)
         {
             //创建阵型查询列表（包含玩家阵型和NPC阵型）
             var playerFormations = await formationService.GetFormationAsync(tiktokConfigService.GetAtkFormationType(), playerId);
@@ -68,7 +68,7 @@ namespace TiktokGame2Server.Others
             jcombatQuery = new JCombatSeatBasedQuery(formationBuilder, frameRecorder);
   
             attrNameQuery = new TiktokAttrNameQuery();
-            report = new TiktokJCombatTurnBasedReport(jcombatQuery);
+            report = new TiktokJCombatTurnBasedReportBuilder(jcombatQuery);
 
             //创建玩家unit对象
             var playerUnits = new List<IJCombatUnit>();
@@ -110,7 +110,9 @@ namespace TiktokGame2Server.Others
 
             var result = combatRunner.GetReport();
 
-            return result.GetCombatReportData<TiktokJCombatUnitData>();
+            var reportData = report.GetCombatReportData<TiktokJCombatUnitData>() as TiktokJCombatTurnBasedReportData;
+            reportData.CombatSceneBusinessId = tiktokConfigService.GetLevelNodeCombatSceneBusinessId(levelNodeBusinessId);
+            return reportData;
         }
 
     }

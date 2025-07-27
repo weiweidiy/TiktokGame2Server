@@ -2,10 +2,15 @@
 
 namespace TiktokGame2Server.Others
 {
-    public class TiktokJCombatTurnBasedReport : JCombatTurnBasedReportBuilder
+    public class TiktokJCombatTurnBasedReportBuilder : JCombatTurnBasedReportBuilder
     {
-        public TiktokJCombatTurnBasedReport(IJCombatSeatBasedQuery jcombatQuery) : base(jcombatQuery)
+        public TiktokJCombatTurnBasedReportBuilder(IJCombatSeatBasedQuery jcombatQuery) : base(jcombatQuery)
         {
+        }
+
+        protected override JCombatTurnBasedReportData<T> CreateReportData<T>()
+        {
+            return (JCombatTurnBasedReportData<T>)(object)new TiktokJCombatTurnBasedReportData();
         }
 
         protected override T CreateUnitData<T>(IJCombatUnit unit)

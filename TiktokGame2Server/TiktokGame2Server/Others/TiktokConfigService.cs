@@ -129,6 +129,24 @@ namespace TiktokGame2Server.Others
             var foramtionCfg = Get<FormationsCfgData>(formationUid);
             return foramtionCfg.UnitsUid.ToArray();
         }
+
+        /// <summary>
+        /// 获取关卡节点的战斗场景BusinessId
+        /// </summary>
+        /// <param name="levelNodeBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string GetLevelNodeCombatSceneBusinessId(string levelNodeBusinessId)
+        {
+            var nodeCfg = Get<LevelsNodesCfgData>(levelNodeBusinessId);
+            if (nodeCfg == null)
+            {
+                throw new Exception($"LevelNodeCfgData not found for businessId: {levelNodeBusinessId}");
+            }
+            return nodeCfg.CombatSceneUid;
+
+        }
+
         #endregion
 
         #region 副本阵型相关
@@ -245,6 +263,7 @@ namespace TiktokGame2Server.Others
         }
         #endregion
 
+        #region action相关
         public string[] GetActionTriggersName(string actionBusinessId)
         {
             var actionCfg = Get<ActionsCfgData>(actionBusinessId);
@@ -359,5 +378,7 @@ namespace TiktokGame2Server.Others
             }
             return actionCfg.Executors.ToArray();
         }
+
+        #endregion
     }
 }
