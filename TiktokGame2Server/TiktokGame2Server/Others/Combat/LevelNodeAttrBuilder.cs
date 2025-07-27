@@ -13,8 +13,8 @@ namespace TiktokGame2Server.Others
             var result = new List<IUnique>();
 
             var hp = new GameAttributeInt("Hp", 500, 500);
-            var atk = new GameAttributeInt("Atk", 70, 70);
-            var def = new GameAttributeInt("Def", 10, 10);
+            var atk = new GameAttributeInt("Atk", 100, 100);
+            var def = new GameAttributeInt("Def", 20, 20);
             var speed = new GameAttributeInt("Speed", 50, 50);
             result.Add(hp);
             result.Add(speed);

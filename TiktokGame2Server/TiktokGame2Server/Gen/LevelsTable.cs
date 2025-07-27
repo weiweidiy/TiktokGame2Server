@@ -16,12 +16,6 @@ namespace JFramework
         //唯一标识
         public string Uid{ get;set;} 
 
-        //关卡名字
-        public string Name;
-
-        //预制体
-        public string PrefabUid;
-
         //下一关Uid
         public string Next;
 

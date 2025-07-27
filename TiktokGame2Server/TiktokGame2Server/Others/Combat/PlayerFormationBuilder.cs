@@ -10,17 +10,20 @@ namespace TiktokGame2Server.Others
 
         IJCombatTurnBasedEventRecorder recorder;
 
-        public PlayerFormationBuilder(List<Formation> playerFormation, IJCombatTurnBasedEventRecorder recorder)
+        TiktokConfigService tiktokConfigService;
+
+        public PlayerFormationBuilder(List<Formation> playerFormation, IJCombatTurnBasedEventRecorder recorder, TiktokConfigService tiktokConfigService)
         {
             this.playerFormation = playerFormation ?? throw new ArgumentNullException(nameof(playerFormation));
             this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
+            this.tiktokConfigService = tiktokConfigService ?? throw new ArgumentNullException(nameof(tiktokConfigService));
         }
 
         public List<JCombatFormationInfo> Build()
         {
             return playerFormation.Select(f =>
             {
-                var builder = new PlayerUnitBuilder(new PlayerAttrBuilder(f.PlayerId, f.SamuraiId), new PlayerActionsBuilder(f.PlayerId, f.SamuraiId,recorder), f.Samurai);
+                var builder = new PlayerUnitBuilder(new PlayerAttrBuilder(f.PlayerId, f.SamuraiId), new PlayerActionsBuilder(f.PlayerId, f.SamuraiId,recorder,tiktokConfigService), f.Samurai);
                 var info = new JCombatFormationInfo
                 {
                     Point = f.FormationPoint,

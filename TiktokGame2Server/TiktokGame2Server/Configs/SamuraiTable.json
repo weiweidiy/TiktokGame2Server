@@ -1,0 +1,26 @@
+[
+  {
+    "Uid":"1",
+    "Power":122,
+    "Def":122,
+    "Intel":122,
+    "Speed":122,
+    "SoldierUid":"1"
+   },
+  {
+    "Uid":"2",
+    "Power":122,
+    "Def":122,
+    "Intel":122,
+    "Speed":122,
+    "SoldierUid":"1"
+   },
+  {
+    "Uid":"3",
+    "Power":122,
+    "Def":122,
+    "Intel":122,
+    "Speed":122,
+    "SoldierUid":"1"
+   }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "Uid":"1",
+    "Triggers":[],
+    "Finder":"JCombatDefaultFinder",
+    "FinderArgs":0.0,
+    "Formulas":[
+            "TiktokDamageFormula"
+         ],
+    "FormulasArgs":[
+    [0.5]
+],
+    "Executors":[
+            "JCombatExecutorDamage"
+         ]
+   },
+  {
+    "Uid":"2",
+    "Triggers":[
+            "JCombatBeforeDamageTrigger"
+         ],
+    "Finder":"",
+    "FinderArgs":0.0,
+    "Formulas":[
+            "JCombatFormulaDamageDataChange"
+         ],
+    "FormulasArgs":[
+    [0.25]
+],
+    "Executors":[
+            "JCombatExecutorDamageDataChange"
+         ]
+   }
+]

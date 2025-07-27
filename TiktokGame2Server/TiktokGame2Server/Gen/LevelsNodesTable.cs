@@ -31,15 +31,6 @@ namespace JFramework
         //前置节点
         public string PreUid;
 
-        //关卡节点Uid
-        public string PrefabUid;
-
-        //底座预制体UID
-        public string BottomPrefabUid;
-
-        //成就预制体Uid
-        public string StarPrefabUid;
-
         //阵型Uid
         public string FormationUid;
 

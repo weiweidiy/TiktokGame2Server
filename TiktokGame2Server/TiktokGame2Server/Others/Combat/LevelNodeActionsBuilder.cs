@@ -6,9 +6,11 @@ namespace TiktokGame2Server.Others
     {
         string formationUnitBusinessId;
         IJCombatTurnBasedEventRecorder recorder;
-        public LevelNodeActionsBuilder(string formationUnitBusinessId, IJCombatTurnBasedEventRecorder recorder) {
+        TiktokConfigService tiktokConfigService;
+        public LevelNodeActionsBuilder(string formationUnitBusinessId, IJCombatTurnBasedEventRecorder recorder, TiktokConfigService tiktokConfigService) {
             this.formationUnitBusinessId = formationUnitBusinessId;
             this.recorder = recorder;
+            this.tiktokConfigService = tiktokConfigService;
         }
         public List<IJCombatAction> Create()
         {
@@ -18,9 +20,10 @@ namespace TiktokGame2Server.Others
 
             foreach(var actionBusinessId in actionBusinessIds)
             {
-                var finder1 = new JCombatDefaultFinder();
-                var formula = new TiktokNormalFormula();
-                var executor1 = new JCombatExecutorDamage(finder1, formula);
+                var args = tiktokConfigService.GetActionFormulasArgs(actionBusinessId, 0);
+                var finder1 = new JCombatDefaultFinder(null);
+                var formula = new TiktokDamageFormula(new float[] { 1});
+                var executor1 = new JCombatExecutorDamage(finder1, formula, null);
                 var lstExecutor1 = new List<IJCombatExecutor>();
                 lstExecutor1.Add(executor1);
 
@@ -41,10 +44,13 @@ namespace TiktokGame2Server.Others
         {
             var result = new List<string>();
 
-            result.Add("Action1");
-
+            var soldierBusinessId = tiktokConfigService.GetFormationUnitSoldierBusinessId(formationUnitBusinessId);
+            var actions = tiktokConfigService.GetSoldierActions(soldierBusinessId);
+            result.AddRange(actions);
             return result;
         }
+
+
     }
 }
 

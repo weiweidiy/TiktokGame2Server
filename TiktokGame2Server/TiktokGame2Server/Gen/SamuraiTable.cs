@@ -16,9 +16,6 @@ namespace JFramework
         //唯一标识
         public string Uid{ get;set;} 
 
-        //名字
-        public string Name;
-
         //武力
         public int Power;
 

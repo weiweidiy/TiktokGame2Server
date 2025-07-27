@@ -11,6 +11,7 @@ namespace TiktokGame2Server.Others
             // 可以在这里添加额外的初始化逻辑
         }
 
+        #region 默认配置相关
         public string GetDefaultSamuraiBusinessId() => "1";
         public int GetDefaultFormationPoint() => 4;
         public int GetAtkFormationType() => 1;
@@ -34,7 +35,33 @@ namespace TiktokGame2Server.Others
             }
             return samuraiCfg.SoldierUid;
         }
+        #endregion
 
+        #region 关卡相关
+        /// <summary>
+        /// 获取下一个关卡的BusinessId
+        /// </summary>
+        /// <param name="levelBusinessId"></param>
+        /// <returns></returns>
+        public string GetNextLevel(string levelBusinessId)
+        {
+            var levelCfg = Get<LevelsCfgData>(levelBusinessId);
+            return levelCfg.Next;
+        }
+
+        /// <summary>
+        /// 获取前置关卡的BusinessId
+        /// </summary>
+        /// <param name="levelBusinessId"></param>
+        /// <returns></returns>
+        public string GetPreLevel(string levelBusinessId)
+        {
+            var levelCfg = Get<LevelsCfgData>(levelBusinessId);
+            return levelCfg.Pre;
+        }
+        #endregion
+
+        #region 关卡节点相关
         /// <summary>
         /// 判断是否是新关卡的第一个节点
         /// </summary>
@@ -83,27 +110,7 @@ namespace TiktokGame2Server.Others
             return nodeCfg.PreUid;
         }
 
-        /// <summary>
-        /// 获取下一个关卡的BusinessId
-        /// </summary>
-        /// <param name="levelBusinessId"></param>
-        /// <returns></returns>
-        public string GetNextLevel(string levelBusinessId)
-        {
-            var levelCfg = Get<LevelsCfgData>(levelBusinessId);
-            return levelCfg.Next;
-        }
 
-        /// <summary>
-        /// 获取前置关卡的BusinessId
-        /// </summary>
-        /// <param name="levelBusinessId"></param>
-        /// <returns></returns>
-        public string GetPreLevel(string levelBusinessId)
-        {
-            var levelCfg = Get<LevelsCfgData>(levelBusinessId);
-            return levelCfg.Pre;
-        }
 
         /// <summary>
         /// 获取关卡节点的阵型配置
@@ -122,7 +129,9 @@ namespace TiktokGame2Server.Others
             var foramtionCfg = Get<FormationsCfgData>(formationUid);
             return foramtionCfg.UnitsUid.ToArray();
         }
+        #endregion
 
+        #region 副本阵型相关
         /// <summary>
         /// 获取阵型单位的武士id
         /// </summary>
@@ -144,7 +153,9 @@ namespace TiktokGame2Server.Others
             var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
             return formationUnitCfg.SoldierUid;
         }
+        #endregion
 
+        #region samurai相关
         /// <summary>
         /// 获取武士的战斗力
         /// </summary>
@@ -184,7 +195,9 @@ namespace TiktokGame2Server.Others
         {
             return Get<SamuraiCfgData>(samuraiBusinessId)?.Speed ?? 0;
         }
+        #endregion
 
+        #region soldier相关
         /// <summary>
         /// 获取兵种的攻击力
         /// </summary>
@@ -213,6 +226,138 @@ namespace TiktokGame2Server.Others
         public int GetSoldierSpeed(string soldierBusinessId)
         {
             return Get<SoldiersCfgData>(soldierBusinessId)?.Speed ?? 0;
+        }
+
+        /// <summary>
+        /// 获取兵种的技能列表
+        /// </summary>
+        /// <param name="soldierBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string[] GetSoldierActions(string soldierBusinessId)
+        {
+            var soldierCfg = Get<SoldiersCfgData>(soldierBusinessId);
+            if (soldierCfg == null)
+            {
+                throw new Exception($"SoldiersCfgData not found for businessId: {soldierBusinessId}");
+            }
+            return soldierCfg.Actions.ToArray();
+        }
+        #endregion
+
+        public string[] GetActionTriggersName(string actionBusinessId)
+        {
+            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+            if (actionCfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            return actionCfg.Triggers.ToArray();
+        }
+
+        //public float[] GetActionTriggersArgs(string actionBusinessId, int index)
+        //{
+        //    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+        //    if (actionCfg == null)
+        //    {
+        //        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+        //    }
+        //    if (index < 0 || index >= actionCfg.TriggersArgs.Count)
+        //    {
+        //        throw new IndexOutOfRangeException($"TriggerArgs index {index} is out of range for action {actionBusinessId}");
+        //    }
+        //    var args = actionCfg.TriggersArgs[index];
+        //    return args.ToArray();
+        //}
+
+        /// <summary>
+        /// 获取指定action的查找者名称
+        /// </summary>
+        /// <param name="actionBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string GetActionFinderName(string actionBusinessId)
+        {
+            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+            if (actionCfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            return actionCfg.Finder;
+        }
+
+        /// <summary>
+        /// 获取指定action的查找者参数
+        /// </summary>
+        /// <param name="actionBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public float[] GetActionFinderArgs(string actionBusinessId)
+        {
+            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+            if (actionCfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            return new float[] { actionCfg.FinderArgs };
+        }
+
+        /// <summary>
+        /// 获取指定action的公式名称列表
+        /// </summary>
+        /// <param name="actionBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string[] GetActionFormulasName(string actionBusinessId)
+        {
+            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+            if (actionCfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            return actionCfg.Formulas.ToArray();
+        }
+
+        /// <summary>
+        /// 获取指定action的公式参数列表
+        /// </summary>
+        /// <param name="actionBusinessId"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="IndexOutOfRangeException"></exception>
+        public float[] GetActionFormulasArgs(string actionBusinessId, int index)
+        {
+            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+            if (actionCfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            if (index < 0 || index >= actionCfg.FormulasArgs.Count)
+            {
+                throw new IndexOutOfRangeException($"FormulaArgs index {index} is out of range for action {actionBusinessId}");
+            }
+
+            var args = actionCfg.FormulasArgs[index];
+            return args.ToArray();
+
+        }
+
+
+        /// <summary>
+        /// 获取指定action的执行者名称列表
+        /// </summary>
+        /// <param name="actionBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string[] GetActionExecutorsName(string actionBusinessId)
+        {
+            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+            if (actionCfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            return actionCfg.Executors.ToArray();
         }
     }
 }

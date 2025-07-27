@@ -27,7 +27,7 @@ namespace TiktokGame2Server.Others
                     continue;
 
                 var unitBuilder = new LevelNodeUnitBuilder(new LevelNodeAttrBuilder(formationUnitBusinessId)
-                        , new LevelNodeActionsBuilder(formationUnitBusinessId,recorder)
+                        , new LevelNodeActionsBuilder(formationUnitBusinessId,recorder,tiktokConfigService)
                         , formationUnitBusinessId, tiktokConfigService);
 
                 var formation = new JCombatFormationInfo();

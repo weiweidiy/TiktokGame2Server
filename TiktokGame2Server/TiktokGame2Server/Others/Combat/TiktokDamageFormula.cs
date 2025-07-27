@@ -5,15 +5,24 @@ namespace TiktokGame2Server.Others
     /// <summary>
     /// 常用的伤害计算公式，攻击-防御
     /// </summary>
-    public class TiktokNormalFormula : JCombatFormula
+    public class TiktokDamageFormula : JCombatFormulaBase
     {
-        public override int CalcHitValue(IJAttributeableUnit target)
+        public TiktokDamageFormula(float[] args) : base(args)
+        {
+        }
+
+        public override float CalcHitValue(IJAttributeableUnit target)
         {
             //伤害= 释放者攻击力 * 释放者Power - 目标防御力 * 目标Def
             var caster = query.GetUnit(GetOwner().GetCaster());
             var atk = caster.GetAttribute("Atk") as GameAttributeInt;
             var targetDef = target.GetAttribute("Def") as GameAttributeInt;
-            return atk.CurValue - targetDef.CurValue;
+            return Math.Max(1, atk.CurValue - targetDef.CurValue) * GetArg(0);
+        }
+
+        protected override int GetValidArgsCount()
+        {
+            return 1;
         }
     }
 }

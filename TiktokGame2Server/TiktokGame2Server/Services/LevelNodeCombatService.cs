@@ -42,7 +42,7 @@ namespace TiktokGame2Server.Others
             eventRecorder = new JCombatTurnBasedEventRecorder(frameRecorder);
 
             //构建双方阵型信息
-            var playerFormationBuilder = new PlayerFormationBuilder(playerFormations, eventRecorder);
+            var playerFormationBuilder = new PlayerFormationBuilder(playerFormations, eventRecorder, tiktokConfigService);
             var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId,tiktokConfigService, eventRecorder);
             var playerFormationInfos = playerFormationBuilder.Build();
             var levelodeFormationInfos = levelNodeFormationBuilder.Build();

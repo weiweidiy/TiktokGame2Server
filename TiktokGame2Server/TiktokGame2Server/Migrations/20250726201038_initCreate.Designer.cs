@@ -12,7 +12,7 @@ using TiktokGame2Server.Entities;
 namespace TiktokGame2Server.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250724140022_initCreate")]
+    [Migration("20250726201038_initCreate")]
     partial class initCreate
     {
         /// <inheritdoc />

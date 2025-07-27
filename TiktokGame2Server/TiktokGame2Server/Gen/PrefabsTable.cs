@@ -16,8 +16,5 @@ namespace JFramework
         //唯一标识
         public string Uid{ get;set;} 
 
-        //预制体名字
-        public string PrefabName;
-
     }
 }
