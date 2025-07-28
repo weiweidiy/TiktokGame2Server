@@ -149,16 +149,15 @@ namespace TiktokGame2Server.Others
 
         #endregion
 
-        #region 副本阵型相关
+        #region 副本阵型单位相关
         /// <summary>
         /// 获取阵型单位的武士id
         /// </summary>
         /// <param name="formationUnitBusinessId"></param>
         /// <returns></returns>
-        public string GetFormationUnitSamuraiBusinessId(string formationUnitBusinessId)
+        public string GetFormationUnitSamuraiBusinessId(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
         {
-            var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
-            return formationUnitCfg.SamuraiUid;
+            return (cfg?.SamuraiUid) ?? Get<FormationUnitsCfgData>(formationUnitBusinessId).SamuraiUid;
         }
 
         /// <summary>
@@ -166,11 +165,159 @@ namespace TiktokGame2Server.Others
         /// </summary>
         /// <param name="formationUnitBusinessId"></param>
         /// <returns></returns>
-        public string GetFormationUnitSoldierBusinessId(string formationUnitBusinessId)
+        public string GetFormationUnitSoldierBusinessId(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            return (cfg?.SoldierUid) ?? Get<FormationUnitsCfgData>(formationUnitBusinessId).SoldierUid;
+        }
+
+        /// <summary>
+        /// 阵型单位的额外攻击力
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitExtraAtk(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            return (cfg?.Atk) ?? Get<FormationUnitsCfgData>(formationUnitBusinessId).Atk;
+        }
+
+        /// <summary>
+        /// 阵型单位的额外防御力
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitExtraDefence(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            return (cfg?.Def) ?? Get<FormationUnitsCfgData>(formationUnitBusinessId).Def;
+        }
+
+        /// <summary>
+        /// 阵型单位的额外速度
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitExtraSpeed(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            return (cfg?.Speed) ?? Get<FormationUnitsCfgData>(formationUnitBusinessId).Speed;
+        }
+
+        /// <summary>
+        /// 阵型单位的额外生命值
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationeUnitExtraHp(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
         {
             var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
-            return formationUnitCfg.SoldierUid;
+            return 0; //to do:读取配置
         }
+
+        /// <summary>
+        /// 阵型单位的额外等级
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitExtraLevel(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
+            return 1;//to do:读取配置
+        }
+
+        /// <summary>
+        /// 获取阵型单位的性别
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitSex(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
+            return 0;//to do:
+        }
+
+        /// <summary>
+        /// 获取阵型单位的攻击力
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public int GetFormationUnitAttack(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var soldier = GetFormationUnitSoldierBusinessId(formationUnitBusinessId, cfg);
+            var atk = GetSoldierAttack(soldier);
+            var extraAtk = GetFormationUnitExtraAtk(formationUnitBusinessId, cfg);
+            return atk + extraAtk;
+        }
+
+        /// <summary>
+        /// 获取阵型单位的防御力
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitDefence(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var soldier = GetFormationUnitSoldierBusinessId(formationUnitBusinessId, cfg);
+            var def = GetSoldierDefence(soldier);
+            var extraDef = GetFormationUnitExtraDefence(formationUnitBusinessId, cfg);
+            return def + extraDef;
+        }
+
+        /// <summary>
+        /// 获取阵型单位的速度
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitSpeed(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var samurai = GetFormationUnitSamuraiBusinessId(formationUnitBusinessId, cfg);
+            var speed = GetSamuraiSpeed(samurai);
+            var extraSpeed = GetFormationUnitExtraSpeed(formationUnitBusinessId, cfg);
+            return speed + extraSpeed;
+        }
+
+        /// <summary>
+        /// 获取阵型单位的最大生命值
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitMaxHp(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var level = GetFormationUnitExtraLevel(formationUnitBusinessId, cfg);
+            var extraHp = GetFormationeUnitExtraHp(formationUnitBusinessId, cfg);
+            return FormulaMaxHp(level) + extraHp;
+        }
+
+        /// <summary>
+        /// 获取阵型单位的战斗力
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitPower(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var samurai = GetFormationUnitSamuraiBusinessId(formationUnitBusinessId, cfg);
+            return GetSamuraiPower(samurai);
+        }
+
+        /// <summary>
+        /// 获取阵型单位的守备力
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitDef(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var samurai = GetFormationUnitSamuraiBusinessId(formationUnitBusinessId, cfg);
+            return GetSamuraiDef(samurai);
+        }
+
+        /// <summary>
+        /// 获取阵型单位的智力
+        /// </summary>
+        /// <param name="formationUnitBusinessId"></param>
+        /// <returns></returns>
+        public int GetFormationUnitIntel(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
+        {
+            var samurai = GetFormationUnitSamuraiBusinessId(formationUnitBusinessId, cfg);
+            return GetSamuraiIntel(samurai);
+        }
+
         #endregion
 
         #region samurai相关
@@ -199,7 +346,7 @@ namespace TiktokGame2Server.Others
         /// </summary>
         /// <param name="samuraiBusinessId"></param>
         /// <returns></returns>
-        public int GetSamuraiInt(string samuraiBusinessId)
+        public int GetSamuraiIntel(string samuraiBusinessId)
         {
             return Get<SamuraiCfgData>(samuraiBusinessId)?.Intel ?? 0;
         }
@@ -213,6 +360,17 @@ namespace TiktokGame2Server.Others
         {
             return Get<SamuraiCfgData>(samuraiBusinessId)?.Speed ?? 0;
         }
+
+        /// <summary>
+        /// 获取武士的性别
+        /// </summary>
+        /// <param name="samuraiBusinessId"></param>
+        /// <returns></returns>
+        public int GetSamuraiSex(string samuraiBusinessId)
+        {
+            return 0; // to do: 读取配置
+        }
+
         #endregion
 
         #region soldier相关
@@ -379,6 +537,29 @@ namespace TiktokGame2Server.Others
             return actionCfg.Executors.ToArray();
         }
 
+        #endregion
+
+        #region 公式相关
+        /// <summary>
+        /// 计算最大血量
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public int FormulaMaxHp(int level)
+        {
+            return (int)(1000 * (1 + level / 10f)); //to do: 计算最大HP
+        }
+
+        /// <summary>
+        /// 根据经验值计算等级
+        /// </summary>
+        /// <param name="experience"></param>
+        /// <returns></returns>
+        public int FormulaLevel(int experience)
+        {
+            //to do: 计算等级
+            return (int)(Math.Sqrt(experience / 100f));
+        }
         #endregion
     }
 }

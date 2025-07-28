@@ -15,8 +15,8 @@ namespace TiktokGame2Server.Others
         {
             //伤害= 释放者攻击力 * 释放者Power - 目标防御力 * 目标Def
             var caster = query.GetUnit(GetOwner().GetCaster());
-            var atk = caster.GetAttribute("Atk") as GameAttributeInt;
-            var targetDef = target.GetAttribute("Def") as GameAttributeInt;
+            var atk = caster.GetAttribute("Attack") as GameAttributeInt;
+            var targetDef = target.GetAttribute("Defence") as GameAttributeInt;
             return Math.Max(1, atk.CurValue - targetDef.CurValue) * GetArg(0);
         }
 

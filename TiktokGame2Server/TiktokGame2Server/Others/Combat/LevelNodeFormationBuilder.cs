@@ -26,7 +26,7 @@ namespace TiktokGame2Server.Others
                 if (formationUnitBusinessId == "0")
                     continue;
 
-                var unitBuilder = new LevelNodeUnitBuilder(new LevelNodeAttrBuilder(formationUnitBusinessId)
+                var unitBuilder = new LevelNodeUnitBuilder(new TiktokAttributesBuilder(new FormationUnitAttributeService(formationUnitBusinessId, tiktokConfigService))
                         , new LevelNodeActionsBuilder(formationUnitBusinessId,recorder,tiktokConfigService)
                         , formationUnitBusinessId, tiktokConfigService);
 

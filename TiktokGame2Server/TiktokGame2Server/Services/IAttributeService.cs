@@ -6,7 +6,7 @@ namespace TiktokGame2Server.Others
     {
         int GetPower();
         int GetDef();
-        int GetInt();
+        int GetIntel();
         int GetSpeed();
         int GetLevel();
         int GetSex();

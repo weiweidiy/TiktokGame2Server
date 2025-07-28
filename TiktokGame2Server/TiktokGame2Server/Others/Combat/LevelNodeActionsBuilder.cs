@@ -35,7 +35,7 @@ namespace TiktokGame2Server.Others
 
         //    foreach(var actionBusinessId in actionBusinessIds)
         //    {
-        //        var args = tiktokConfigService.GetActionFormulasArgs(actionBusinessId, 0);
+        //        var args = attributeService.GetActionFormulasArgs(actionBusinessId, 0);
         //        var finder1 = new JCombatDefaultFinder(null);
         //        var formula = new TiktokDamageFormula(new float[] { 1});
         //        var executor1 = new JCombatExecutorDamage(finder1, formula, null);

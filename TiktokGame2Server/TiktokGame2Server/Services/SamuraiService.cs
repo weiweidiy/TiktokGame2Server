@@ -6,9 +6,11 @@ namespace TiktokGame2Server.Others
     public class SamuraiService : ISamuraiService
     {
         private readonly MyDbContext _dbContext;
-        public SamuraiService(MyDbContext dbContext)
+        private readonly TiktokConfigService tiktokConfigService;
+        public SamuraiService(MyDbContext dbContext, TiktokConfigService tiktokConfigService)
         {
             _dbContext = dbContext;
+            this.tiktokConfigService = tiktokConfigService ?? throw new ArgumentNullException(nameof(tiktokConfigService));
         }
         public async Task<List<Samurai>> GetAllSamuraiAsync(int playerId)
         {
@@ -47,7 +49,8 @@ namespace TiktokGame2Server.Others
             {
                 BusinessId = samuraiUid,
                 PlayerId = playerId,
-                SoldierUid = soldierUid
+                SoldierUid = soldierUid,
+                CurHp = tiktokConfigService.FormulaMaxHp(1),//默认1级
             };
             _dbContext.Samurais.Add(samurai);
             await _dbContext.SaveChangesAsync();
