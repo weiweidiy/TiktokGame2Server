@@ -96,9 +96,10 @@ var app = builder.Build();
 
 var configService = app.Services.GetRequiredService<TiktokConfigService>();
 
+//"D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Configs\\"
 //"E:\\UnityProjects\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Configs\\"
 
-await configService.PreloadAllAsync("D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Configs\\", ".json"); // 如果 Main 是 async Task
+await configService.PreloadAllAsync("E:\\UnityProjects\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Configs\\", ".json"); // 如果 Main 是 async Task
 
 app.UseMiddleware<TokenAuthMiddleware>();
 

@@ -4,7 +4,7 @@
     "SamuraiUid":"1",
     "SoldierUid":"1",
     "Atk":100,
-    "Def":100,
+    "Def":5,
     "Hp":100,
     "Speed":100
    },
@@ -13,7 +13,7 @@
     "SamuraiUid":"2",
     "SoldierUid":"1",
     "Atk":100,
-    "Def":100,
+    "Def":5,
     "Hp":100,
     "Speed":100
    },
@@ -22,7 +22,7 @@
     "SamuraiUid":"3",
     "SoldierUid":"1",
     "Atk":100,
-    "Def":100,
+    "Def":5,
     "Hp":100,
     "Speed":100
    }
