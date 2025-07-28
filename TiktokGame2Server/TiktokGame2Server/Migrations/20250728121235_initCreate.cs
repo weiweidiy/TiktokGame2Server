@@ -18,8 +18,8 @@ namespace TiktokGame2Server.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Uid = table.Column<string>(type: "text", nullable: false),
-                    Role = table.Column<string>(type: "text", nullable: false),
+                    Uid = table.Column<string>(type: "text", nullable: true),
+                    Role = table.Column<string>(type: "text", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -78,6 +78,7 @@ namespace TiktokGame2Server.Migrations
                     BusinessId = table.Column<string>(type: "text", nullable: false),
                     Level = table.Column<int>(type: "integer", nullable: false),
                     Experience = table.Column<int>(type: "integer", nullable: false),
+                    CurHp = table.Column<int>(type: "integer", nullable: false),
                     SoldierUid = table.Column<string>(type: "text", nullable: false),
                     PlayerId = table.Column<int>(type: "integer", nullable: false)
                 },

@@ -1,37 +1,31 @@
 ﻿using JFramework.Game;
 using System.Reflection;
 using System.Text;
+using TiktokGame2Server.Entities;
 
 namespace TiktokGame2Server.Others
 {
 
     public class PlayerActionsBuilder : TiktokJCombatAcionsBaseBuilder
     {
-        int playerId;
-        int samuraiId;
+        Samurai samurai;
 
-        public PlayerActionsBuilder(int playerId, int samuraiId, IJCombatTurnBasedEventRecorder recorder, TiktokConfigService tiktokConfigService):base(recorder, tiktokConfigService)
+        public PlayerActionsBuilder(Samurai samurai, IJCombatTurnBasedEventRecorder recorder, TiktokConfigService tiktokConfigService):base(recorder, tiktokConfigService)
         {
-            this.playerId = playerId;
-            this.samuraiId = samuraiId;
+            this.samurai = samurai ?? throw new ArgumentNullException(nameof(samurai));
         }
 
        
         protected override List<string> GetActionsBusiness()
         {
-            return GetActionsBusiness(playerId, samuraiId);
-        }
-
-        private List<string> GetActionsBusiness(int playerId, int samuraiId)
-        {
-            var result = new List<string>();
-
-            result.Add("1");
-            result.Add("2");
-            return result;
-        }
-
-       
+            var level = samurai.Level;
+            var smuraiBusinessId = samurai.BusinessId;
+            var samuraiAction = tiktokConfigService.GetSamuraiActions(level, smuraiBusinessId);
+            var soldierAction = tiktokConfigService.GetSoldierActions(samurai.SoldierUid);
+            // 根据武士等级和武士ID获取可用的动作
+            samuraiAction.AddRange(soldierAction);
+            return samuraiAction;
+        }       
     }
 }
 

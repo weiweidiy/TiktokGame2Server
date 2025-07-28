@@ -27,6 +27,10 @@ namespace TiktokGame2Server.Others
         //List<JCombatFormationInfo> lstFormationQuery = null;
         public async Task<TiktokJCombatTurnBasedReportData> GetReport(int playerId, string levelNodeBusinessId)
         {
+            //从Player表获取玩家信息
+            var player = await _dbContext.Players.FindAsync(playerId);
+            var playerUid = player?.Uid;
+
             //创建阵型查询列表（包含玩家阵型和NPC阵型）
             var playerFormations = await formationService.GetFormationAsync(tiktokConfigService.GetAtkFormationType(), playerId);
             if (playerFormations == null || playerFormations.Count == 0)
@@ -78,7 +82,7 @@ namespace TiktokGame2Server.Others
                 var unit1 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, attrNameQuery/*, eventRecorder*/);
                 playerUnits.Add(unit1);
             }
-            team1 = new JCombatTeam("team1", playerUnits);
+            team1 = new JCombatTeam(playerUid, playerUnits);
 
             //创建levelnode unit对象
             var levelNodeUnits = new List<IJCombatUnit>();
@@ -88,7 +92,7 @@ namespace TiktokGame2Server.Others
                 var unit2 = new JCombatTurnBasedUnit(formationInfo.UnitInfo, attrNameQuery/*, eventRecorder*/);
                 levelNodeUnits.Add(unit2);
             }
-            team2 = new JCombatTeam("team2", levelNodeUnits);
+            team2 = new JCombatTeam(levelNodeBusinessId, levelNodeUnits);
 
             var lstTeams = new List<IJCombatTeam>();
             lstTeams.Add(team1);

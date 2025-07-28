@@ -31,7 +31,7 @@ namespace TiktokGame2Server.Others
         public int GetLevel()
         {
             var experience = samurai.Experience;
-            return 1; //to do: 计算等级
+            return tiktokConfigService.FormulaLevel(experience);
         }
 
         public int GetSex()
@@ -40,12 +40,12 @@ namespace TiktokGame2Server.Others
         }
         public int GetHp()
         {
-            return samurai.CurHp; //to do: 从数据库中获取玩家的HP
+            return samurai.CurHp; 
         }
         public int GetMaxHp()
         {
             var level = GetLevel();
-            return 1000; //to do: 计算最大HP
+            return tiktokConfigService.FormulaMaxHp(level); 
         }
 
         public int GetAttack()

@@ -321,6 +321,11 @@ namespace TiktokGame2Server.Others
         #endregion
 
         #region samurai相关
+        public bool IsValidSamurai(string samuraiBusinessId)
+        {
+            return Get<SamuraiCfgData>(samuraiBusinessId) != null;
+        }
+
         /// <summary>
         /// 获取武士的战斗力
         /// </summary>
@@ -369,6 +374,22 @@ namespace TiktokGame2Server.Others
         public int GetSamuraiSex(string samuraiBusinessId)
         {
             return 0; // to do: 读取配置
+        }
+
+        /// <summary>
+        /// 根据武士等级，获取武士解锁的action列表
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="smuraiBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public List<string> GetSamuraiActions(int level, string smuraiBusinessId)
+        {           
+            var result = new List<string>();
+            //to do: 根据武士等级和武士BusinessId获取武士解锁的action列表
+            result.Add("1");
+            result.Add("2");
+            return result;
         }
 
         #endregion
@@ -558,8 +579,10 @@ namespace TiktokGame2Server.Others
         public int FormulaLevel(int experience)
         {
             //to do: 计算等级
-            return (int)(Math.Sqrt(experience / 100f));
+            return (int)(Math.Sqrt(experience / 100f)) + 1;
         }
+
+
         #endregion
     }
 }

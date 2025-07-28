@@ -12,7 +12,7 @@ using TiktokGame2Server.Entities;
 namespace TiktokGame2Server.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250726201038_initCreate")]
+    [Migration("20250728121235_initCreate")]
     partial class initCreate
     {
         /// <inheritdoc />
@@ -37,11 +37,9 @@ namespace TiktokGame2Server.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Role")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Uid")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -144,6 +142,9 @@ namespace TiktokGame2Server.Migrations
                     b.Property<string>("BusinessId")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("CurHp")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Experience")
                         .HasColumnType("integer");
