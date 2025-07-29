@@ -24,7 +24,7 @@ namespace TiktokGame2Server.Others
                 SamuraiBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiBusinessId,
                 SoldierBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SoldierBusinessId,
                 Actions = GetActions(unit),
-                CurHp = ((unit as IJCombatTurnBasedUnit).GetAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt).CurValue,
+                CurHp = ((unit as IJCombatTurnBasedUnit).GetOriginAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt).CurValue,
             } as T;
         }
 
@@ -37,7 +37,7 @@ namespace TiktokGame2Server.Others
                 SamuraiBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiBusinessId,
                 SoldierBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SoldierBusinessId,
                 Actions = GetActions(unit),
-                CurHp = ((unit as IJCombatTurnBasedUnit).GetOriginAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt).CurValue,
+                CurHp = ((unit as IJCombatTurnBasedUnit).GetAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt).CurValue,
             } as T;
         }
 

@@ -5,8 +5,8 @@
     "NodeIndex":0,
     "EventType":"Fight",
     "NextUid":[
-    ["2"]
-],
+            "2"
+         ],
     "PreUid":"0",
     "FormationUid":"1",
     "CombatSceneUid":"1"
@@ -17,8 +17,8 @@
     "NodeIndex":1,
     "EventType":"Fight",
     "NextUid":[
-    ["3"]
-],
+            "3"
+         ],
     "PreUid":"1",
     "FormationUid":"2",
     "CombatSceneUid":"2"
@@ -29,8 +29,9 @@
     "NodeIndex":2,
     "EventType":"Fight",
     "NextUid":[
-    ["4", "5"]
-],
+            "4",
+            "5"
+         ],
     "PreUid":"2",
     "FormationUid":"3",
     "CombatSceneUid":"3"
@@ -41,8 +42,8 @@
     "NodeIndex":3,
     "EventType":"Fight",
     "NextUid":[
-    ["0"]
-],
+            "0"
+         ],
     "PreUid":"3",
     "FormationUid":"1",
     "CombatSceneUid":"1"
@@ -53,8 +54,8 @@
     "NodeIndex":4,
     "EventType":"Fight",
     "NextUid":[
-    ["6"]
-],
+            "6"
+         ],
     "PreUid":"3",
     "FormationUid":"2",
     "CombatSceneUid":"1"
@@ -65,8 +66,8 @@
     "NodeIndex":0,
     "EventType":"Fight",
     "NextUid":[
-    ["7"]
-],
+            "7"
+         ],
     "PreUid":"5",
     "FormationUid":"3",
     "CombatSceneUid":"1"
@@ -77,8 +78,8 @@
     "NodeIndex":1,
     "EventType":"Fight",
     "NextUid":[
-    ["8"]
-],
+            "8"
+         ],
     "PreUid":"6",
     "FormationUid":"1",
     "CombatSceneUid":"1"
@@ -89,8 +90,8 @@
     "NodeIndex":2,
     "EventType":"Fight",
     "NextUid":[
-    ["9"]
-],
+            "9"
+         ],
     "PreUid":"7",
     "FormationUid":"2",
     "CombatSceneUid":"1"
@@ -101,8 +102,8 @@
     "NodeIndex":3,
     "EventType":"Fight",
     "NextUid":[
-    ["10"]
-],
+            "10"
+         ],
     "PreUid":"8",
     "FormationUid":"3",
     "CombatSceneUid":"1"
@@ -113,8 +114,8 @@
     "NodeIndex":4,
     "EventType":"Fight",
     "NextUid":[
-    ["11"]
-],
+            "11"
+         ],
     "PreUid":"9",
     "FormationUid":"2",
     "CombatSceneUid":"1"
@@ -125,8 +126,8 @@
     "NodeIndex":5,
     "EventType":"Fight",
     "NextUid":[
-    ["0"]
-],
+            "0"
+         ],
     "PreUid":"10",
     "FormationUid":"2",
     "CombatSceneUid":"1"

@@ -5,26 +5,30 @@
     "Finder":"JCombatDefaultFinder",
     "FinderArgs":0.0,
     "Formulas":[
-    ["TiktokDamageFormula"]
+            "TiktokDamageFormula"
+         ],
+    "FormulasArgs":[
+    [0.5]
 ],
-    "FormulasArgs":,
     "Executors":[
-    ["JCombatExecutorDamage"]
-]
+            "JCombatExecutorDamage"
+         ]
    },
   {
     "Uid":"2",
     "Triggers":[
-    ["JCombatBeforeDamageTrigger"]
-],
+            "JCombatBeforeDamageTrigger"
+         ],
     "Finder":"",
     "FinderArgs":0.0,
     "Formulas":[
-    ["JCombatFormulaDamageDataChange"]
+            "JCombatFormulaDamageDataChange"
+         ],
+    "FormulasArgs":[
+    [0.25]
 ],
-    "FormulasArgs":,
     "Executors":[
-    ["JCombatExecutorDamageDataChange"]
-]
+            "JCombatExecutorDamageDataChange"
+         ]
    }
 ]

@@ -173,7 +173,6 @@ namespace JFramework
             //    ms.Seek(0, SeekOrigin.Begin);
             //    return (T)formatter.Deserialize(ms);
             //}
-
             if (obj == null) return default(T);
             var json = JsonConvert.SerializeObject(obj);
             return JsonConvert.DeserializeObject<T>(json);
