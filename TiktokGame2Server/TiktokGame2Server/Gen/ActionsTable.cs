@@ -29,7 +29,7 @@ namespace JFramework
         public List<string> Formulas;
 
         //执行器参数
-        public List<List<float>> FormulasArgs;
+        public int FormulasArgs;
 
         //执行器
         public List<string> Executors;

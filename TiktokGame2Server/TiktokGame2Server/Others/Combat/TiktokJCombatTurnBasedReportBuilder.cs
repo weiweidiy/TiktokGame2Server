@@ -8,9 +8,24 @@ namespace TiktokGame2Server.Others
         {
         }
 
+
+
         protected override JCombatTurnBasedReportData<T> CreateReportData<T>()
         {
             return (JCombatTurnBasedReportData<T>)(object)new TiktokJCombatTurnBasedReportData();
+        }
+
+        protected override T CreateOriginUnitData<T>(IJCombatUnit unit)
+        {
+            return new TiktokJCombatUnitData
+            {
+                Uid = unit.Uid,
+                Seat = seatQuery.GetSeat(unit.Uid),
+                SamuraiBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiBusinessId,
+                SoldierBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SoldierBusinessId,
+                Actions = GetActions(unit),
+                CurHp = ((unit as IJCombatTurnBasedUnit).GetAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt).CurValue,
+            } as T;
         }
 
         protected override T CreateUnitData<T>(IJCombatUnit unit)
@@ -21,9 +36,12 @@ namespace TiktokGame2Server.Others
                 Seat = seatQuery.GetSeat(unit.Uid),
                 SamuraiBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SamuraiBusinessId,
                 SoldierBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SoldierBusinessId,
-                Actions = GetActions(unit)
+                Actions = GetActions(unit),
+                CurHp = ((unit as IJCombatTurnBasedUnit).GetOriginAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt).CurValue,
             } as T;
         }
+
+
 
         List<KeyValuePair<string, string>> GetActions(IJCombatUnit unit)
         {
@@ -48,6 +66,8 @@ namespace TiktokGame2Server.Others
         public int Seat { get; set; }
         public string? SamuraiBusinessId { get; set; }
         public string? SoldierBusinessId { get; set; } // 可能需要在其他地方使用
+        public int CurHp { get; set; }
+        public int MaxHp { get; set; }
         public List<KeyValuePair<string, string>>? Actions { get; set; } 
     }
 
