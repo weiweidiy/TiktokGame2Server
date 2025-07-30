@@ -6,12 +6,13 @@ namespace TiktokGame2Server.Others
     {
         TiktokConfigService tiktokConfigService;
         string levelNodeBusinessId;
-        IJCombatTurnBasedEventRecorder recorder;
-        public LevelNodeFormationBuilder(string levelNodeBusinessId,  TiktokConfigService tiktokConfigService, IJCombatTurnBasedEventRecorder recorder) 
+        IJCombatContext context;
+        public LevelNodeFormationBuilder(string levelNodeBusinessId,  TiktokConfigService tiktokConfigService, IJCombatContext context) 
         {
             this.tiktokConfigService = tiktokConfigService;
             this.levelNodeBusinessId = levelNodeBusinessId;
-            this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
+
         }
 
         public List<JCombatFormationInfo> Build()
@@ -27,7 +28,7 @@ namespace TiktokGame2Server.Others
                     continue;
 
                 var unitBuilder = new LevelNodeUnitBuilder(new TiktokAttributesBuilder(new FormationUnitAttributeService(formationUnitBusinessId, tiktokConfigService))
-                        , new LevelNodeActionsBuilder(formationUnitBusinessId,recorder,tiktokConfigService)
+                        , new LevelNodeActionsBuilder(formationUnitBusinessId,tiktokConfigService, context)
                         , formationUnitBusinessId, tiktokConfigService);
 
                 var formation = new JCombatFormationInfo();

@@ -6,7 +6,7 @@ namespace TiktokGame2Server.Others
     {
         string formationUnitBusinessId;
 
-        public LevelNodeActionsBuilder(string formationUnitBusinessId, IJCombatTurnBasedEventRecorder recorder, TiktokConfigService tiktokConfigService) :base(recorder,tiktokConfigService)
+        public LevelNodeActionsBuilder(string formationUnitBusinessId,  TiktokConfigService tiktokConfigService, IJCombatContext context) :base(tiktokConfigService, context)
         {
             this.formationUnitBusinessId = formationUnitBusinessId;
 

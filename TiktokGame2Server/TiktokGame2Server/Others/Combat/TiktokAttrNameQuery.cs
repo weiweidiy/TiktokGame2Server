@@ -15,6 +15,11 @@ public partial class LevelNodeCombatService
             {
                 return TiktokAttributesType.Hp.ToString();
             }
+
+            public string GetMaxHpAttrName()
+            {
+                return TiktokAttributesType.MaxHp.ToString();
+            }
         }
 
     }

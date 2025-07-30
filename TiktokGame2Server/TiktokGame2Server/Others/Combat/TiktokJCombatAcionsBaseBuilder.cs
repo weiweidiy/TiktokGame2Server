@@ -5,11 +5,12 @@ namespace TiktokGame2Server.Others
     public abstract class TiktokJCombatAcionsBaseBuilder : IJCombatActionBuilder
     {
         protected TiktokConfigService tiktokConfigService;
-        protected IJCombatTurnBasedEventRecorder recorder;
-        public TiktokJCombatAcionsBaseBuilder(IJCombatTurnBasedEventRecorder recorder, TiktokConfigService tiktokConfigService)
+        protected IJCombatContext context;
+        public TiktokJCombatAcionsBaseBuilder(TiktokConfigService tiktokConfigService, IJCombatContext context)
         {
-            this.recorder = recorder;
+
             this.tiktokConfigService = tiktokConfigService;
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         protected abstract List<string> GetActionsBusiness();
@@ -22,6 +23,7 @@ namespace TiktokGame2Server.Others
 
             foreach (var actionBusinessId in actionBusinessIds)
             {
+                //构造触发器
                 var lstTriggers = new List<IJCombatTrigger>();
                 var triggersNames = GetTriggersName(actionBusinessId);
                 foreach (var triggerName in triggersNames)
@@ -30,16 +32,25 @@ namespace TiktokGame2Server.Others
                     lstTriggers.Add(trigger);
                 }
 
+                //构造finder
+                var actionFinder = CreateFinder(GetFinderName(actionBusinessId), null);
 
+                //构造执行器
                 var lstExecutors = new List<IJCombatExecutor>();
-
-                var finder = CreateFinder(GetFinderName(actionBusinessId), null);
-
+                var filtersNames = GetFiltersName(actionBusinessId);
+                var executorFindersNames = GetExecutorsFindersNames(actionBusinessId);
                 var formulasNames = GetFormulasName(actionBusinessId);
                 var executorNames = GetExecutorsNames(actionBusinessId);
-
                 for (int i = 0; i < formulasNames.Length; i++)
                 {
+                    //构造filter
+                    var filterName = filtersNames.Length > i ? filtersNames[i] : null;
+                    var filter = CreateFilter(filterName, null);
+
+                    var executorFinderName = executorFindersNames.Length > i ? executorFindersNames[i] : null;
+                    var executorFinder = CreateFinder(executorFinderName, null);
+
+                    //构造formula
                     var formulaName = formulasNames[i];
                     var formulaArgs = GetFormulasArgs(actionBusinessId, i);
                     if (formulaName == null || formulaName == "")
@@ -48,8 +59,10 @@ namespace TiktokGame2Server.Others
                     }
                     var formula = CreateFormula(formulaName, formulaArgs);
 
+
+
                     var executorName = executorNames.Length > i ? executorNames[i] : null;
-                    var executor = CreateExecutor(executorName, finder, formula, null);
+                    var executor = CreateExecutor(executorName, filter, executorFinder, formula, null);
 
                     lstExecutors.Add(executor);
                 }
@@ -57,15 +70,18 @@ namespace TiktokGame2Server.Others
                 var actionInfo = new TiktokJCombatActionInfo();
                 actionInfo.Uid = Guid.NewGuid().ToString();
                 actionInfo.ActionBusinessId = actionBusinessId;
-                actionInfo.Executors = lstExecutors;
                 actionInfo.Triggers = lstTriggers; // 这里可以添加触发器，如果有的话
+                actionInfo.Finder = actionFinder;
+                actionInfo.Executors = lstExecutors;
 
-                var action1 = new JCombatActionBase(actionInfo, recorder);
+                var action1 = new JCombatActionBase(actionInfo, context);
                 result.Add(action1);
             }
 
             return result;
         }
+
+
 
         string[] GetTriggersName(string actionBusinessId)
         {
@@ -77,10 +93,21 @@ namespace TiktokGame2Server.Others
             return tiktokConfigService.GetActionFinderName(actionBusinessId);
         }
 
+        string[] GetFiltersName(string actionBusinessId)
+        {
+            return tiktokConfigService.GetActionFiltersName(actionBusinessId);
+        }
+
+        string[] GetExecutorsFindersNames(string actionBusinessId)
+        {
+            return tiktokConfigService.GetExecutorsFindersNames(actionBusinessId);
+        }
+
         string[] GetFormulasName(string actionBusinessId)
         {
             return tiktokConfigService.GetActionFormulasName(actionBusinessId);
         }
+
 
         float[] GetFormulasArgs(string actionBusinessId, int index)
         {
@@ -115,7 +142,19 @@ namespace TiktokGame2Server.Others
             return (IJCombatTargetsFinder)TypeHelper.CreateInstanceByClassName(finderName, ctorArgs);
         }
 
-        IJCombatFormula CreateFormula(string formulaName, float[] args)
+        IJCombatFilter CreateFilter(string? filterName, float[] args)
+        {
+            if (filterName == null || filterName == "")
+            {
+                return null;
+            }
+            // 假设 args 已经定义
+            object[] ctorArgs = new object[] { args };
+            return (IJCombatFilter)TypeHelper.CreateInstanceByClassName(filterName, ctorArgs);
+
+        }
+
+        IJCombatFormula CreateFormula(string? formulaName, float[] args)
         {
             if (formulaName == null || formulaName == "")
             {
@@ -126,13 +165,13 @@ namespace TiktokGame2Server.Others
             return (IJCombatFormula)TypeHelper.CreateInstanceByClassName(formulaName, ctorArgs);
         }
 
-        IJCombatExecutor CreateExecutor(string executorName, IJCombatTargetsFinder finder, IJCombatFormula formula, float[] args)
+        IJCombatExecutor CreateExecutor(string executorName, IJCombatFilter filter, IJCombatTargetsFinder finder, IJCombatFormula formula, float[] args)
         {
             if (executorName == null || executorName == "")
             {
                 throw new ArgumentException("Executor name cannot be null or empty", nameof(executorName));
             }
-            object[] ctorArgs = new object[] { finder, formula, args };
+            object[] ctorArgs = new object[] { filter, finder, formula, args };
             return (IJCombatExecutor)TypeHelper.CreateInstanceByClassName(executorName, ctorArgs);
         }
     }

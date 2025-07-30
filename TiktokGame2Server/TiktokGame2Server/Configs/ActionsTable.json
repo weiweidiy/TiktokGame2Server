@@ -17,7 +17,7 @@
   {
     "Uid":"2",
     "Triggers":[
-            "JCombatBeforeDamageTrigger"
+            "JCombatBeforeHurtTrigger"
          ],
     "Finder":"",
     "FinderArgs":0.0,
@@ -25,7 +25,7 @@
             "JCombatFormulaDamageDataChange"
          ],
     "FormulasArgs":[
-    [0.25]
+    [0, 0.25]
 ],
     "Executors":[
             "JCombatExecutorDamageDataChange"

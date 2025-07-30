@@ -8,14 +8,14 @@ namespace TiktokGame2Server.Others
     {
         List<Formation> playerFormation;
 
-        IJCombatTurnBasedEventRecorder recorder;
+        IJCombatContext context;
 
         TiktokConfigService tiktokConfigService;
 
-        public PlayerFormationBuilder(List<Formation> playerFormation, IJCombatTurnBasedEventRecorder recorder, TiktokConfigService tiktokConfigService)
+        public PlayerFormationBuilder(List<Formation> playerFormation,  TiktokConfigService tiktokConfigService, IJCombatContext context)
         {
             this.playerFormation = playerFormation ?? throw new ArgumentNullException(nameof(playerFormation));
-            this.recorder = recorder ?? throw new ArgumentNullException(nameof(recorder));
+            this.context = context ?? throw new ArgumentNullException(nameof(context));
             this.tiktokConfigService = tiktokConfigService ?? throw new ArgumentNullException(nameof(tiktokConfigService));
         }
 
@@ -23,7 +23,7 @@ namespace TiktokGame2Server.Others
         {
             return playerFormation.Select(f =>
             {
-                var builder = new PlayerUnitBuilder(new TiktokAttributesBuilder(new PlayerAttributeService(f.Samurai, tiktokConfigService)), new PlayerActionsBuilder(f.Samurai,recorder,tiktokConfigService), f.Samurai);
+                var builder = new PlayerUnitBuilder(new TiktokAttributesBuilder(new PlayerAttributeService(f.Samurai, tiktokConfigService)), new PlayerActionsBuilder(f.Samurai,tiktokConfigService, context), f.Samurai);
                 var info = new JCombatFormationInfo
                 {
                     Point = f.FormationPoint,

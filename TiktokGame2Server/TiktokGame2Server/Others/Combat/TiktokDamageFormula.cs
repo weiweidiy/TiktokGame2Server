@@ -11,13 +11,13 @@ namespace TiktokGame2Server.Others
         {
         }
 
-        public override float CalcHitValue(IJAttributeableUnit target)
+        public override void CalcHitValue(IJAttributeableUnit target, ref float value)
         {
             //伤害= 释放者攻击力 * 释放者Power - 目标防御力 * 目标Def
             var caster = query.GetUnit(GetOwner().GetCaster());
             var atk = caster.GetAttribute("Attack") as GameAttributeInt;
             var targetDef = target.GetAttribute("Defence") as GameAttributeInt;
-            return Math.Max(1, atk.CurValue - targetDef.CurValue) * GetArg(0);
+            value = Math.Max(10, atk.CurValue - targetDef.CurValue) * GetArg(0);
         }
 
         protected override int GetValidArgsCount()

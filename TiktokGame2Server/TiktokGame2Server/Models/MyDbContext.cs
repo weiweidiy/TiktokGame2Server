@@ -15,6 +15,7 @@ namespace TiktokGame2Server.Entities
         public DbSet<Samurai> Samurais { get; set; }
 
         public DbSet<Formation> Formations { get; set; }
+        public DbSet<HpPool> HpPools { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

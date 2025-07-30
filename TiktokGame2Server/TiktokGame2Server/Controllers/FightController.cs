@@ -57,7 +57,7 @@ namespace TiktokGame2Server.Controllers
 
             var reportData = await levelNodeCombatService.GetReport(playerId, levelNodeBusinessId);
 
-            var result = true;
+            var result = reportData.winnerTeamUid == playerUid ? true : false;
 
             if(result)
             {

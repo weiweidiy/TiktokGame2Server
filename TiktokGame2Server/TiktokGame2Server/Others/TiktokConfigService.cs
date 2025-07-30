@@ -443,14 +443,9 @@ namespace TiktokGame2Server.Others
         #endregion
 
         #region action相关
-        public string[] GetActionTriggersName(string actionBusinessId)
+        public string[] GetActionTriggersName(string actionBusinessId, ActionsCfgData cfg = null)
         {
-            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-            if (actionCfg == null)
-            {
-                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-            }
-            return actionCfg.Triggers.ToArray();
+            return (cfg?.Triggers.ToArray()) ?? Get<ActionsCfgData>(actionBusinessId).Triggers.ToArray();
         }
 
         //public float[] GetActionTriggersArgs(string actionBusinessId, int index)
@@ -474,7 +469,7 @@ namespace TiktokGame2Server.Others
         /// <param name="actionBusinessId"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string GetActionFinderName(string actionBusinessId)
+        public string GetActionFinderName(string actionBusinessId, ActionsCfgData cfg = null)
         {
             var actionCfg = Get<ActionsCfgData>(actionBusinessId);
             if (actionCfg == null)
@@ -490,7 +485,7 @@ namespace TiktokGame2Server.Others
         /// <param name="actionBusinessId"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public float[] GetActionFinderArgs(string actionBusinessId)
+        public float[] GetActionFinderArgs(string actionBusinessId, ActionsCfgData cfg = null)
         {
             var actionCfg = Get<ActionsCfgData>(actionBusinessId);
             if (actionCfg == null)
@@ -501,12 +496,43 @@ namespace TiktokGame2Server.Others
         }
 
         /// <summary>
+        /// 获取筛选器名称列表
+        /// </summary>
+        /// <param name="actionBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public string[] GetActionFiltersName(string actionBusinessId, ActionsCfgData cfg = null)
+        {
+            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+            if (actionCfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            return new string[] {  };
+        }
+
+        /// <summary>
+        /// 获取执行器finder名称
+        /// </summary>
+        /// <param name="actionBusinessId"></param>
+        /// <returns></returns>
+        public string[] GetExecutorsFindersNames(string actionBusinessId, ActionsCfgData cfg = null)
+        {
+            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+            if (actionCfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            return new string[] { };
+        }
+
+        /// <summary>
         /// 获取指定action的公式名称列表
         /// </summary>
         /// <param name="actionBusinessId"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string[] GetActionFormulasName(string actionBusinessId)
+        public string[] GetActionFormulasName(string actionBusinessId, ActionsCfgData cfg = null)
         {
             var actionCfg = Get<ActionsCfgData>(actionBusinessId);
             if (actionCfg == null)
@@ -524,7 +550,7 @@ namespace TiktokGame2Server.Others
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
         /// <exception cref="IndexOutOfRangeException"></exception>
-        public float[] GetActionFormulasArgs(string actionBusinessId, int index)
+        public float[] GetActionFormulasArgs(string actionBusinessId, int index, ActionsCfgData cfg = null)
         {
             var actionCfg = Get<ActionsCfgData>(actionBusinessId);
             if (actionCfg == null)
@@ -548,7 +574,7 @@ namespace TiktokGame2Server.Others
         /// <param name="actionBusinessId"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string[] GetActionExecutorsName(string actionBusinessId)
+        public string[] GetActionExecutorsName(string actionBusinessId, ActionsCfgData cfg = null)
         {
             var actionCfg = Get<ActionsCfgData>(actionBusinessId);
             if (actionCfg == null)
@@ -581,6 +607,8 @@ namespace TiktokGame2Server.Others
             //to do: 计算等级
             return (int)(Math.Sqrt(experience / 100f)) + 1;
         }
+
+
 
 
         #endregion

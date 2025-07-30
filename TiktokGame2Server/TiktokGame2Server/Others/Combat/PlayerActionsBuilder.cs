@@ -10,7 +10,7 @@ namespace TiktokGame2Server.Others
     {
         Samurai samurai;
 
-        public PlayerActionsBuilder(Samurai samurai, IJCombatTurnBasedEventRecorder recorder, TiktokConfigService tiktokConfigService):base(recorder, tiktokConfigService)
+        public PlayerActionsBuilder(Samurai samurai,  TiktokConfigService tiktokConfigService, IJCombatContext context) :base( tiktokConfigService, context)
         {
             this.samurai = samurai ?? throw new ArgumentNullException(nameof(samurai));
         }

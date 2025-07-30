@@ -25,6 +25,7 @@ namespace TiktokGame2Server.Others
                 SoldierBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SoldierBusinessId,
                 Actions = GetActions(unit),
                 CurHp = ((unit as IJCombatTurnBasedUnit).GetOriginAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt).CurValue,
+                MaxHp = ((unit as IJCombatTurnBasedUnit).GetOriginAttribute(TiktokAttributesType.MaxHp.ToString()) as GameAttributeInt).MaxValue,
             } as T;
         }
 
@@ -38,6 +39,7 @@ namespace TiktokGame2Server.Others
                 SoldierBusinessId = ((unit as IJCombatTurnBasedUnit).GetUnitInfo() as TiktokJCombatUnitInfo).SoldierBusinessId,
                 Actions = GetActions(unit),
                 CurHp = ((unit as IJCombatTurnBasedUnit).GetAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt).CurValue,
+                MaxHp = ((unit as IJCombatTurnBasedUnit).GetAttribute(TiktokAttributesType.MaxHp.ToString()) as GameAttributeInt).MaxValue,
             } as T;
         }
 
@@ -77,6 +79,7 @@ namespace TiktokGame2Server.Others
         public string? ActionBusinessId { get; set; }
         public List<IJCombatTrigger>? Triggers { get; set; }
         public List<IJCombatExecutor>? Executors { get ; set ; }
+        public IJCombatTargetsFinder? Finder { get ; set ; }
     }
 }
 

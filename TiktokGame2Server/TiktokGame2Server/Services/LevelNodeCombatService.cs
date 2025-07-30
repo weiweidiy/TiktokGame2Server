@@ -40,14 +40,15 @@ namespace TiktokGame2Server.Others
 
             JCombatTurnBasedFrameRecorder frameRecorder;
             JCombatTurnBasedEventRecorder eventRecorder;
-
             //创建帧记录器
             frameRecorder = new JCombatTurnBasedFrameRecorder(19); //从0开始，共20回合
             eventRecorder = new JCombatTurnBasedEventRecorder(frameRecorder);
 
+            IJCombatContext context = new TiktokJCombatContext(eventRecorder, null);
+
             //构建双方阵型信息
-            var playerFormationBuilder = new PlayerFormationBuilder(playerFormations, eventRecorder, tiktokConfigService);
-            var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId,tiktokConfigService, eventRecorder);
+            var playerFormationBuilder = new PlayerFormationBuilder(playerFormations,tiktokConfigService, context);
+            var levelNodeFormationBuilder = new LevelNodeFormationBuilder(levelNodeBusinessId,tiktokConfigService, context);
             var playerFormationInfos = playerFormationBuilder.Build();
             var levelodeFormationInfos = levelNodeFormationBuilder.Build();
 
