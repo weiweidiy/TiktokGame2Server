@@ -57,8 +57,25 @@ namespace TiktokGame2Server.Controllers
 
             var reportData = await levelNodeCombatService.GetReport(playerId, levelNodeBusinessId);
 
-            var result = reportData.winnerTeamUid == playerUid ? true : false;
+            //to do: 从战报中获取玩家所有samurai的剩余血量，然后从hppool里补充HP给samurai
+            if (reportData == null)
+            {
+                return BadRequest(new { message = "战斗数据获取失败" });
+            }
+            //获取玩家的samurai剩余血量
+            var formationData = reportData.FormationData;
+            var lstSamurai = formationData[playerUid];
+            foreach(var unit in lstSamurai)
+            {
+                var samuraiId = int.Parse(unit.Uid);
+                var curHp = unit.CurHp;
+                var maxHp = unit.MaxHp;
+            }
 
+
+
+
+            var result = reportData.winnerTeamUid == playerUid ? true : false;
             if(result)
             {
                 levelNode = await levelNodeService.LevelNodeVictoryAsync(levelNodeBusinessId, playerId);
@@ -67,7 +84,7 @@ namespace TiktokGame2Server.Controllers
             var levelNodeDTO = new LevelNodeDTO
             {
                 BusinessId = levelNodeBusinessId,
-                Process = levelNode.Process,
+                Process = levelNode?.Process ?? 0,
             };
 
             fightDTO.LevelNodeDTO = levelNodeDTO;

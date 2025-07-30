@@ -74,6 +74,27 @@ namespace TiktokGame2Server.Migrations
                     b.ToTable("Formations");
                 });
 
+            modelBuilder.Entity("TiktokGame2Server.Entities.HpPool", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Hp")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("HpPools");
+                });
+
             modelBuilder.Entity("TiktokGame2Server.Entities.LevelNode", b =>
                 {
                     b.Property<int>("Id")
@@ -175,6 +196,17 @@ namespace TiktokGame2Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Samurai");
+                });
+
+            modelBuilder.Entity("TiktokGame2Server.Entities.HpPool", b =>
+                {
+                    b.HasOne("TiktokGame2Server.Entities.Player", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.LevelNode", b =>

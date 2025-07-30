@@ -13,6 +13,13 @@ namespace Tiktok
 
         public  LevelNodeDTO? LevelNodeDTO { get; set; }
 
+        /// <summary>
+        /// 战斗后更新的武士信息列表
+        /// </summary>
+        public List<SamuraiDTO>? SamuraiDTOs { get; set; } 
+
+
+
 
     }
 }
