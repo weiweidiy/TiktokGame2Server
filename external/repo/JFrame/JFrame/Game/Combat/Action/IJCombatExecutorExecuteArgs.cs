@@ -7,9 +7,20 @@ namespace JFramework.Game
     /// </summary>
     public interface IJCombatExecutorExecuteArgs
     {
+        /// <summary>
+        /// 执行的目标对象列表，必须要有
+        /// </summary>
         List<IJCombatCasterTargetableUnit> TargetUnits { get; set; }
 
+        /// <summary>
+        /// 对伤害处理的执行器需要这个参数
+        /// </summary>
         IJCombatDamageData DamageData { get; set; }
+
+        /// <summary>
+        /// 属性
+        /// </summary>
+        GameAttributeInt Attribute { get; set; }
 
         /// <summary>
         /// 执行参数历史

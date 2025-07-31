@@ -163,7 +163,6 @@ namespace JFramework.Game
                     executeArgs = finder.GetTargetsData();
                 }      
 
-
                 if(executeArgs == null)
                 {
                     return;
@@ -177,6 +176,27 @@ namespace JFramework.Game
                     executor.AddCombatEvent(newActionEvent);
                     executeArgs = executor.Execute(executeArgs);
                 }
+
+                //if (targets != null)
+                //{
+                //    foreach (var target in targets)
+                //    {
+                //        IJCombatExecutorExecuteArgs args = null;
+                //        foreach (var executor in executors)
+                //        {
+                //            args = executor.Execute(executeArgs, args, target);
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    IJCombatExecutorExecuteArgs args = null;
+                //    foreach (var executor in executors)
+                //    {
+                //        args = executor.Execute(executeArgs, args, null);
+                //    }
+                //}
+
 
             }
         }
