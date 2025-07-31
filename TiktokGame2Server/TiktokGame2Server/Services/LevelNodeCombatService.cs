@@ -44,7 +44,7 @@ namespace TiktokGame2Server.Others
             frameRecorder = new JCombatTurnBasedFrameRecorder(19); //从0开始，共20回合
             eventRecorder = new JCombatTurnBasedEventRecorder(frameRecorder);
 
-            IJCombatContext context = new TiktokJCombatContext(eventRecorder, null);
+            IJCombatContext context = new TiktokJCombatContext(eventRecorder, new ConsoleLogger());
 
             //构建双方阵型信息
             var playerFormationBuilder = new PlayerFormationBuilder(playerFormations,tiktokConfigService, context);

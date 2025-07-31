@@ -28,7 +28,7 @@ namespace TiktokGame2Server.Others
                 var triggersNames = GetTriggersName(actionBusinessId);
                 foreach (var triggerName in triggersNames)
                 {
-                    var trigger = CreateTrigger(triggerName, null);
+                    var trigger = CreateTrigger(triggerName, null,null);
                     lstTriggers.Add(trigger);
                 }
 
@@ -120,14 +120,14 @@ namespace TiktokGame2Server.Others
         }
 
 
-        IJCombatTrigger CreateTrigger(string triggerName, float[] args)
+        IJCombatTrigger CreateTrigger(string triggerName, float[] args, IJCombatTargetsFinder finder)
         {
             if (triggerName == null || triggerName == "")
             {
                 return null;
             }
             // 假设 args 已经定义
-            object[] ctorArgs = new object[] { args };
+            object[] ctorArgs = new object[] { args, finder };
             return (IJCombatTrigger)TypeHelper.CreateInstanceByClassName(triggerName, ctorArgs);
         }
 

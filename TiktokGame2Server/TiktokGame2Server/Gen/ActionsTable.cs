@@ -25,6 +25,12 @@ namespace JFramework
         //查找器参数
         public float FinderArgs;
 
+        //删选器
+        public List<string> Filters;
+
+        //删选器参数
+        public List<List<float>> FiltersArgs;
+
         //公示计算器
         public List<string> Formulas;
 
