@@ -7,23 +7,20 @@ using JFramework.Game;
 
 namespace JFramework
 {
-    public partial class ActionsTable : BaseConfigTable<ActionsCfgData>
+    public partial class ActionTriggersTable : BaseConfigTable<ActionTriggersCfgData>
     {
     }
 
-    public class ActionsCfgData : IUnique
+    public class ActionTriggersCfgData : IUnique
     {
         //唯一标识
         public string Uid{ get;set;} 
 
-        //触发器
-        public List<string> TriggersUid;
-
         //查找器
         public string FinderUid;
 
-        //执行器
-        public List<string> ExecutorsUid;
+        //名字
+        public string Name;
 
     }
 }

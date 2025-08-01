@@ -69,10 +69,12 @@ namespace TiktokGame2Server.Others
             IJCombatTurnBasedAttrNameQuery attrNameQuery;
             JCombatTurnBasedReportBuilder report;
 
-            //查询工具，funcSeat 可以替换成 formationBuilder
-            jcombatQuery = new JCombatSeatBasedQuery(formationBuilder, frameRecorder);
-  
+
             attrNameQuery = new TiktokAttrNameQuery();
+            //查询工具，funcSeat 可以替换成 formationBuilder
+            jcombatQuery = new JCombatSeatBasedQuery(formationBuilder, frameRecorder, attrNameQuery);
+  
+            
             report = new TiktokJCombatTurnBasedReportBuilder(jcombatQuery);
 
             //创建玩家unit对象

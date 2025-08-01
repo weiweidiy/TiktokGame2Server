@@ -1,394 +1,200 @@
 [
   {
     "Uid":"1",
-    "Triggers":[],
-    "Finder":"JCombatOppoDefaultFinder",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[
-            "TiktokDamageFormula"
-         ],
-    "FormulasArgs":[
-    [1]
-],
-    "Executors":[
-            "JCombatExecutorDamage"
+    "TriggersUid":[],
+    "FinderUid":"1",
+    "ExecutorsUid":[
+            "1"
          ]
    },
   {
     "Uid":"2",
-    "Triggers":[
-            "JCombatBeforeHurtTrigger"
+    "TriggersUid":[
+            "1"
          ],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[
-            "JCombatFormulaDamageDataChange"
-         ],
-    "FormulasArgs":[
-    [1, 10]
-],
-    "Executors":[
-            "JCombatExecutorDamageDataChange"
+    "FinderUid":"",
+    "ExecutorsUid":[
+            "2"
          ]
    },
   {
     "Uid":"3",
-    "Triggers":[
-            "JCombatBeforeHurtTrigger"
-         ],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[
-            "JCombatFormulaTurnDamageDataChange"
-         ],
-    "FormulasArgs":[
-    [0, 0.95, 1, 0.85]
-],
-    "Executors":[
-            "JCombatExecutorDamageDataChange"
-         ]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"4",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"5",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"6",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"7",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"8",
-    "Triggers":[],
-    "Finder":"JCombatOppoDefaultFinder",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[
-            "TiktokDamageFormula"
-         ],
-    "FormulasArgs":[
-    [1.05]
-],
-    "Executors":[
-            "JCombatExecutorDamage"
-         ]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"9",
-    "Triggers":[],
-    "Finder":"JCombatOppoDefaultFinder",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[
-            "TiktokDamageFormula"
-         ],
-    "FormulasArgs":[
-    [1.1]
-],
-    "Executors":[
-            "JCombatExecutorDamage"
-         ]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"10",
-    "Triggers":[],
-    "Finder":"JCombatOppoDefaultFinder",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[
-            "TiktokDamageFormula"
-         ],
-    "FormulasArgs":[
-    [1.15]
-],
-    "Executors":[
-            "JCombatExecutorDamage"
-         ]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"11",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"12",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"13",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"14",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"15",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"16",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"17",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"18",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"19",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"20",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"21",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"22",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"23",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"24",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"25",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"26",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"27",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"28",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"29",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"30",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"31",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    },
   {
     "Uid":"32",
-    "Triggers":[],
-    "Finder":"",
-    "FinderArgs":0.0,
-    "Filters":[],
-    "FiltersArgs":[],
-    "Formulas":[],
-    "FormulasArgs":[],
-    "Executors":[]
+    "TriggersUid":[],
+    "FinderUid":"",
+    "ExecutorsUid":[]
    }
 ]

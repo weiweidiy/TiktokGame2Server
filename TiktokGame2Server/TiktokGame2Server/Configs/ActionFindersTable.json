@@ -1,0 +1,26 @@
+[
+  {
+    "Uid":"1",
+    "Name":"JCombatFindOppoDefault"
+   },
+  {
+    "Uid":"2",
+    "Name":"JCombatFindSelf"
+   },
+  {
+    "Uid":"3",
+    "Name":"JCombatFindCol"
+   },
+  {
+    "Uid":"4",
+    "Name":"JCombatFindCross"
+   },
+  {
+    "Uid":"5",
+    "Name":"JCombatFindRow"
+   },
+  {
+    "Uid":"6",
+    "Name":"JCombatFindRandom"
+   }
+]

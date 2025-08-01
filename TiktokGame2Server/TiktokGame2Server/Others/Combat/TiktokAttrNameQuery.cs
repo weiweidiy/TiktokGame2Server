@@ -11,6 +11,12 @@ public partial class LevelNodeCombatService
                 return TiktokAttributesType.Speed.ToString();
             }
 
+            public string GetAttrName(int nameId)
+            {
+                var attr = (TiktokAttributesType)nameId;
+                return attr.ToString();
+            }
+
             public string GetHpAttrName()
             {
                 return TiktokAttributesType.Hp.ToString();

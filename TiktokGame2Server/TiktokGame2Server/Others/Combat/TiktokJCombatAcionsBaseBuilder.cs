@@ -25,44 +25,58 @@ namespace TiktokGame2Server.Others
             {
                 //构造触发器
                 var lstTriggers = new List<IJCombatTrigger>();
-                var triggersNames = GetTriggersName(actionBusinessId);
-                foreach (var triggerName in triggersNames)
+                
+                var actionTriggerUid = GetActionTriggersUid(actionBusinessId);
+                if(actionTriggerUid != null )
                 {
-                    var trigger = CreateTrigger(triggerName, null,null);
-                    lstTriggers.Add(trigger);
+                    foreach (var triggerUid in actionTriggerUid)
+                    {
+                        IJCombatTargetsFinder triggerFinder = null;
+                        var triggerFinderUid = GetTriggerFinderUid(triggerUid);
+                        if(triggerFinderUid != null)
+                        {
+                            var triggerFinderName = GetFinderName(triggerFinderUid);
+                            triggerFinder = CreateFinder(triggerFinderName, null); //finder暂时没有参数
+                        }
+                        
+                        var triggerName = GetTriggerName(triggerUid);
+                        var trigger = CreateTrigger(triggerName, null, triggerFinder); //触发器暂时没有参数
+                        lstTriggers.Add(trigger);
+                    }
                 }
 
+
                 //构造finder
-                var actionFinder = CreateFinder(GetFinderName(actionBusinessId), null);
+                var actionFinderUid = GetActionFinderUid(actionBusinessId);
+                IJCombatTargetsFinder? actionFinder = null;
+                if (actionFinderUid != null )
+                {
+                    actionFinder = CreateFinder(GetFinderName(actionFinderUid), null); //finder暂时没有参数
+                }
+
 
                 //构造执行器
                 var lstExecutors = new List<IJCombatExecutor>();
-                var filtersNames = GetFiltersName(actionBusinessId);
-                var executorFindersNames = GetExecutorsFindersNames(actionBusinessId);
-                var formulasNames = GetFormulasName(actionBusinessId);
-                var executorNames = GetExecutorsNames(actionBusinessId);
-                for (int i = 0; i < formulasNames.Length; i++)
+                var actionExecutorsUid = GetActionExecutorsUid(actionBusinessId);
+                foreach(var executorUid in actionExecutorsUid)
                 {
-                    //构造filter
-                    var filterName = filtersNames.Length > i ? filtersNames[i] : null;
-                    var filter = CreateFilter(filterName, null);
-
-                    var executorFinderName = executorFindersNames.Length > i ? executorFindersNames[i] : null;
-                    var executorFinder = CreateFinder(executorFinderName, null);
-
-                    //构造formula
-                    var formulaName = formulasNames[i];
-                    var formulaArgs = GetFormulasArgs(actionBusinessId, i);
-                    if (formulaName == null || formulaName == "")
+                    IJCombatFilter? filter = null;
+                    var executorFilterName = GetExecutorFilterName(executorUid);
+                    if(executorFilterName != null)
                     {
-                        throw new ArgumentException("Formula name cannot be null or empty", nameof(formulaName));
+                        var executorFilterArgs = GetExecutorFilterArgs(executorUid);
+                        filter = CreateFilter(executorFilterName, executorFilterArgs);
                     }
-                    var formula = CreateFormula(formulaName, formulaArgs);
 
+                    IJCombatFormula formula = null;
+                    var executorFormulaName = GetExecutorFormulaName(executorUid);
+                    var executorFormulaArgs = GetExecutorFormulaArgs(executorUid);
+                    formula = CreateFormula(executorFormulaName, executorFormulaArgs);
 
-
-                    var executorName = executorNames.Length > i ? executorNames[i] : null;
-                    var executor = CreateExecutor(executorName, filter, executorFinder, formula, null);
+                    IJCombatExecutor executor = null;
+                    var executeName = GetExecutorName(executorUid);
+                    var executorArgs = GetExecutorArgs(executorUid);
+                    executor = CreateExecutor(executeName, filter, null, formula, executorArgs);
 
                     lstExecutors.Add(executor);
                 }
@@ -83,42 +97,68 @@ namespace TiktokGame2Server.Others
 
 
 
-        string[] GetTriggersName(string actionBusinessId)
+        string[]? GetActionTriggersUid(string actionBusinessId)
         {
-            return tiktokConfigService.GetActionTriggersName(actionBusinessId);
+            return tiktokConfigService.GetActionTriggersUid(actionBusinessId);
         }
 
-        string GetFinderName(string actionBusinessId)
+        string? GetActionFinderUid(string actionBusinessId)
         {
-            return tiktokConfigService.GetActionFinderName(actionBusinessId);
+            return tiktokConfigService.GetActionFinderUid(actionBusinessId);
         }
 
-        string[] GetFiltersName(string actionBusinessId)
+        string[] GetActionExecutorsUid(string actionBusinessId)
         {
-            return tiktokConfigService.GetActionFiltersName(actionBusinessId);
-        }
-
-        string[] GetExecutorsFindersNames(string actionBusinessId)
-        {
-            return tiktokConfigService.GetExecutorsFindersNames(actionBusinessId);
-        }
-
-        string[] GetFormulasName(string actionBusinessId)
-        {
-            return tiktokConfigService.GetActionFormulasName(actionBusinessId);
+            return tiktokConfigService.GetActionExecutorsUid(actionBusinessId);
         }
 
 
-        float[] GetFormulasArgs(string actionBusinessId, int index)
+
+        string GetTriggerName(string triggerBusinessId)
         {
-            return tiktokConfigService.GetActionFormulasArgs(actionBusinessId, index);
+            return tiktokConfigService.GetTriggerName(triggerBusinessId);
         }
 
-        string[] GetExecutorsNames(string actionBusinessId)
+        string? GetTriggerFinderUid(string triggerBusinessId)
         {
-            return tiktokConfigService.GetActionExecutorsName(actionBusinessId);
+            return tiktokConfigService.GetTriggerFinderUid(triggerBusinessId);
         }
 
+        string GetFinderName(string finderBusinessId)
+        {
+            return tiktokConfigService.GetFinderName(finderBusinessId);
+        }
+
+        string GetExecutorName(string executorBusinessId) {
+            return tiktokConfigService.GetExecutorName(executorBusinessId);
+        }
+
+        float[]? GetExecutorArgs(string executorBusinessId)
+        {
+            return tiktokConfigService.GetExecutorArgs(executorBusinessId);
+        }
+
+        string? GetExecutorFilterName(string executorBusinessId) {
+
+            return tiktokConfigService.GetExecutorFilterName(executorBusinessId);
+        }
+
+        float[]? GetExecutorFilterArgs(string executorBusinessId)
+        {
+            return tiktokConfigService.GetExecutorFilterArgs(executorBusinessId);
+        }
+
+        string GetExecutorFormulaName(string executorBusinessId) {
+        
+            return tiktokConfigService.GetExecutorFormulaName(executorBusinessId);
+        }
+
+        float[]? GetExecutorFormulaArgs(string executorBusinessId)
+        {
+            return tiktokConfigService.GetExecutorFormulaArgs(executorBusinessId);
+        }
+
+   
 
         IJCombatTrigger CreateTrigger(string triggerName, float[] args, IJCombatTargetsFinder finder)
         {
@@ -142,7 +182,7 @@ namespace TiktokGame2Server.Others
             return (IJCombatTargetsFinder)TypeHelper.CreateInstanceByClassName(finderName, ctorArgs);
         }
 
-        IJCombatFilter CreateFilter(string? filterName, float[] args)
+        IJCombatFilter CreateFilter(string? filterName, float[]? args)
         {
             if (filterName == null || filterName == "")
             {
@@ -154,7 +194,7 @@ namespace TiktokGame2Server.Others
 
         }
 
-        IJCombatFormula CreateFormula(string? formulaName, float[] args)
+        IJCombatFormula CreateFormula(string? formulaName, float[]? args)
         {
             if (formulaName == null || formulaName == "")
             {

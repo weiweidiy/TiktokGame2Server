@@ -443,25 +443,185 @@ namespace TiktokGame2Server.Others
         #endregion
 
         #region action相关
-        public string[] GetActionTriggersName(string actionBusinessId, ActionsCfgData cfg = null)
+
+        /// <summary>
+        /// 获取触发器名字
+        /// </summary>
+        /// <param name="triggerBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string GetTriggerName(string triggerBusinessId)
         {
-            return (cfg?.Triggers.ToArray()) ?? Get<ActionsCfgData>(actionBusinessId).Triggers.ToArray();
+            var triggerCfg = Get<ActionTriggersCfgData>(triggerBusinessId);
+            if (triggerCfg == null)
+            {
+                throw new Exception($"ActionsTriggersCfgData not found for businessId: {triggerBusinessId}");
+            }
+            return triggerCfg.Name;
         }
 
-        //public float[] GetActionTriggersArgs(string actionBusinessId, int index)
-        //{
-        //    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-        //    if (actionCfg == null)
-        //    {
-        //        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-        //    }
-        //    if (index < 0 || index >= actionCfg.TriggersArgs.Count)
-        //    {
-        //        throw new IndexOutOfRangeException($"TriggerArgs index {index} is out of range for action {actionBusinessId}");
-        //    }
-        //    var args = actionCfg.TriggersArgs[index];
-        //    return args.ToArray();
-        //}
+        /// <summary>
+        /// 获取触发器中的查找器uid
+        /// </summary>
+        /// <param name="triggerBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string? GetTriggerFinderUid(string triggerBusinessId)
+        {
+            var triggerCfg = Get<ActionTriggersCfgData>(triggerBusinessId);
+            if (triggerCfg == null)
+            {
+                throw new Exception($"ActionsTriggersCfgData not found for businessId: {triggerBusinessId}");
+            }
+            return triggerCfg.FinderUid == "" ? null : triggerCfg.FinderUid;
+        }
+
+        /// <summary>
+        /// 获取查找器名字
+        /// </summary>
+        /// <param name="finderBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string GetFinderName(string finderBusinessId)
+        {
+            var finderCfg = Get<ActionFindersCfgData>(finderBusinessId);
+            if (finderCfg == null)
+            {
+                throw new Exception($"ActionsFindersCfgData not found for businessId: {finderBusinessId}");
+            }
+            return finderCfg.Name;
+        }
+
+        /// <summary>
+        /// 获取执行器名字
+        /// </summary>
+        /// <param name="executorBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string GetExecutorName(string executorBusinessId)
+        {
+            var executorCfg = Get<ActionExecutorsCfgData>(executorBusinessId);
+            if (executorCfg == null)
+            {
+                throw new Exception($"ActionsExecutorsCfgData not found for businessId: {executorBusinessId}");
+            }
+            return executorCfg.Name;
+        }
+
+        /// <summary>
+        /// 获取执行器参数
+        /// </summary>
+        /// <param name="executorBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public float[] GetExecutorArgs(string executorBusinessId)
+        {
+            var executorCfg = Get<ActionExecutorsCfgData>(executorBusinessId);
+            if (executorCfg == null)
+            {
+                throw new Exception($"ActionsExecutorsCfgData not found for businessId: {executorBusinessId}");
+            }
+            return executorCfg.Args.ToArray();
+        }
+
+        /// <summary>
+        /// 获取执行器过滤器的名字
+        /// </summary>
+        /// <param name="executorBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string? GetExecutorFilterName(string executorBusinessId)
+        {
+            var executorCfg = Get<ActionExecutorsCfgData>(executorBusinessId);
+            if (executorCfg == null)
+            {
+                throw new Exception($"ActionsExecutorsCfgData not found for businessId: {executorBusinessId}");
+            }
+            return executorCfg.FilterName == ""? null : executorCfg.FilterName;
+        }
+
+        /// <summary>
+        /// 获取执行器过滤器的参数
+        /// </summary>
+        /// <param name="executorBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public float[]? GetExecutorFilterArgs(string executorBusinessId)
+        {
+            var executorCfg = Get<ActionExecutorsCfgData>(executorBusinessId);
+            if (executorCfg == null)
+            {
+                throw new Exception($"ActionsExecutorsCfgData not found for businessId: {executorBusinessId}");
+            }
+            return executorCfg.FilterArgs.ToArray();
+        }
+
+        /// <summary>
+        /// 获取执行器公式名字
+        /// </summary>
+        /// <param name="executorBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string GetExecutorFormulaName(string  executorBusinessId)
+        {
+            var executorCfg = Get<ActionExecutorsCfgData>(executorBusinessId);
+            if (executorCfg == null)
+            {
+                throw new Exception($"ActionsExecutorsCfgData not found for businessId: {executorBusinessId}");
+            }
+
+            //公式名字不能为空
+            if(executorCfg.FormulaName == "")
+            {
+                throw new Exception($"ActionsExecutorsCfgData FormulaName is empty for businessId: {executorBusinessId}");
+            }
+                
+            return executorCfg.FormulaName ;
+        }
+
+        /// <summary>
+        /// 获取执行器公式参数
+        /// </summary>
+        /// <param name="executorBusinessId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public float[]? GetExecutorFormulaArgs(string  executorBusinessId)
+        {
+            var executorCfg = Get<ActionExecutorsCfgData>(executorBusinessId);
+            if (executorCfg == null)
+            {
+                throw new Exception($"ActionsExecutorsCfgData not found for businessId: {executorBusinessId}");
+            }
+            return executorCfg.FormulaArgs.ToArray();
+        }
+
+        /// <summary>
+        /// 获取action触发器Uid列表
+        /// </summary>
+        /// <param name="actionBusinessId"></param>
+        /// <param name="cfg"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public string[]? GetActionTriggersUid(string actionBusinessId, ActionsCfgData cfg = null)
+        {
+            if(cfg == null)
+            {
+                cfg = Get<ActionsCfgData>(actionBusinessId);
+            }
+            if (cfg == null)
+            {
+                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+            }
+            var triggersUid = cfg.TriggersUid;
+            if (triggersUid == null || triggersUid.Count == 0)
+            {
+                return null;
+            }
+
+            return triggersUid.ToArray();
+        }
+
+        
 
         /// <summary>
         /// 获取指定action的查找者名称
@@ -469,120 +629,151 @@ namespace TiktokGame2Server.Others
         /// <param name="actionBusinessId"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string GetActionFinderName(string actionBusinessId, ActionsCfgData cfg = null)
+        public string? GetActionFinderUid(string actionBusinessId, ActionsCfgData cfg = null)
         {
-            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-            if (actionCfg == null)
+            if (cfg == null)
+            {
+                cfg = Get<ActionsCfgData>(actionBusinessId);
+            }
+            
+            if (cfg == null)
             {
                 throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
             }
-            return actionCfg.Finder;
+
+            return cfg.FinderUid == "" ? null : cfg.FinderUid;
         }
 
         /// <summary>
-        /// 获取指定action的查找者参数
-        /// </summary>
-        /// <param name="actionBusinessId"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public float[] GetActionFinderArgs(string actionBusinessId, ActionsCfgData cfg = null)
-        {
-            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-            if (actionCfg == null)
-            {
-                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-            }
-            return new float[] { actionCfg.FinderArgs };
-        }
-
-        /// <summary>
-        /// 获取筛选器名称列表
-        /// </summary>
-        /// <param name="actionBusinessId"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public string[] GetActionFiltersName(string actionBusinessId, ActionsCfgData cfg = null)
-        {
-            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-            if (actionCfg == null)
-            {
-                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-            }
-            return new string[] {  };
-        }
-
-        /// <summary>
-        /// 获取执行器finder名称
-        /// </summary>
-        /// <param name="actionBusinessId"></param>
-        /// <returns></returns>
-        public string[] GetExecutorsFindersNames(string actionBusinessId, ActionsCfgData cfg = null)
-        {
-            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-            if (actionCfg == null)
-            {
-                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-            }
-            return new string[] { };
-        }
-
-        /// <summary>
-        /// 获取指定action的公式名称列表
-        /// </summary>
-        /// <param name="actionBusinessId"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public string[] GetActionFormulasName(string actionBusinessId, ActionsCfgData cfg = null)
-        {
-            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-            if (actionCfg == null)
-            {
-                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-            }
-            return actionCfg.Formulas.ToArray();
-        }
-
-        /// <summary>
-        /// 获取指定action的公式参数列表
+        /// 获取指定action的执行者uid列表
         /// </summary>
         /// <param name="actionBusinessId"></param>
         /// <param name="index"></param>
+        /// <param name="cfg"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        /// <exception cref="IndexOutOfRangeException"></exception>
-        public float[] GetActionFormulasArgs(string actionBusinessId, int index, ActionsCfgData cfg = null)
+        public string[] GetActionExecutorsUid(string actionBusinessId, ActionsCfgData cfg = null)
         {
-            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-            if (actionCfg == null)
+            if (cfg == null)
+            {
+                cfg = Get<ActionsCfgData>(actionBusinessId);
+            }
+            if (cfg == null)
             {
                 throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
             }
-            if (index < 0 || index >= actionCfg.FormulasArgs.Count)
+
+            var executorsUid = cfg.ExecutorsUid;
+            if (executorsUid == null || executorsUid.Count == 0)
             {
-                throw new IndexOutOfRangeException($"FormulaArgs index {index} is out of range for action {actionBusinessId}");
+                throw new Exception($"No executors found for action: {actionBusinessId}");
             }
 
-            var args = actionCfg.FormulasArgs[index];
-            return args.ToArray();
-
+            return executorsUid.ToArray();
         }
 
+        ///// <summary>
+        ///// 获取指定action的执行者名称列表
+        ///// </summary>
+        ///// <param name="actionBusinessId"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public string[] GetActionExecutorsName(string actionBusinessId, ActionsCfgData cfg = null)
+        //{
+        //    var executorsUid = GetActionExecutorsUid(actionBusinessId);
+        //    if (executorsUid == null || executorsUid.Length == 0)
+        //    {
+        //        throw new Exception($"No executors found for action: {actionBusinessId}");
+        //    }
 
-        /// <summary>
-        /// 获取指定action的执行者名称列表
-        /// </summary>
-        /// <param name="actionBusinessId"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public string[] GetActionExecutorsName(string actionBusinessId, ActionsCfgData cfg = null)
-        {
-            var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-            if (actionCfg == null)
-            {
-                throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-            }
-            return actionCfg.Executors.ToArray();
-        }
+        //    var result = new List<string>();
+
+        //    foreach (var executorUid in executorsUid)
+        //    {
+        //        var executorName = GetExecutorName(executorUid);
+        //        result.Add(executorName);
+        //    }
+
+        //    return result.ToArray();
+        //}
+
+
+
+        ///// <summary>
+        ///// 获取筛选器名称列表
+        ///// </summary>
+        ///// <param name="actionBusinessId"></param>
+        ///// <returns></returns>
+        ///// <exception cref="NotImplementedException"></exception>
+        //public string[]? GetActionFiltersName(string actionBusinessId, ActionsCfgData cfg = null)
+        //{
+        //    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+        //    if (actionCfg == null)
+        //    {
+        //        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+        //    }
+        //    return null;
+        //}
+
+        /////// <summary>
+        /////// 获取执行器finder名称
+        /////// </summary>
+        /////// <param name="actionBusinessId"></param>
+        /////// <returns></returns>
+        ////public string[] GetExecutorsFindersNames(string actionBusinessId, ActionsCfgData cfg = null)
+        ////{
+        ////    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+        ////    if (actionCfg == null)
+        ////    {
+        ////        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+        ////    }
+        ////    return new string[] { };
+        ////}
+
+
+        ///// <summary>
+        ///// 获取指定action的公式名称列表
+        ///// </summary>
+        ///// <param name="actionBusinessId"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        //public string GetExecutorFormulaName(string actionBusinessId, ActionsCfgData cfg = null)
+        //{
+        //    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+        //    if (actionCfg == null)
+        //    {
+        //        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+        //    }
+        //    var executorUid = actionCfg.ExecutorUid;
+        //}
+
+        ///// <summary>
+        ///// 获取指定action的公式参数列表
+        ///// </summary>
+        ///// <param name="actionBusinessId"></param>
+        ///// <param name="index"></param>
+        ///// <returns></returns>
+        ///// <exception cref="Exception"></exception>
+        ///// <exception cref="IndexOutOfRangeException"></exception>
+        //public float[] GetActionFormulasArgs(string actionBusinessId, int index, ActionsCfgData cfg = null)
+        //{
+        //    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
+        //    if (actionCfg == null)
+        //    {
+        //        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
+        //    }
+        //    if (index < 0 || index >= actionCfg.FormulasArgs.Count)
+        //    {
+        //        throw new IndexOutOfRangeException($"FormulaArgs index {index} is out of range for action {actionBusinessId}");
+        //    }
+
+        //    var args = actionCfg.FormulasArgs[index];
+        //    return args.ToArray();
+
+        //}
+
+
+
 
         #endregion
 
