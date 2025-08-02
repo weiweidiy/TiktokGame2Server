@@ -672,109 +672,6 @@ namespace TiktokGame2Server.Others
             return executorsUid.ToArray();
         }
 
-        ///// <summary>
-        ///// 获取指定action的执行者名称列表
-        ///// </summary>
-        ///// <param name="actionBusinessId"></param>
-        ///// <returns></returns>
-        ///// <exception cref="Exception"></exception>
-        //public string[] GetActionExecutorsName(string actionBusinessId, ActionsCfgData cfg = null)
-        //{
-        //    var executorsUid = GetActionExecutorsUid(actionBusinessId);
-        //    if (executorsUid == null || executorsUid.Length == 0)
-        //    {
-        //        throw new Exception($"No executors found for action: {actionBusinessId}");
-        //    }
-
-        //    var result = new List<string>();
-
-        //    foreach (var executorUid in executorsUid)
-        //    {
-        //        var executorName = GetExecutorName(executorUid);
-        //        result.Add(executorName);
-        //    }
-
-        //    return result.ToArray();
-        //}
-
-
-
-        ///// <summary>
-        ///// 获取筛选器名称列表
-        ///// </summary>
-        ///// <param name="actionBusinessId"></param>
-        ///// <returns></returns>
-        ///// <exception cref="NotImplementedException"></exception>
-        //public string[]? GetActionFiltersName(string actionBusinessId, ActionsCfgData cfg = null)
-        //{
-        //    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-        //    if (actionCfg == null)
-        //    {
-        //        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-        //    }
-        //    return null;
-        //}
-
-        /////// <summary>
-        /////// 获取执行器finder名称
-        /////// </summary>
-        /////// <param name="actionBusinessId"></param>
-        /////// <returns></returns>
-        ////public string[] GetExecutorsFindersNames(string actionBusinessId, ActionsCfgData cfg = null)
-        ////{
-        ////    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-        ////    if (actionCfg == null)
-        ////    {
-        ////        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-        ////    }
-        ////    return new string[] { };
-        ////}
-
-
-        ///// <summary>
-        ///// 获取指定action的公式名称列表
-        ///// </summary>
-        ///// <param name="actionBusinessId"></param>
-        ///// <returns></returns>
-        ///// <exception cref="Exception"></exception>
-        //public string GetExecutorFormulaName(string actionBusinessId, ActionsCfgData cfg = null)
-        //{
-        //    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-        //    if (actionCfg == null)
-        //    {
-        //        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-        //    }
-        //    var executorUid = actionCfg.ExecutorUid;
-        //}
-
-        ///// <summary>
-        ///// 获取指定action的公式参数列表
-        ///// </summary>
-        ///// <param name="actionBusinessId"></param>
-        ///// <param name="index"></param>
-        ///// <returns></returns>
-        ///// <exception cref="Exception"></exception>
-        ///// <exception cref="IndexOutOfRangeException"></exception>
-        //public float[] GetActionFormulasArgs(string actionBusinessId, int index, ActionsCfgData cfg = null)
-        //{
-        //    var actionCfg = Get<ActionsCfgData>(actionBusinessId);
-        //    if (actionCfg == null)
-        //    {
-        //        throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
-        //    }
-        //    if (index < 0 || index >= actionCfg.FormulasArgs.Count)
-        //    {
-        //        throw new IndexOutOfRangeException($"FormulaArgs index {index} is out of range for action {actionBusinessId}");
-        //    }
-
-        //    var args = actionCfg.FormulasArgs[index];
-        //    return args.ToArray();
-
-        //}
-
-
-
-
         #endregion
 
         #region 公式相关
@@ -803,5 +700,7 @@ namespace TiktokGame2Server.Others
 
 
         #endregion
+
+        
     }
 }
