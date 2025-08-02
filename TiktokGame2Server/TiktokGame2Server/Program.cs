@@ -71,6 +71,7 @@ builder.Services.AddScoped<ILevelNodesService, LevelNodeService>();
 builder.Services.AddScoped<ISamuraiService, SamuraiService>();
 builder.Services.AddScoped<IFormationService, FormationService>();
 builder.Services.AddScoped<ILevelNodeCombatService, LevelNodeCombatService>();
+builder.Services.AddScoped<IHpPoolService, HpPoolService>();
 
 
 // ≈‰÷√JWT»œ÷§

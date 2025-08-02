@@ -13,15 +13,19 @@ namespace TiktokGame2Server.Controllers
         private readonly ITokenService tokenService;
         private readonly ILevelNodeCombatService levelNodeCombatService;
         TiktokConfigService tiktokConfigService;
+        IHpPoolService hpPoolService;
+
         public FightController(ILevelNodesService levelNodeService
                             , ITokenService tokenService
                             , ILevelNodeCombatService levelNodeCombatService
-                            , TiktokConfigService tiktokConfigService)
+                            , TiktokConfigService tiktokConfigService
+                            , IHpPoolService hpPoolService)
         {
             this.levelNodeService = levelNodeService;
             this.tokenService = tokenService;
             this.levelNodeCombatService = levelNodeCombatService;
             this.tiktokConfigService = tiktokConfigService;
+            this.hpPoolService = hpPoolService;
         }
 
         // 修复 CS8600: 将 null 文本或可能的 null 值转换为不可为 null 类型。
@@ -43,7 +47,7 @@ namespace TiktokGame2Server.Controllers
             //如果levelNode为null，说明关卡节点还没有解锁
             if (levelNode == null)
             {
-                if(levelNodeBusinessId != tiktokConfigService.GetDefaultFirstNodeBusinessId()) //如果不是默认的初始节点，则检查前置节点是否解锁
+                if (levelNodeBusinessId != tiktokConfigService.GetDefaultFirstNodeBusinessId()) //如果不是默认的初始节点，则检查前置节点是否解锁
                 {
                     var previousNodeBusinessId = tiktokConfigService.GetPreviousLevelNode(levelNodeBusinessId);
                     //数据库查询是否存在该节点
@@ -57,30 +61,62 @@ namespace TiktokGame2Server.Controllers
 
             var reportData = await levelNodeCombatService.GetReport(playerId, levelNodeBusinessId);
 
-            //to do: 从战报中获取玩家所有samurai的剩余血量，然后从hppool里补充HP给samurai
+
             if (reportData == null)
             {
                 return BadRequest(new { message = "战斗数据获取失败" });
             }
+
+            //获取玩家的hpPool剩余血量
+            var hpPoolRemainHp = await hpPoolService.GetHpPoolAsync(playerId);
+
+
             //获取玩家的samurai剩余血量
             var formationData = reportData.FormationData;
             var lstSamurai = formationData[playerUid];
-            foreach(var unit in lstSamurai)
+            var samuraiDTOs = new List<SamuraiDTO>();
+            foreach (var unit in lstSamurai)
             {
                 var samuraiId = int.Parse(unit.Uid);
                 var curHp = unit.CurHp;
                 var maxHp = unit.MaxHp;
+                //如果curHp不满，则尝试从hppool中补充
+                if (curHp < maxHp)
+                {
+                    var offset = maxHp - curHp;
+                    if (offset <= hpPoolRemainHp)
+                    {
+                        curHp += offset;
+                        hpPoolRemainHp -= offset;
+                        //更新hppool
+                        await hpPoolService.SubtractHpPoolAsync(playerId, offset);
+                    }
+                    else
+                    {
+                        curHp += hpPoolRemainHp; //补充到满血
+                        hpPoolRemainHp = 0; //hppool清空
+                        await hpPoolService.SubtractHpPoolAsync(playerId, hpPoolRemainHp);
+                    }
+
+                    var samuraiDTO = new SamuraiDTO
+                    {
+                        Id = samuraiId,
+                        BusinessId = unit.SamuraiBusinessId,
+                        CurHp = curHp,
+                        //MaxHp = maxHp
+                    };
+                    samuraiDTOs.Add(samuraiDTO);
+                }
+
             }
-
-
 
 
             var result = reportData.winnerTeamUid == playerUid ? true : false;
-            if(result)
+            if (result)
             {
                 levelNode = await levelNodeService.LevelNodeVictoryAsync(levelNodeBusinessId, playerId);
             }
-  
+
             var levelNodeDTO = new LevelNodeDTO
             {
                 BusinessId = levelNodeBusinessId,
@@ -89,7 +125,7 @@ namespace TiktokGame2Server.Controllers
 
             fightDTO.LevelNodeDTO = levelNodeDTO;
             fightDTO.ReportData = reportData ?? new TiktokJCombatTurnBasedReportData();
-
+            fightDTO.SamuraiDTOs = samuraiDTOs;
             return Ok(fightDTO);
 
         }
