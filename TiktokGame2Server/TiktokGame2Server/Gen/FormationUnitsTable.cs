@@ -34,5 +34,8 @@ namespace JFramework
         //额外速度
         public int Speed;
 
+        //等级
+        public int Level;
+
     }
 }

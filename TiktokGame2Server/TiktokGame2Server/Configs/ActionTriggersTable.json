@@ -3,5 +3,10 @@
     "Uid":"1",
     "FinderUid":"2",
     "Name":"JCombatBeforeHurtTrigger"
+   },
+  {
+    "Uid":"2",
+    "FinderUid":"2",
+    "Name":"JCombatTriggerCombatStart"
    }
 ]

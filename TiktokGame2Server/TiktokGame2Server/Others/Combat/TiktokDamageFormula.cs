@@ -11,19 +11,45 @@ namespace TiktokGame2Server.Others
         {
         }
 
-        public override void CalcHitValue(IJAttributeableUnit target, ref float value)
-        {
-            //伤害= 释放者攻击力 * 释放者Power - 目标防御力 * 目标Def
-            var caster = query.GetUnit(GetOwner().GetCaster());
-            var atk = caster.GetAttribute("Attack") as GameAttributeInt;
-            var targetDef = target.GetAttribute("Defence") as GameAttributeInt;
-            value = Math.Max(10, atk.CurValue - targetDef.CurValue) * GetArg(0);
-        }
-
         protected override int GetValidArgsCount()
         {
             return 1;
         }
+
+        /// <summary>
+        /// 获取伤害比率系数
+        /// </summary>
+        /// <returns></returns>
+        protected float GetDamageRate()
+        {
+            return GetArg(0);
+        }
+
+        public override void CalcHitValue(IJAttributeableUnit target, ref float value)
+        {
+            //伤害= 释放者攻击力 * 释放者Power - 目标防御力 * 目标Def
+            var caster = query.GetUnit(GetOwner().GetCaster());
+            var hp = caster.GetAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt;
+            var baseDmg = (hp.CurValue / 3);
+
+            var power = caster.GetAttribute(TiktokAttributesType.Power.ToString()) as GameAttributeInt;
+            var attack = caster.GetAttribute(TiktokAttributesType.Attack.ToString()) as GameAttributeInt;
+
+            var targetDef = target.GetAttribute(TiktokAttributesType.Def.ToString()) as GameAttributeInt;
+            var targetDefence = target.GetAttribute(TiktokAttributesType.Defence.ToString()) as GameAttributeInt;
+
+            //兵种系数
+            var soldierRate = (attack.CurValue - targetDefence.CurValue) / 100f;
+            //samurai系数
+            var samuraiRate = (power.CurValue - targetDef.CurValue) / 50f;
+
+            //计算伤害
+            var damage = baseDmg * Math.Max(0, (1+ soldierRate + samuraiRate));
+
+            value = damage * GetDamageRate();
+        }
+
+
     }
 }
 

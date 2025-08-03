@@ -44,7 +44,9 @@ namespace TiktokGame2Server.Others
             frameRecorder = new JCombatTurnBasedFrameRecorder(19); //从0开始，共20回合
             eventRecorder = new JCombatTurnBasedEventRecorder(frameRecorder);
 
-            IJCombatContext context = new TiktokJCombatContext(eventRecorder, new ConsoleLogger());
+            var logger = new ConsoleLogger();
+
+            IJCombatContext context = new TiktokJCombatContext(eventRecorder, logger);
 
             //构建双方阵型信息
             var playerFormationBuilder = new PlayerFormationBuilder(playerFormations,tiktokConfigService, context);
@@ -73,8 +75,9 @@ namespace TiktokGame2Server.Others
             attrNameQuery = new TiktokAttrNameQuery();
             //查询工具，funcSeat 可以替换成 formationBuilder
             jcombatQuery = new JCombatSeatBasedQuery(formationBuilder, frameRecorder, attrNameQuery);
-  
-            
+            jcombatQuery.SetLogger(logger);
+
+
             report = new TiktokJCombatTurnBasedReportBuilder(jcombatQuery);
 
             //创建玩家unit对象

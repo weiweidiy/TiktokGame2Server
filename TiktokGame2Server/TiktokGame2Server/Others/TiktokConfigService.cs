@@ -207,8 +207,7 @@ namespace TiktokGame2Server.Others
         /// <returns></returns>
         public int GetFormationeUnitExtraHp(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
         {
-            var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
-            return 0; //to do:读取配置
+            return (cfg?.Hp) ?? Get<FormationUnitsCfgData>(formationUnitBusinessId).Hp;
         }
 
         /// <summary>
@@ -218,8 +217,7 @@ namespace TiktokGame2Server.Others
         /// <returns></returns>
         public int GetFormationUnitExtraLevel(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
         {
-            var formationUnitCfg = Get<FormationUnitsCfgData>(formationUnitBusinessId);
-            return 1;//to do:读取配置
+            return (cfg?.Level) ?? Get<FormationUnitsCfgData>(formationUnitBusinessId).Level;
         }
 
         /// <summary>
