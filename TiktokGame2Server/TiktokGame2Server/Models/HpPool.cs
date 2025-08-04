@@ -9,6 +9,8 @@
 
         public int Hp { get; set; } // 生命值
 
+        public int MaxHp { get; set; }
+
         public int PlayerId { get; set; } // 外键，关联玩家
         public Player? Player { get; set; }
     }

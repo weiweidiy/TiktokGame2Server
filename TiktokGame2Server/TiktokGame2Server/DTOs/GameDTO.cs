@@ -12,5 +12,7 @@ namespace Tiktok
         public List<FormationDTO>? AtkFormationDTO { get; set; } = new List<FormationDTO>();
 
         public List<FormationDTO>? DefFormationDTO { get; set; } = new List<FormationDTO>();
+
+        public HpPoolDTO? HpPoolDTO { get; set; } 
     }
 }

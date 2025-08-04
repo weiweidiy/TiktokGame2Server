@@ -59,6 +59,7 @@ namespace TiktokGame2Server.Controllers
                 SamuraisDTO = await GetSamuraiDTOs(playerId),
                 AtkFormationDTO = await GetFormationDTOs(playerId, tiktokConfigService.GetAtkFormationType()),
                 DefFormationDTO = await GetFormationDTOs(playerId, tiktokConfigService.GetDefFormationType()),
+                HpPoolDTO = await GetHpPoolDTO(playerId),
             };
 
             return Ok(gameDto);
@@ -108,6 +109,29 @@ namespace TiktokGame2Server.Controllers
             }).ToList();
 
             return samuraisDTO ?? new List<SamuraiDTO>();
+        }
+
+        async Task<HpPoolDTO> GetHpPoolDTO(int playerId)
+        {
+            //获取玩家的生命池
+            var hpPool = await myDbContext.HpPools.FirstOrDefaultAsync(hp => hp.PlayerId == playerId);
+            if (hpPool == null)
+            {
+                //创建一个新的生命池
+                hpPool = new HpPool { PlayerId = playerId, Hp = tiktokConfigService.GetDefaultHpPoolHp(), MaxHp = tiktokConfigService.GetDefaultHpPoolMaxHp() };
+                myDbContext.HpPools.Add(hpPool);   
+                myDbContext.SaveChanges();
+            }
+
+            // 将HpPool转换为DTO
+            var hpPoolDTO = new HpPoolDTO
+            {
+                Hp = hpPool.Hp,
+                MaxHp = hpPool.MaxHp,
+            };
+
+            return hpPoolDTO;
+
         }
 
         /// <summary>

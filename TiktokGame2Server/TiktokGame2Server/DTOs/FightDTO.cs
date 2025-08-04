@@ -18,8 +18,6 @@ namespace Tiktok
         /// </summary>
         public List<SamuraiDTO>? SamuraiDTOs { get; set; } 
 
-
-
-
+        public HpPoolDTO? HpPoolDTO { get; set; }
     }
 }

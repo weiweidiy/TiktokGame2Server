@@ -30,7 +30,7 @@ namespace JFramework.Game
         public void ResetActionUnits()
         {
             var lst = GetAll();
-            lst.BinarySort(new Compare());
+            lst = lst.BinarySort(new Compare());
             actionList.Clear();
             actionList.AddRange(lst);
         }

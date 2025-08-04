@@ -10,7 +10,7 @@ namespace TiktokGame2Server.Others
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
-        public async Task<int> GetHpPoolAsync(int playerId)
+        public async Task<int> GetHpPoolCurHpAsync(int playerId)
         {
             //从hppool中获取玩家的生命池
             var hpPool = await _dbContext.HpPools
@@ -57,5 +57,11 @@ namespace TiktokGame2Server.Others
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
+        public async Task<HpPool> GetHpPoolAsync(int playerId)
+        {
+            return await _dbContext.HpPools
+                .FirstOrDefaultAsync(hp => hp.PlayerId == playerId);
+
+        }
     }
 }

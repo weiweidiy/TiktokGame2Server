@@ -20,12 +20,12 @@
          ]
    },
   {
-    "Uid":"3",
-    "Atk":0,
-    "Def":0,
-    "Speed":0,
-    "Actions":[]
-   },
+    "Uid": "3",
+    "Atk": 0,
+    "Def": 0,
+    "Speed": 100,
+    "Actions": []
+  },
   {
     "Uid":"4",
     "Atk":0,

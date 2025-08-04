@@ -20,6 +20,8 @@ namespace TiktokGame2Server.Others
 
         public string GetDefaultFirstNodeBusinessId() => "1";
 
+        public int GetDefaultHpPoolHp() => 10000;
+        public int GetDefaultHpPoolMaxHp() => 10000;
         /// <summary>
         /// 根据武士BusinessId获取默认的SoldierBusinessId
         /// </summary>
@@ -266,9 +268,11 @@ namespace TiktokGame2Server.Others
         public int GetFormationUnitSpeed(string formationUnitBusinessId, FormationUnitsCfgData cfg = null)
         {
             var samurai = GetFormationUnitSamuraiBusinessId(formationUnitBusinessId, cfg);
-            var speed = GetSamuraiSpeed(samurai);
+            var samuraiSpeed = GetSamuraiSpeed(samurai);
+            var soldier = GetFormationUnitSoldierBusinessId(formationUnitBusinessId, cfg);
+            var soldierSpeed = GetSoldierSpeed(soldier);
             var extraSpeed = GetFormationUnitExtraSpeed(formationUnitBusinessId, cfg);
-            return speed + extraSpeed;
+            return samuraiSpeed + soldierSpeed + extraSpeed;
         }
 
         /// <summary>
@@ -697,8 +701,10 @@ namespace TiktokGame2Server.Others
 
 
 
+
+
         #endregion
 
-        
+
     }
 }

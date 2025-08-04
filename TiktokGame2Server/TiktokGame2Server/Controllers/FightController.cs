@@ -68,9 +68,13 @@ namespace TiktokGame2Server.Controllers
             }
 
             //获取玩家的hpPool剩余血量
-            var hpPoolRemainHp = await hpPoolService.GetHpPoolAsync(playerId);
-
-
+            int hpPoolRemainHp = 0;
+            var hpPool = await hpPoolService.GetHpPoolAsync(playerId);
+            if(hpPool != null)
+            {
+                hpPoolRemainHp = hpPool.Hp;
+            }
+            
             //获取玩家的samurai剩余血量
             var formationData = reportData.FormationData;
             var lstSamurai = formationData[playerUid];
@@ -107,8 +111,13 @@ namespace TiktokGame2Server.Controllers
                     };
                     samuraiDTOs.Add(samuraiDTO);
                 }
-
             }
+
+            var hpPoolDTO = new HpPoolDTO
+            {
+                Hp = hpPoolRemainHp,
+                MaxHp = hpPool?.MaxHp ?? 0 // 如果hpPool为null，则默认为0
+            };
 
 
             var result = reportData.winnerTeamUid == playerUid ? true : false;
@@ -123,9 +132,12 @@ namespace TiktokGame2Server.Controllers
                 Process = levelNode?.Process ?? 0,
             };
 
+
+
             fightDTO.LevelNodeDTO = levelNodeDTO;
             fightDTO.ReportData = reportData ?? new TiktokJCombatTurnBasedReportData();
             fightDTO.SamuraiDTOs = samuraiDTOs;
+            fightDTO.HpPoolDTO = hpPoolDTO;
             return Ok(fightDTO);
 
         }
