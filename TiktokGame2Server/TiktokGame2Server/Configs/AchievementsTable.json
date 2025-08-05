@@ -1,0 +1,14 @@
+[
+  {
+    "Uid":"1",
+    "Name":"AchievementWin",
+    "Args":[]
+   },
+  {
+    "Uid":"2",
+    "Name":"AchievementHpPercent",
+    "Args":[
+            0.9
+         ]
+   }
+]

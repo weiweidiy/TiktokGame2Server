@@ -11,6 +11,7 @@ namespace JFramework
     {
         public TiktokGenConfigManager(IConfigLoader loader, IDeserializer deserializer) : base(loader)
         {
+          RegisterTable<AchievementsTable, AchievementsCfgData>(nameof(AchievementsTable), deserializer);
           RegisterTable<ActionExecutorsTable, ActionExecutorsCfgData>(nameof(ActionExecutorsTable), deserializer);
           RegisterTable<ActionFindersTable, ActionFindersCfgData>(nameof(ActionFindersTable), deserializer);
           RegisterTable<ActionsTable, ActionsCfgData>(nameof(ActionsTable), deserializer);

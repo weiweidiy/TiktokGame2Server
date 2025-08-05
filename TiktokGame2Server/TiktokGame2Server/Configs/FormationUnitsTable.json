@@ -5,19 +5,19 @@
     "SoldierUid":"1",
     "Atk":0,
     "Def":0,
-    "Hp":-500,
+    "Hp":100,
     "Speed":100,
     "Level":1
    },
   {
     "Uid":"2",
     "SamuraiUid":"2",
-    "SoldierUid":"1",
+    "SoldierUid":"2",
     "Atk":0,
     "Def":0,
-    "Hp":-500,
+    "Hp":100,
     "Speed":100,
-    "Level":1
+    "Level":2
    },
   {
     "Uid":"3",
@@ -25,8 +25,8 @@
     "SoldierUid":"1",
     "Atk":0,
     "Def":0,
-    "Hp":-500,
+    "Hp":100,
     "Speed":100,
-    "Level":1
+    "Level":3
    }
 ]
