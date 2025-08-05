@@ -698,13 +698,31 @@ namespace TiktokGame2Server.Others
             return (int)(Math.Sqrt(experience / 100f)) + 1;
         }
 
-
-
-
-
-
         #endregion
 
+        #region 成就相关
+        public string GetAchievementClassName(string achievementBusinessId)
+        {
+            return "AchievementWin";
+        }
+
+        public float[]  GetAchievementArgs(string achievementBusinessId)
+        {
+            //to do: 获取成就参数
+            return new float[] { 1, 2, 3 };
+        }
+
+        public string GetAchievementBusinessId(string levelNodeBusinessId, int process)
+        {
+            return "1";
+        }
+
+        public int GetMaxAchievementProcess(string levelNodeBusinessId)
+        {
+            return 3;
+        }
+
+        #endregion
 
     }
 }

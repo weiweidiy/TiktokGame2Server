@@ -64,11 +64,11 @@ namespace TiktokGame2Server.Others
                 };
                 _dbContext.LevelNodes.Add(levelNode);
             }
-            // 更新 LevelNode 的 Process 状态 process小于3，则+1
-            if (levelNode.Process < QueryLevelNodeMaxProcess(levelNodeBusinessId))
-            {
-                levelNode.Process++;
-            }
+            //// 更新 LevelNode 的 Process 状态 process小于3，则+1
+            //if (levelNode.Process < QueryLevelNodeMaxProcess(levelNodeBusinessId))
+            //{
+            //    levelNode.Process++;
+            //}
 
             // 保存更改到数据库
             await _dbContext.SaveChangesAsync();

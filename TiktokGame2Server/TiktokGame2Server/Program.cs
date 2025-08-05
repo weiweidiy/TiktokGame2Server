@@ -1,8 +1,10 @@
 using JFramework;
 using JFramework.Game;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TiktokGame2Server.Entities;
@@ -72,6 +74,7 @@ builder.Services.AddScoped<ISamuraiService, SamuraiService>();
 builder.Services.AddScoped<IFormationService, FormationService>();
 builder.Services.AddScoped<ILevelNodeCombatService, LevelNodeCombatService>();
 builder.Services.AddScoped<IHpPoolService, HpPoolService>();
+builder.Services.AddScoped<IAchievementService, AchievementService>();
 
 
 // 配置JWT认证
@@ -91,6 +94,11 @@ builder.Services.AddScoped<IHpPoolService, HpPoolService>();
 //        };
 //    });
 
+// 添加日志（默认已包含Console、Debug等）
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+//builder.Logging.AddFile("Logs/app-{Date}.log"); // 需安装第三方包，如 Serilog 或 Microsoft.Extensions.Logging.File
 
 var app = builder.Build();
 
@@ -120,5 +128,20 @@ app.UseAuthorization();
 app.MapControllers();
 
 //app.MapGet("/", ()=>"hello world");
+
+//app.UseExceptionHandler(errorApp =>
+//{
+//    errorApp.Run(async context =>
+//    {
+//        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+//        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+//        if (exceptionHandlerPathFeature?.Error != null)
+//        {
+//            logger.LogError(exceptionHandlerPathFeature.Error, "Unhandled exception occurred.");
+//        }
+//        context.Response.StatusCode = 500;
+//        await context.Response.WriteAsync("An error occurred.");
+//    });
+//});
 
 app.Run();

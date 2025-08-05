@@ -14,18 +14,21 @@ namespace TiktokGame2Server.Controllers
         private readonly ILevelNodeCombatService levelNodeCombatService;
         TiktokConfigService tiktokConfigService;
         IHpPoolService hpPoolService;
+        IAchievementService achievementService;
 
         public FightController(ILevelNodesService levelNodeService
                             , ITokenService tokenService
                             , ILevelNodeCombatService levelNodeCombatService
                             , TiktokConfigService tiktokConfigService
-                            , IHpPoolService hpPoolService)
+                            , IHpPoolService hpPoolService
+                            , IAchievementService achievementService)
         {
             this.levelNodeService = levelNodeService;
             this.tokenService = tokenService;
             this.levelNodeCombatService = levelNodeCombatService;
             this.tiktokConfigService = tiktokConfigService;
             this.hpPoolService = hpPoolService;
+            this.achievementService = achievementService;
         }
 
         // 修复 CS8600: 将 null 文本或可能的 null 值转换为不可为 null 类型。
@@ -113,6 +116,7 @@ namespace TiktokGame2Server.Controllers
                 }
             }
 
+            //更新血池信息
             var hpPoolDTO = new HpPoolDTO
             {
                 Hp = hpPoolRemainHp,
@@ -124,6 +128,14 @@ namespace TiktokGame2Server.Controllers
             if (result)
             {
                 levelNode = await levelNodeService.LevelNodeVictoryAsync(levelNodeBusinessId, playerId);
+                //根据成就达成条件 更新levelNode process
+                var process = levelNode.Process + 1;
+                var achievementBusinessId = tiktokConfigService.GetAchievementBusinessId(levelNodeBusinessId, process);
+                int maxAchievementProcess = tiktokConfigService.GetMaxAchievementProcess(levelNodeBusinessId);
+                if (achievementService.IsAchievementCompleted(playerUid, reportData, achievementBusinessId) && levelNode.Process < maxAchievementProcess)
+                {
+                    levelNode.Process++;
+                }
             }
 
             var levelNodeDTO = new LevelNodeDTO
