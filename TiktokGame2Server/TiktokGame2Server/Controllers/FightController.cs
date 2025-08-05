@@ -144,8 +144,6 @@ namespace TiktokGame2Server.Controllers
                         levelNode.Process++;
                         //更新levelNode process
                         levelNode = await levelNodeService.UpdateLevelNodeProcessAsync(levelNodeBusinessId, playerId, levelNode.Process);
-
-
                     }
                 }  
             }
