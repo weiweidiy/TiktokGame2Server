@@ -1,26 +1,26 @@
 [
   {
     "Uid":"1",
-    "Power":100,
-    "Def":90,
-    "Intel":100,
-    "Speed":50,
+    "Power":150,
+    "Def":10,
+    "Intel":122,
+    "Speed":122,
     "SoldierUid":"1"
    },
   {
     "Uid":"2",
-    "Power":100,
-    "Def":90,
-    "Intel":100,
-    "Speed":50,
+    "Power":150,
+    "Def":10,
+    "Intel":122,
+    "Speed":122,
     "SoldierUid":"1"
    },
   {
     "Uid":"3",
-    "Power":100,
-    "Def":90,
-    "Intel":100,
-    "Speed":50,
+    "Power":150,
+    "Def":10,
+    "Intel":122,
+    "Speed":122,
     "SoldierUid":"1"
    }
 ]

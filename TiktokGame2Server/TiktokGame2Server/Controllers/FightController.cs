@@ -15,13 +15,15 @@ namespace TiktokGame2Server.Controllers
         TiktokConfigService tiktokConfigService;
         IHpPoolService hpPoolService;
         IAchievementService achievementService;
+        ISamuraiService samuraiService;
 
         public FightController(ILevelNodesService levelNodeService
                             , ITokenService tokenService
                             , ILevelNodeCombatService levelNodeCombatService
                             , TiktokConfigService tiktokConfigService
                             , IHpPoolService hpPoolService
-                            , IAchievementService achievementService)
+                            , IAchievementService achievementService
+                            , ISamuraiService samuraiService)
         {
             this.levelNodeService = levelNodeService;
             this.tokenService = tokenService;
@@ -29,6 +31,7 @@ namespace TiktokGame2Server.Controllers
             this.tiktokConfigService = tiktokConfigService;
             this.hpPoolService = hpPoolService;
             this.achievementService = achievementService;
+            this.samuraiService = samuraiService;
         }
 
         // 修复 CS8600: 将 null 文本或可能的 null 值转换为不可为 null 类型。
@@ -105,11 +108,13 @@ namespace TiktokGame2Server.Controllers
                         await hpPoolService.SubtractHpPoolAsync(playerId, hpPoolRemainHp);
                     }
 
+                    //更新samurai的血量
+                    var samurai = await samuraiService.UpdateSamuraiHpAsync(samuraiId, curHp);
                     var samuraiDTO = new SamuraiDTO
                     {
                         Id = samuraiId,
                         BusinessId = unit.SamuraiBusinessId,
-                        CurHp = curHp,
+                        CurHp = samurai.CurHp,
                         //MaxHp = maxHp
                     };
                     samuraiDTOs.Add(samuraiDTO);
@@ -131,11 +136,18 @@ namespace TiktokGame2Server.Controllers
                 //根据成就达成条件 更新levelNode process
                 var process = levelNode.Process + 1;
                 var achievementBusinessId = tiktokConfigService.GetAchievementBusinessId(levelNodeBusinessId, process);
-                int maxAchievementProcess = tiktokConfigService.GetMaxAchievementProcess(levelNodeBusinessId);
-                if (achievementService.IsAchievementCompleted(playerUid, reportData, achievementBusinessId) && levelNode.Process < maxAchievementProcess)
+                if(achievementBusinessId != null)
                 {
-                    levelNode.Process++;
-                }
+                    int maxAchievementProcess = tiktokConfigService.GetMaxAchievementProcess(levelNodeBusinessId);
+                    if (achievementService.IsAchievementCompleted(playerUid, reportData, achievementBusinessId) && levelNode.Process < maxAchievementProcess)
+                    {
+                        levelNode.Process++;
+                        //更新levelNode process
+                        levelNode = await levelNodeService.UpdateLevelNodeProcessAsync(levelNodeBusinessId, playerId, levelNode.Process);
+
+
+                    }
+                }  
             }
 
             var levelNodeDTO = new LevelNodeDTO
@@ -143,8 +155,6 @@ namespace TiktokGame2Server.Controllers
                 BusinessId = levelNodeBusinessId,
                 Process = levelNode?.Process ?? 0,
             };
-
-
 
             fightDTO.LevelNodeDTO = levelNodeDTO;
             fightDTO.ReportData = reportData ?? new TiktokJCombatTurnBasedReportData();

@@ -9,6 +9,8 @@ namespace TiktokGame2Server.Others
             this.args = args;
         }
 
+        protected float GetArg(int index) => args[index];
+
         public abstract bool IsCompleted(string playerUid, TiktokJCombatTurnBasedReportData reportData);
     }
 }

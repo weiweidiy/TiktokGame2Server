@@ -76,15 +76,29 @@ namespace TiktokGame2Server.Others
             return levelNode;
         }
 
+        public Task<LevelNode> UpdateLevelNodeProcessAsync(string levelNodeBusinessId, int playerId, int process)
+        {
+            if (!CheckUid(levelNodeBusinessId))
+                throw new ArgumentException($"节点 {levelNodeBusinessId} 不存在或无效。");
+            // 查找对应的 LevelNode
+            var levelNode = _dbContext.LevelNodes.FirstOrDefault(n => n.BusinessId == levelNodeBusinessId && n.PlayerId == playerId);
+            if (levelNode == null)
+            {
+                throw new ArgumentException($"节点 {levelNodeBusinessId} 未解锁，无法更新进度。");
+            }
+            // 更新 LevelNode 的 Process 状态
+            levelNode.Process = process;
+            // 保存更改到数据库
+            _dbContext.SaveChanges();
+            return Task.FromResult(levelNode);
+
+        }
+
         bool CheckUid(string levelNodeBusinessId)
         {
             return tiktokConfigService.IsValidLevelNode(levelNodeBusinessId);
         }
 
-        int QueryLevelNodeMaxProcess(string nodeId)
-        {
-            //测试数据，临时硬编码
-            return 3;
-        }
+
     }
 }
