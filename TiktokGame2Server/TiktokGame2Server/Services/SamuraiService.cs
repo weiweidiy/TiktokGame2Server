@@ -121,6 +121,15 @@ namespace TiktokGame2Server.Others
             return !string.IsNullOrEmpty(samuraiBusinessId)  && tiktokConfigService.IsValidSamurai(samuraiBusinessId);
         }
 
+        public Task<Samurai> UpdateSamuraiHpAsync(int samuraiId, int curHp)
+        {
+            var samurai = _dbContext.Samurais.Find(samuraiId);
+            if (samurai == null)
+                throw new ArgumentException($"武士 {samuraiId} 不存在。");
+            samurai.CurHp = curHp;
+            _dbContext.Samurais.Update(samurai);
+            return _dbContext.SaveChangesAsync().ContinueWith(t => samurai);
 
+        }
     }
 }

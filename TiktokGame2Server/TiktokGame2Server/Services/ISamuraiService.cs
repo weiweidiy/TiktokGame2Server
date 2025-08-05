@@ -34,5 +34,6 @@ namespace TiktokGame2Server.Others
         /// <param name="playerId"></param>
         /// <returns></returns>
         Task<bool> DeleteSamuraiAsync(int samuraiId);
+        Task<Samurai> UpdateSamuraiHpAsync(int samuraiId, int curHp);
     }
 }

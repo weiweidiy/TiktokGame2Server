@@ -386,7 +386,7 @@ namespace TiktokGame2Server.Others
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public List<string> GetSamuraiActions(int level, string smuraiBusinessId)
-        {           
+        {
             var result = new List<string>();
             //to do: 根据武士等级和武士BusinessId获取武士解锁的action列表
             result.Add("1");
@@ -539,7 +539,7 @@ namespace TiktokGame2Server.Others
             {
                 throw new Exception($"ActionsExecutorsCfgData not found for businessId: {executorBusinessId}");
             }
-            return executorCfg.FilterName == ""? null : executorCfg.FilterName;
+            return executorCfg.FilterName == "" ? null : executorCfg.FilterName;
         }
 
         /// <summary>
@@ -564,7 +564,7 @@ namespace TiktokGame2Server.Others
         /// <param name="executorBusinessId"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public string GetExecutorFormulaName(string  executorBusinessId)
+        public string GetExecutorFormulaName(string executorBusinessId)
         {
             var executorCfg = Get<ActionExecutorsCfgData>(executorBusinessId);
             if (executorCfg == null)
@@ -573,12 +573,12 @@ namespace TiktokGame2Server.Others
             }
 
             //公式名字不能为空
-            if(executorCfg.FormulaName == "")
+            if (executorCfg.FormulaName == "")
             {
                 throw new Exception($"ActionsExecutorsCfgData FormulaName is empty for businessId: {executorBusinessId}");
             }
-                
-            return executorCfg.FormulaName ;
+
+            return executorCfg.FormulaName;
         }
 
         /// <summary>
@@ -587,7 +587,7 @@ namespace TiktokGame2Server.Others
         /// <param name="executorBusinessId"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public float[]? GetExecutorFormulaArgs(string  executorBusinessId)
+        public float[]? GetExecutorFormulaArgs(string executorBusinessId)
         {
             var executorCfg = Get<ActionExecutorsCfgData>(executorBusinessId);
             if (executorCfg == null)
@@ -606,7 +606,7 @@ namespace TiktokGame2Server.Others
         /// <exception cref="Exception"></exception>
         public string[]? GetActionTriggersUid(string actionBusinessId, ActionsCfgData cfg = null)
         {
-            if(cfg == null)
+            if (cfg == null)
             {
                 cfg = Get<ActionsCfgData>(actionBusinessId);
             }
@@ -623,7 +623,7 @@ namespace TiktokGame2Server.Others
             return triggersUid.ToArray();
         }
 
-        
+
 
         /// <summary>
         /// 获取指定action的查找者名称
@@ -637,7 +637,7 @@ namespace TiktokGame2Server.Others
             {
                 cfg = Get<ActionsCfgData>(actionBusinessId);
             }
-            
+
             if (cfg == null)
             {
                 throw new Exception($"ActionsCfgData not found for businessId: {actionBusinessId}");
@@ -698,13 +698,37 @@ namespace TiktokGame2Server.Others
             return (int)(Math.Sqrt(experience / 100f)) + 1;
         }
 
-
-
-
-
-
         #endregion
 
+        #region 成就相关
+        public string GetAchievementClassName(string achievementBusinessId)
+        {
+            if (achievementBusinessId == "1")
+                return "AchievementWin";
+            if (achievementBusinessId == "2")
+                return "AchievementHpPercent";
+
+            throw new Exception("achievementBusinessId 没有找对对应类名 " + achievementBusinessId);
+        }
+
+        public float[] GetAchievementArgs(string achievementBusinessId)
+        {
+            //to do: 获取成就参数
+            return new float[] { 1};
+        }
+
+        public string GetAchievementBusinessId(string levelNodeBusinessId, int process)
+        {
+            return process.ToString();
+            //return "1";
+        }
+
+        public int GetMaxAchievementProcess(string levelNodeBusinessId)
+        {
+            return 3;
+        }
+
+        #endregion
 
     }
 }

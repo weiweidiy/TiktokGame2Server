@@ -26,6 +26,6 @@ namespace TiktokGame2Server.Others
         /// <param name="playerId"></param>
         /// <returns></returns>
         Task<LevelNode> LevelNodeVictoryAsync(string nodeId, int playerId);
-
+        Task<LevelNode> UpdateLevelNodeProcessAsync(string levelNodeBusinessId, int playerId, int process);
     }
 }
