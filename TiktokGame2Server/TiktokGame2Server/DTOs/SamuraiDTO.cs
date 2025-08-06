@@ -11,4 +11,17 @@
 
         //public int MaxHp { get; set; }
     }
+
+    public class BagSlotDTO
+    {
+        public int Id { get; set; }
+        public ItemDTO? ItemDTO { get; set; }
+    }
+
+    public class ItemDTO
+    {
+        public int Id { get; set; }
+        public required string ItemBusinessId { get; set; } = string.Empty;
+        public int Count { get; set; } = 1;
+    }
 }

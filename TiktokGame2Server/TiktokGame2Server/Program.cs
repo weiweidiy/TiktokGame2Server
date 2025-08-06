@@ -77,6 +77,7 @@ builder.Services.AddScoped<IHpPoolService, HpPoolService>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
 builder.Services.AddScoped<IEvaluationService, TiktokCombatEvaluationService>();
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+builder.Services.AddScoped<IBagService, BagService>();
 
 
 // ≈‰÷√JWT»œ÷§

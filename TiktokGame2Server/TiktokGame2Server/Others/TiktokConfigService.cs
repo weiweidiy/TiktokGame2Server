@@ -27,6 +27,8 @@ namespace TiktokGame2Server.Others
 
         public int GetDefaultCurrencyPan() => 0;
 
+        public int GetDefaultBagSlotCount() => 20;
+
         /// <summary>
         /// 根据武士BusinessId获取默认的SoldierBusinessId
         /// </summary>
@@ -739,6 +741,8 @@ namespace TiktokGame2Server.Others
             var achData = Get<AchievementsCfgData>(achievementBusinessId);
             return achData.Args.ToArray();
         }
+
+
 
 
 

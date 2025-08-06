@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TiktokGame2Server.Entities;
@@ -11,9 +12,11 @@ using TiktokGame2Server.Entities;
 namespace TiktokGame2Server.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250806085611_updateBag")]
+    partial class updateBag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -272,7 +275,7 @@ namespace TiktokGame2Server.Migrations
             modelBuilder.Entity("TiktokGame2Server.Entities.BagItem", b =>
                 {
                     b.HasOne("TiktokGame2Server.Entities.BagSlot", "BagSlot")
-                        .WithOne("BagItem")
+                        .WithOne("Item")
                         .HasForeignKey("TiktokGame2Server.Entities.BagItem", "BagSlotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -370,7 +373,7 @@ namespace TiktokGame2Server.Migrations
 
             modelBuilder.Entity("TiktokGame2Server.Entities.BagSlot", b =>
                 {
-                    b.Navigation("BagItem");
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("TiktokGame2Server.Entities.Player", b =>

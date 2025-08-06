@@ -16,5 +16,7 @@ namespace Tiktok
         public HpPoolDTO? HpPoolDTO { get; set; } 
 
         public CurrencyDTO? CurrencyDTO { get; set; }
+
+        public List<BagSlotDTO>? BagDTOs { get; set; } 
     }
 }

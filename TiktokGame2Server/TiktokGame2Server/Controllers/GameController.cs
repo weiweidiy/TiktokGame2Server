@@ -15,7 +15,8 @@ namespace TiktokGame2Server.Controllers
         , ILevelNodesService levelNodeService
         , ISamuraiService samuraiService
         , IFormationService formationService
-        , TiktokConfigService tiktokConfigService) : Controller
+        , TiktokConfigService tiktokConfigService
+        , IBagService bagService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         ITokenService tokenService = tokenService;
@@ -24,6 +25,7 @@ namespace TiktokGame2Server.Controllers
         ISamuraiService samuraiService = samuraiService;
         IFormationService formationService = formationService;
         TiktokConfigService tiktokConfigService = tiktokConfigService;
+        IBagService bagService = bagService;
 
         [HttpPost("EnterGame")]
         public async Task<ActionResult<GameDTO>> EnterGame()
@@ -61,10 +63,13 @@ namespace TiktokGame2Server.Controllers
                 DefFormationDTO = await GetFormationDTOs(playerId, tiktokConfigService.GetDefFormationType()),
                 HpPoolDTO = await GetHpPoolDTO(playerId),
                 CurrencyDTO = await GetCurrencyDTO(playerId),
+                BagDTOs = await GetBagDTO(playerId),
             };
 
             return Ok(gameDto);
         }
+
+
 
 
 
@@ -155,6 +160,32 @@ namespace TiktokGame2Server.Controllers
             };
 
             return hpPoolDTO;
+
+        }
+
+
+        async Task<List<BagSlotDTO>> GetBagDTO(int playerId)
+        {
+            //获取玩家的背包
+            var bagSlots = await bagService.GetAllBagSlotsAsync(playerId);
+            if (bagSlots == null || bagSlots.Count == 0)
+            {
+                //创建一个默认的背包槽
+                bagSlots = await bagService.AddBagSlotsAsync(playerId, tiktokConfigService.GetDefaultBagSlotCount());
+            }
+
+            var bagSlotDTOs = bagSlots?.Select(n => new BagSlotDTO
+            {
+                Id = n.Id,
+                ItemDTO = n.BagItem == null? null : new ItemDTO
+                {
+                    Id = n.BagItem.Id,
+                    ItemBusinessId = n.BagItem.ItemBusinessId,
+                    Count = n.BagItem.Count,
+                },
+            }).ToList();
+
+            return bagSlotDTOs ?? new List<BagSlotDTO>();
 
         }
 
