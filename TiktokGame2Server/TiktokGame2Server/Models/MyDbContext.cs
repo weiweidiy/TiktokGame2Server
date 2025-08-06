@@ -19,6 +19,10 @@ namespace TiktokGame2Server.Entities
 
         public DbSet<Currency> Currencies { get; set; }
 
+        public DbSet<Bag> Bags { get; set; }
+
+        public DbSet<Item> Items { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LevelNode>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
@@ -26,6 +30,8 @@ namespace TiktokGame2Server.Entities
             modelBuilder.Entity<Formation>().HasIndex(c => new { c.FormationType, c.FormationPoint, c.SamuraiId }).IsUnique();
             modelBuilder.Entity<HpPool>().HasIndex(c => new { c.PlayerId }).IsUnique();
             modelBuilder.Entity<Currency>().HasIndex(c => new { c.PlayerId }).IsUnique();
+            modelBuilder.Entity<Bag>().HasIndex(c => new { c.PlayerId, c.ItemId }).IsUnique();
+            //modelBuilder.Entity<Item>().HasIndex(c => new {  c.PlayerId }).IsUnique();
 
             // 确保DeviceId唯一
             //modelBuilder.Entity<Account>()

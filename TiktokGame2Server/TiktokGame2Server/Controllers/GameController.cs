@@ -60,10 +60,13 @@ namespace TiktokGame2Server.Controllers
                 AtkFormationDTO = await GetFormationDTOs(playerId, tiktokConfigService.GetAtkFormationType()),
                 DefFormationDTO = await GetFormationDTOs(playerId, tiktokConfigService.GetDefFormationType()),
                 HpPoolDTO = await GetHpPoolDTO(playerId),
+                CurrencyDTO = await GetCurrencyDTO(playerId),
             };
 
             return Ok(gameDto);
         }
+
+
 
         /// <summary>
         /// 获取玩家的关卡节点信息
@@ -109,6 +112,27 @@ namespace TiktokGame2Server.Controllers
             }).ToList();
 
             return samuraisDTO ?? new List<SamuraiDTO>();
+        }
+
+        async Task<CurrencyDTO> GetCurrencyDTO(int playerId)
+        {
+            //获取玩家的货币
+            var currency = await myDbContext.Currencies.FirstOrDefaultAsync(c => c.PlayerId == playerId);
+            if (currency == null)
+            {
+                //创建一个新的货币
+                currency = new Currency { PlayerId = playerId, Coin = tiktokConfigService.GetDefaultCurrencyCoin(), Pan = tiktokConfigService.GetDefaultCurrencyPan() };
+                myDbContext.Currencies.Add(currency);
+                myDbContext.SaveChanges();
+            }
+            // 将Currency转换为DTO
+            var currencyDTO = new CurrencyDTO
+            {
+                Coin = currency.Coin,
+                Pan = currency.Pan,
+            };
+            return currencyDTO;
+
         }
 
         async Task<HpPoolDTO> GetHpPoolDTO(int playerId)

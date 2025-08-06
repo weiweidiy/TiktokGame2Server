@@ -22,6 +22,11 @@ namespace TiktokGame2Server.Others
 
         public int GetDefaultHpPoolHp() => 10000;
         public int GetDefaultHpPoolMaxHp() => 10000;
+
+        public int GetDefaultCurrencyCoin() => 0;
+
+        public int GetDefaultCurrencyPan() => 0;
+
         /// <summary>
         /// 根据武士BusinessId获取默认的SoldierBusinessId
         /// </summary>
@@ -64,6 +69,28 @@ namespace TiktokGame2Server.Others
         #endregion
 
         #region 关卡节点相关
+        public int GetMaxAchievementProcess(string levelNodeBusinessId)
+        {
+            var nodeCfgData = Get<LevelsNodesCfgData>(levelNodeBusinessId);
+            var achievements = nodeCfgData.AchievementUid;
+            return achievements.Count;
+        }
+
+        public string GetAchievementBusinessId(string levelNodeBusinessId, int process)
+        {
+            var nodeCfgData = Get<LevelsNodesCfgData>(levelNodeBusinessId);
+            var achievements = nodeCfgData.AchievementUid;
+            if (achievements == null || achievements.Count == 0)
+            {
+                return string.Empty; // 没有成就
+            }
+            if (process < 1 || process > achievements.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(process), "Process must be within the range of achievements.");
+            }
+            return achievements[process - 1];
+        }
+
         /// <summary>
         /// 判断是否是新关卡的第一个节点
         /// </summary>
@@ -703,30 +730,20 @@ namespace TiktokGame2Server.Others
         #region 成就相关
         public string GetAchievementClassName(string achievementBusinessId)
         {
-            if (achievementBusinessId == "1")
-                return "AchievementWin";
-            if (achievementBusinessId == "2")
-                return "AchievementHpPercent";
-
-            throw new Exception("achievementBusinessId 没有找对对应类名 " + achievementBusinessId);
+            var achData = Get<AchievementsCfgData>(achievementBusinessId);
+            return achData.Name;
         }
 
         public float[] GetAchievementArgs(string achievementBusinessId)
         {
-            //to do: 获取成就参数
-            return new float[] { 1};
+            var achData = Get<AchievementsCfgData>(achievementBusinessId);
+            return achData.Args.ToArray();
         }
 
-        public string GetAchievementBusinessId(string levelNodeBusinessId, int process)
-        {
-            return process.ToString();
-            //return "1";
-        }
 
-        public int GetMaxAchievementProcess(string levelNodeBusinessId)
-        {
-            return 3;
-        }
+
+
+
 
         #endregion
 

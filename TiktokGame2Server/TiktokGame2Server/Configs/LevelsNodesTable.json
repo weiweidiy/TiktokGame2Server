@@ -9,7 +9,12 @@
          ],
     "PreUid":"0",
     "FormationUid":"1",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"2",
@@ -21,7 +26,12 @@
          ],
     "PreUid":"1",
     "FormationUid":"2",
-    "CombatSceneUid":"2"
+    "CombatSceneUid":"2",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"3",
@@ -34,7 +44,12 @@
          ],
     "PreUid":"2",
     "FormationUid":"3",
-    "CombatSceneUid":"3"
+    "CombatSceneUid":"3",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"4",
@@ -46,7 +61,12 @@
          ],
     "PreUid":"3",
     "FormationUid":"1",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"5",
@@ -58,7 +78,12 @@
          ],
     "PreUid":"3",
     "FormationUid":"2",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"6",
@@ -70,7 +95,12 @@
          ],
     "PreUid":"5",
     "FormationUid":"3",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"7",
@@ -82,7 +112,12 @@
          ],
     "PreUid":"6",
     "FormationUid":"1",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"8",
@@ -94,7 +129,12 @@
          ],
     "PreUid":"7",
     "FormationUid":"2",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"9",
@@ -106,7 +146,12 @@
          ],
     "PreUid":"8",
     "FormationUid":"3",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"10",
@@ -118,7 +163,12 @@
          ],
     "PreUid":"9",
     "FormationUid":"2",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    },
   {
     "Uid":"11",
@@ -130,6 +180,11 @@
          ],
     "PreUid":"10",
     "FormationUid":"2",
-    "CombatSceneUid":"1"
+    "CombatSceneUid":"1",
+    "AchievementUid":[
+            "1",
+            "2",
+            "1"
+         ]
    }
 ]

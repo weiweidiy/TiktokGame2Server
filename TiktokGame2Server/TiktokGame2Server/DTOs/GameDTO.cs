@@ -14,5 +14,7 @@ namespace Tiktok
         public List<FormationDTO>? DefFormationDTO { get; set; } = new List<FormationDTO>();
 
         public HpPoolDTO? HpPoolDTO { get; set; } 
+
+        public CurrencyDTO? CurrencyDTO { get; set; }
     }
 }

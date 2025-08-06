@@ -1,5 +1,4 @@
-﻿
-namespace TiktokGame2Server.Others
+﻿namespace TiktokGame2Server.Others
 {
     public interface IDrawSamuraiService
     {

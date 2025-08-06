@@ -37,5 +37,8 @@ namespace JFramework
         //场景Uid
         public string CombatSceneUid;
 
+        //成就条件Uid
+        public List<string> AchievementUid;
+
     }
 }
