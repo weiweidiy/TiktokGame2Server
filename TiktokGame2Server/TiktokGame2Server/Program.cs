@@ -75,6 +75,7 @@ builder.Services.AddScoped<IFormationService, FormationService>();
 builder.Services.AddScoped<ILevelNodeCombatService, LevelNodeCombatService>();
 builder.Services.AddScoped<IHpPoolService, HpPoolService>();
 builder.Services.AddScoped<IAchievementService, AchievementService>();
+builder.Services.AddScoped<IEvaluationService, TiktokCombatEvaluationService>();
 
 
 // 配置JWT认证
@@ -108,7 +109,7 @@ var configService = app.Services.GetRequiredService<TiktokConfigService>();
 //"D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Configs\\"
 //"E:\\UnityProjects\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Configs\\"
 
-await configService.PreloadAllAsync("E:\\UnityProjects\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Configs\\", ".json"); // 如果 Main 是 async Task
+await configService.PreloadAllAsync("D:\\Demos\\TiktokGame2Server\\TiktokGame2Server\\TiktokGame2Server\\Configs\\", ".json"); // 如果 Main 是 async Task
 
 app.UseMiddleware<TokenAuthMiddleware>();
 

@@ -17,11 +17,15 @@ namespace TiktokGame2Server.Entities
         public DbSet<Formation> Formations { get; set; }
         public DbSet<HpPool> HpPools { get; set; }
 
+        public DbSet<Currency> Currencies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LevelNode>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
             modelBuilder.Entity<Samurai>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
             modelBuilder.Entity<Formation>().HasIndex(c => new { c.FormationType, c.FormationPoint, c.SamuraiId }).IsUnique();
+            modelBuilder.Entity<HpPool>().HasIndex(c => new { c.PlayerId }).IsUnique();
+            modelBuilder.Entity<Currency>().HasIndex(c => new { c.PlayerId }).IsUnique();
 
             // 确保DeviceId唯一
             //modelBuilder.Entity<Account>()

@@ -2,6 +2,6 @@
 {
     public interface IEvaluationService
     {
-        int GetEvaluation(TiktokJCombatTurnBasedReportData reportData);
+        int GetEvaluation(string playerUid, TiktokJCombatTurnBasedReportData reportData);
     }
 }

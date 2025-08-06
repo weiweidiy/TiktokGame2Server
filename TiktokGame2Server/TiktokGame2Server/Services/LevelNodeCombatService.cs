@@ -15,11 +15,13 @@ namespace TiktokGame2Server.Others
     /// <param name="tiktokConfigService"></param>
     public partial class LevelNodeCombatService(MyDbContext dbContext
         , IFormationService formationService
-        , TiktokConfigService tiktokConfigService) : ILevelNodeCombatService
+        , TiktokConfigService tiktokConfigService
+        , IEvaluationService evaluationService) : ILevelNodeCombatService
     {
         private readonly MyDbContext _dbContext = dbContext;
         private readonly IFormationService formationService = formationService;
         private readonly TiktokConfigService tiktokConfigService = tiktokConfigService;
+        private readonly IEvaluationService evaluationService = evaluationService;
 
         ///// <summary>
         ///// 阵型查询列表
@@ -122,6 +124,7 @@ namespace TiktokGame2Server.Others
 
             var reportData = report.GetCombatReportData<TiktokJCombatUnitData>() as TiktokJCombatTurnBasedReportData;
             reportData.CombatSceneBusinessId = tiktokConfigService.GetLevelNodeCombatSceneBusinessId(levelNodeBusinessId);
+            reportData.Evaluation = evaluationService.GetEvaluation(playerUid, reportData);
             return reportData;
         }
 
