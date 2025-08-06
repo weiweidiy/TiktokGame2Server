@@ -71,6 +71,19 @@ namespace TiktokGame2Server.Others
         #endregion
 
         #region 关卡节点相关
+
+        public string GetLevelNodeAchievementRewardBusinessId(string levelNodeBusinessId, int process)
+        {
+            return "1"; // to do: 根据关卡节点BusinessId和process获取奖励BusinessId
+        }
+
+        public string GetLevelNodeVictoryRewardBusinessId(string levelNodeBusinessId)
+        {
+            var nodeCfgData = Get<LevelsNodesCfgData>(levelNodeBusinessId);
+            return "1";// to do: 根据关卡节点BusinessId获取胜利奖励BusinessId
+            //return nodeCfgData.WinRewardUid;
+        }
+
         public int GetMaxAchievementProcess(string levelNodeBusinessId)
         {
             var nodeCfgData = Get<LevelsNodesCfgData>(levelNodeBusinessId);
@@ -744,9 +757,37 @@ namespace TiktokGame2Server.Others
 
 
 
+        #endregion
+
+        #region 道具相关
+        public int GetItemMaxCount(string itemBusinessId)
+        {
+            return 99;
+        }
 
 
+        #endregion
 
+        #region 奖励相关
+        public int[]? GetRewardCurrenciesTypes(string rewardBusinessId)
+        {
+            return new int[] { 1 }; // to do: 读取配置 ， 暂时就给铜钱
+        }
+
+        public int[]? GetRewardCurrenciesCounts(string rewardBusinessId)
+        {
+            return new int[] { 100 }; // to do: 读取配置 ， 暂时就给100铜钱
+        }
+
+        public string[]? GetRewardItems(string rewardBusinessId)
+        {
+            return new string[] { "1" }; // to do: 读取配置 ， 暂时就给1号道具
+        }
+
+        public int[]? GetRewardItemsCounts(string rewardBusinessId)
+        {
+            return new int[] { 1 }; // to do: 读取配置 ， 暂时就给1个1号道具
+        }
 
 
         #endregion

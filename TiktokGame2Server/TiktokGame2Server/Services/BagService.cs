@@ -62,12 +62,56 @@ namespace TiktokGame2Server.Others
 
         }
 
+        public Task<List<BagItem>> GetBagItemsAsync(int playerId, string itemBusinessId)
+        {
+            // Fetch all bag items for the player with the specified item business ID
+            return _dbContext.BagItems
+                .Where(bi => bi.PlayerId == playerId && bi.ItemBusinessId == itemBusinessId)
+                .ToListAsync();
+        }
+
         // Implementation of the IBagService methods would go here
-        public Task<BagSlot> AddItemToBagSlotAsync(int playerId, string itemBusinessId, int count)
+        public async Task<BagItem> AddItemToBagSlotAsync(int playerId, string itemBusinessId, int count)
         {
             //如果找到相同itemBusinessId的道具，且没有满，则该道具数量+count，如果已经满了，则查看空的格子，如果存在则放入空的BagSlot
-            throw new NotImplementedException();
+            var items = await GetBagItemsAsync(playerId, itemBusinessId);
+            if(items != null && items.Count > 0)
+            {
+                foreach (var item in items)
+                {
+                    if (item.Count + count < tiktokConfigService.GetItemMaxCount(item.ItemBusinessId))
+                    {
+                        item.Count += count;
+                        //更新道具
+                        _dbContext.BagItems.Update(item);
+                        await _dbContext.SaveChangesAsync();
+                        return item;
+                    }
+                }
+            }
 
+            //如果没有找到相同itemBusinessId的道具，或者所有的道具都满了，则查看空的BagSlot
+            var emptyBagSlot = await GetEmptyBagSlotAsync(playerId);
+            if (emptyBagSlot != null)
+            {
+                //如果存在空的BagSlot，则创建新的BagItem并放入空的BagSlot
+                var newItem = new BagItem
+                {
+                    PlayerId = playerId,
+                    ItemBusinessId = itemBusinessId,
+                    Count = count,
+                    BagSlotId = emptyBagSlot.Id
+                };
+                //将新道具添加到数据库
+                _dbContext.BagItems.Add(newItem);
+                emptyBagSlot.ItemId = newItem.Id; // 更新BagSlot的ItemId
+                _dbContext.BagSlots.Update(emptyBagSlot); // 更新BagSlot
+                await _dbContext.SaveChangesAsync();
+                return newItem;
+            }
+
+            //如果没有空的BagSlot，则返回背包已满的错误
+            throw new InvalidOperationException("Bag is full, cannot add new item.");
         }
 
 

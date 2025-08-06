@@ -16,6 +16,7 @@ namespace TiktokGame2Server.Controllers
         IHpPoolService hpPoolService;
         IAchievementService achievementService;
         ISamuraiService samuraiService;
+        IRewardService rewardService;
 
         public FightController(ILevelNodesService levelNodeService
                             , ITokenService tokenService
@@ -23,7 +24,8 @@ namespace TiktokGame2Server.Controllers
                             , TiktokConfigService tiktokConfigService
                             , IHpPoolService hpPoolService
                             , IAchievementService achievementService
-                            , ISamuraiService samuraiService)
+                            , ISamuraiService samuraiService
+                            , IRewardService rewardService)
         {
             this.levelNodeService = levelNodeService;
             this.tokenService = tokenService;
@@ -32,6 +34,7 @@ namespace TiktokGame2Server.Controllers
             this.hpPoolService = hpPoolService;
             this.achievementService = achievementService;
             this.samuraiService = samuraiService;
+            this.rewardService = rewardService;
         }
 
         // 修复 CS8600: 将 null 文本或可能的 null 值转换为不可为 null 类型。
@@ -132,6 +135,7 @@ namespace TiktokGame2Server.Controllers
             var result = reportData.winnerTeamUid == playerUid ? true : false;
             if (result)
             {
+                //战斗胜利
                 levelNode = await levelNodeService.LevelNodeVictoryAsync(levelNodeBusinessId, playerId);
                 //根据成就达成条件 更新levelNode process
                 var process = levelNode.Process + 1;
@@ -144,8 +148,26 @@ namespace TiktokGame2Server.Controllers
                         levelNode.Process++;
                         //更新levelNode process
                         levelNode = await levelNodeService.UpdateLevelNodeProcessAsync(levelNodeBusinessId, playerId, levelNode.Process);
+
+                        //根据Process 添加奖励,只在达成成就时添加奖励一次
+                        var rewardBusinessId = tiktokConfigService.GetLevelNodeAchievementRewardBusinessId(levelNodeBusinessId, levelNode.Process);
+                        if (rewardBusinessId != null)
+                        {
+                            //添加奖励
+                            await rewardService.AddReward(playerId, rewardBusinessId);
+                        }
                     }
-                }  
+                }
+
+                //只要胜利就给与胜利奖励
+                var victoryRewardBusinessId = tiktokConfigService.GetLevelNodeVictoryRewardBusinessId(levelNodeBusinessId);
+                if (victoryRewardBusinessId != null)
+                {
+                    //添加奖励
+                    await rewardService.AddReward(playerId, victoryRewardBusinessId);
+                }
+
+
             }
 
             var levelNodeDTO = new LevelNodeDTO

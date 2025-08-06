@@ -36,13 +36,21 @@ namespace TiktokGame2Server.Others
         Task<BagSlot?> GetEmptyBagSlotAsync(int playerId);
 
         /// <summary>
+        /// 获取指定物品 在背包中的所有实例
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="itemBusinessId"></param>
+        /// <returns></returns>
+        Task<List<BagItem>> GetBagItemsAsync(int playerId, string itemBusinessId);
+
+        /// <summary>
         /// 往背包slot中添加物品
         /// </summary>
         /// <param name="playerId"></param>
         /// <param name="itemBusinessId"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        Task<BagSlot> AddItemToBagSlotAsync(int playerId, string itemBusinessId, int count);
+        Task<BagItem> AddItemToBagSlotAsync(int playerId, string itemBusinessId, int count);
 
         /// <summary>
         /// 移除指定数量的物品
