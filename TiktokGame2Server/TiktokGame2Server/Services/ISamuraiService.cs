@@ -25,8 +25,16 @@ namespace TiktokGame2Server.Others
         /// <param name="samuraiBusinessId"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        Task<Samurai> AddSamuraiAsync(string samuraiBusinessId, string soldierUid, int playerId);
+        Task<Samurai> AddSamuraiAsync(string samuraiBusinessId, string soldierBusinessId, int playerId);
 
+        /// <summary>
+        /// 添加武将
+        /// </summary>
+        /// <param name="samuraiBusinessId"></param>
+        /// <param name="soldierBusinessId"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        Task<List<Samurai>> AddSamuraisAsync(List<string> samuraiBusinessId, List<string> soldierBusinessId, int playerId);
         /// <summary>
         /// 删除指定的武士
         /// </summary>
@@ -34,6 +42,13 @@ namespace TiktokGame2Server.Others
         /// <param name="playerId"></param>
         /// <returns></returns>
         Task<bool> DeleteSamuraiAsync(int samuraiId);
+
+        /// <summary>
+        /// 更新武将信息
+        /// </summary>
+        /// <param name="samuraiId"></param>
+        /// <param name="curHp"></param>
+        /// <returns></returns>
         Task<Samurai> UpdateSamuraiHpAsync(int samuraiId, int curHp);
     }
 }

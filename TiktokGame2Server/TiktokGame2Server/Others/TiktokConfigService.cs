@@ -326,7 +326,7 @@ namespace TiktokGame2Server.Others
         {
             var level = GetFormationUnitExtraLevel(formationUnitBusinessId, cfg);
             var extraHp = GetFormationeUnitExtraHp(formationUnitBusinessId, cfg);
-            return FormulaMaxHp(level) + extraHp;
+            return FormulaMaxHpByLevel(level) + extraHp;
         }
 
         /// <summary>
@@ -724,7 +724,7 @@ namespace TiktokGame2Server.Others
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        public int FormulaMaxHp(int level)
+        public int FormulaMaxHpByLevel(int level)
         {
             return (int)(1000 * (1 + level / 10f)); //to do: 计算最大HP
         }

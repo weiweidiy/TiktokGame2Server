@@ -212,7 +212,7 @@ namespace TiktokGame2Server.Controllers
                             , tiktokConfigService.GetDefaultSoldierBusinessId(tiktokConfigService.GetDefaultSamuraiBusinessId()), playerId);
                 }
 
-                var defaultFormation = await formationService.AddFormationAsync(formationType, tiktokConfigService.GetDefaultFormationPoint(), first.Id, playerId);
+                var defaultFormation = await formationService.AddOrUpdateFormationSamuraiAsync(formationType, tiktokConfigService.GetDefaultFormationPoint(), first.Id, playerId);
                 formations.Add(defaultFormation);
             }
             var formationsDTO = formations?.Select(n => new FormationDTO

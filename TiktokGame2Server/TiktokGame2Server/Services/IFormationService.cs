@@ -1,4 +1,5 @@
-﻿using TiktokGame2Server.Entities;
+﻿using Tiktok;
+using TiktokGame2Server.Entities;
 
 namespace TiktokGame2Server.Others
 {
@@ -16,7 +17,7 @@ namespace TiktokGame2Server.Others
         /// <param name="playerId"></param>
         /// <param name="formation"></param>
         /// <returns></returns>
-        Task<Formation> AddFormationAsync(int formationType, int formationPoint, int samuraiId, int playerId);
+        Task<Formation> AddOrUpdateFormationSamuraiAsync(int formationType, int formationPoint, int samuraiId, int playerId);
 
         /// <summary>
         /// 删除一个点位的配置
@@ -24,9 +25,13 @@ namespace TiktokGame2Server.Others
         /// <param name="formationType"></param>
         /// <param name="formationPoint"></param>
         /// <returns></returns>
-        Task<bool> DeleteFormationAsync(int formationType, int formationPoint);
+        Task<bool> DeleteFormationSamuraiAsync(int formationType, int formationPoint);
 
 
         Task<int> GetFormationPoint(int formationType, int samuraiId);
+        Task DeleteFormationAsync(List<Formation> formationDataToDelete);
+        Task UpdateFormationAsync(Formation existingFormation);
+
+        Task<List<Formation>> UpdateFormationAsync(FormationType formationType, List<FormationDTO> newFormations, int playerId);
     }
 }

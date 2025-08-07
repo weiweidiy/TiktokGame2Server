@@ -5,6 +5,7 @@ using TiktokGame2Server.Others; // 假设TokenService在此命名空间
 
 namespace TiktokGame2Server.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class FightController : Controller
@@ -47,7 +48,7 @@ namespace TiktokGame2Server.Controllers
             var token = Request.Headers["Authorization"].FirstOrDefault();
             var accountUid = tokenService.GetAccountUidFromToken(token);
             var playerUid = tokenService.GetPlayerUidFromToken(token);
-            var playerId = tokenService.GetPlayerIdFromToken(token) ?? 0;
+            var playerId = tokenService.GetPlayerIdFromToken(token) ?? throw new Exception("解析token异常");
 
             //需要打的关卡节点ID
             var levelNodeBusinessId = fightDTO.LevelNodeBusinessId;

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TiktokGame2Server.Entities;
@@ -11,9 +12,11 @@ using TiktokGame2Server.Entities;
 namespace TiktokGame2Server.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250807044325_updateSamuraiDataBase")]
+    partial class updateSamuraiDataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,7 +149,7 @@ namespace TiktokGame2Server.Migrations
 
                     b.HasIndex("SamuraiId");
 
-                    b.HasIndex("FormationType", "FormationPoint", "PlayerId")
+                    b.HasIndex("FormationType", "FormationPoint", "SamuraiId")
                         .IsUnique();
 
                     b.ToTable("Formations");

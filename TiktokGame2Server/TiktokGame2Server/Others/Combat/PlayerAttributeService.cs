@@ -45,7 +45,7 @@ namespace TiktokGame2Server.Others
         public int GetMaxHp()
         {
             var level = GetLevel();
-            return tiktokConfigService.FormulaMaxHp(level); 
+            return tiktokConfigService.FormulaMaxHpByLevel(level); 
         }
 
         public int GetAttack()

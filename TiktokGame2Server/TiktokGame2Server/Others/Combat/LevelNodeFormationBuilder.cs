@@ -46,7 +46,7 @@ namespace TiktokGame2Server.Others
 
 //public class FormationInfo
 //{
-//    public int FormationPoint { get; set; }
+//    public int FormationPoints { get; set; }
 
 //    public required JCombatUnitInfo UnitInfo { get; set; }
 //}

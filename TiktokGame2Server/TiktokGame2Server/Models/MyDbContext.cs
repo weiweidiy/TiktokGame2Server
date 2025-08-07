@@ -26,8 +26,8 @@ namespace TiktokGame2Server.Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<LevelNode>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
-            modelBuilder.Entity<Samurai>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
-            modelBuilder.Entity<Formation>().HasIndex(c => new { c.FormationType, c.FormationPoint, c.SamuraiId }).IsUnique();
+            //modelBuilder.Entity<Samurai>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
+            modelBuilder.Entity<Formation>().HasIndex(c => new { c.FormationType, c.FormationPoint , c.PlayerId }).IsUnique();
             modelBuilder.Entity<HpPool>().HasIndex(c => new { c.PlayerId }).IsUnique();
             modelBuilder.Entity<Currency>().HasIndex(c => new { c.PlayerId }).IsUnique();
             modelBuilder.Entity<BagSlot>().HasIndex(c => new { c.PlayerId, c.ItemId }).IsUnique();

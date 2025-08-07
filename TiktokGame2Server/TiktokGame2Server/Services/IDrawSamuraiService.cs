@@ -1,7 +1,11 @@
-﻿namespace TiktokGame2Server.Others
+﻿using TiktokGame2Server.Entities;
+
+namespace TiktokGame2Server.Others
 {
     public interface IDrawSamuraiService
     {
-        int DrawSamurai();
+        Task<Samurai> DrawSamurai(int playerId);
+
+        Task<List<Samurai>> DrawSamurais(int playerId, int count);
     }
 }

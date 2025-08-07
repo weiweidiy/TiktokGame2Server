@@ -66,11 +66,25 @@ namespace TiktokGame2Server.Others
                 BusinessId = samuraiUid,
                 PlayerId = playerId,
                 SoldierUid = soldierUid,
-                CurHp = tiktokConfigService.FormulaMaxHp(1),//默认1级
+                CurHp = tiktokConfigService.FormulaMaxHpByLevel(1),//默认1级
             };
             _dbContext.Samurais.Add(samurai);
             await _dbContext.SaveChangesAsync();
             return samurai;
+        }
+
+        public async Task<List<Samurai>> AddSamuraisAsync(List<string> samuraiBusinessIds, List<string> soldierUids, int playerId)
+        {
+            if (samuraiBusinessIds.Count != soldierUids.Count)
+                throw new ArgumentException("武士的业务ID和士兵UID数量不匹配。");
+
+            var samurais = new List<Samurai>();
+            for (int i = 0; i < samuraiBusinessIds.Count; i++)
+            {
+                var samurai = await AddSamuraiAsync(samuraiBusinessIds[i], soldierUids[i], playerId);
+                samurais.Add(samurai);
+            }
+            return samurais;
         }
 
         /// <summary>

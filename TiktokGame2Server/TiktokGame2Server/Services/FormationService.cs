@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tiktok;
 using TiktokGame2Server.Entities;
 
 namespace TiktokGame2Server.Others
@@ -6,9 +7,11 @@ namespace TiktokGame2Server.Others
     public class FormationService : IFormationService
     {
         private readonly MyDbContext _dbContext;
-        public FormationService(MyDbContext dbContext)
+        ISamuraiService samuraiService;
+        public FormationService(MyDbContext dbContext, ISamuraiService samuraiService)
         {
             _dbContext = dbContext;
+            this.samuraiService = samuraiService;
         }
         public async Task<List<Formation>?> GetFormationAsync(int formationType, int playerId)
         {
@@ -47,13 +50,13 @@ namespace TiktokGame2Server.Others
         /// <param name="formationPoint"></param>
         /// <param name="samuraiId"></param>
         /// <returns></returns>
-        public async Task<Formation> AddFormationAsync(int formationType, int formationPoint, int samuraiId, int playerId)
+        public async Task<Formation> AddOrUpdateFormationSamuraiAsync(int formationType, int formationPoint, int samuraiId, int playerId)
         {
             //先查询是否存在相同的阵型和位置
             var existingFormation = await _dbContext.Formations
-                .FirstOrDefaultAsync(f => f.FormationType == formationType && f.FormationPoint == formationPoint && f.SamuraiId == samuraiId && f.PlayerId == playerId);
+                .FirstOrDefaultAsync(f => f.FormationType == formationType && f.FormationPoint == formationPoint /*&& f.SamuraiId == samuraiId*/ && f.PlayerId == playerId);
 
-            //如果存在，则修改对应的samuraiId
+            //如果存在，则修改对应的samuraiId, 替换武将
             if (existingFormation != null)
             {
                 existingFormation.SamuraiId = samuraiId;
@@ -62,7 +65,7 @@ namespace TiktokGame2Server.Others
                 return existingFormation;
             }
             else
-            //如果不存在，则添加新的阵型
+            //如果不存在，则添加新的上阵武将
             {
                 var formation = new Formation
                 {
@@ -77,7 +80,7 @@ namespace TiktokGame2Server.Others
             }
         }
 
-        public async Task<bool> DeleteFormationAsync(int formationType, int formationPoint)
+        public async Task<bool> DeleteFormationSamuraiAsync(int formationType, int formationPoint)
         {
             var formation = await _dbContext.Formations
                 .FirstOrDefaultAsync(f => f.FormationType == formationType && f.FormationPoint == formationPoint);
@@ -90,5 +93,81 @@ namespace TiktokGame2Server.Others
             return false;
 
         }
+
+        public async Task DeleteFormationAsync(List<Formation> formationDataToDelete)
+        {
+            if (formationDataToDelete == null || formationDataToDelete.Count == 0)
+            {
+                return; // 如果没有要删除的数据，直接返回
+            }
+            // 批量删除
+            _dbContext.Formations.RemoveRange(formationDataToDelete);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateFormationAsync(Formation existingFormation)
+        {
+            if (existingFormation == null)
+            {
+                throw new ArgumentNullException(nameof(existingFormation), "Existing formation cannot be null");
+            }
+            // 更新阵型数据
+            _dbContext.Formations.Update(existingFormation);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// 更新一个阵型的数据
+        /// </summary>
+        /// <param name="newFormations"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        public async Task<List<Formation>> UpdateFormationAsync(FormationType formationType, List<FormationDTO> newFormations, int playerId)
+        {
+            // 如果没有要更新的数据，返回当前数据库中的数据
+            if (newFormations == null || newFormations.Count == 0)
+            {
+                return await _dbContext.Formations
+                    .Where(f => f.FormationType == (int)formationType && f.PlayerId == playerId)
+                    .ToListAsync();
+            }
+
+
+            // 首先删除所有旧的指定类型的阵型数据
+            var existingFormations = await _dbContext.Formations
+                .Where(f => f.FormationType == (int)formationType && f.PlayerId == playerId)
+                .ToListAsync();
+            //从数据库中删除旧的阵型数据existingFormations
+            if (existingFormations.Count > 0)
+            {
+                _dbContext.Formations.RemoveRange(existingFormations);
+            }
+
+
+            // 遍历新的阵型数据，进行添加 
+            var addedFormations = new List<Formation>();
+            foreach (var formationDTO in newFormations)
+            {
+                var samuraiId = formationDTO.SamuraiId;
+                //从数据库中查询该玩家是否有该武将
+                var samurai = await samuraiService.GetSamuraiAsync(samuraiId);
+                if (samurai == null) throw new Exception(formationType + " samurai 不存在 " + samuraiId );
+
+                var newFormation = new Formation
+                {
+                    FormationType = formationDTO.FormationType,
+                    FormationPoint = formationDTO.FormationPoint,
+                    SamuraiId = formationDTO.SamuraiId, 
+                    PlayerId = playerId
+                };
+                _dbContext.Formations.Add(newFormation);
+                addedFormations.Add(newFormation);
+            }
+
+            await _dbContext.SaveChangesAsync();
+            return addedFormations;
+        }
     }
 }
+
+
