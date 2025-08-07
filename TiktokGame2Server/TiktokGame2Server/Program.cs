@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Text;
 using TiktokGame2Server.Entities;
 using TiktokGame2Server.Others;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -124,7 +127,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+app.MapHub<TiktokGame2Server.Hubs.GameHub>("/gamehub");
 
 app.UseHttpsRedirection();
 
@@ -150,3 +153,16 @@ app.MapControllers();
 //});
 
 app.Run();
+
+
+
+
+//const connection = new signalR.HubConnectionBuilder()
+//    .withUrl("/gamehub")
+//    .build();
+
+//connection.on("ReceiveDrawSamurai", function(data) {
+//    console.log("È«·þ¹ã²¥£º", data);
+//});
+
+//connection.start();

@@ -9,11 +9,22 @@ namespace TiktokGame2Server.Others
         {
             this.samuraiService = samuraiService ?? throw new ArgumentNullException(nameof(samuraiService));
         }
-        public Task<Samurai> DrawSamurai(int playerId)
+        public async Task<Samurai> DrawSamurai(int playerId)
         {
             var businessId = "1"; // This should be replaced with the actual business ID logic
             var soldierBusinessId = "1"; // This should be replaced with the actual soldier UID logic
-            return samuraiService.AddSamuraiAsync(businessId, soldierBusinessId, playerId);
+
+            var samurai = await samuraiService.AddSamuraiAsync(businessId, soldierBusinessId, playerId);
+
+            // 广播消息到所有客户端
+            //await hubContext.Clients.All.SendAsync("ReceiveDrawSamurai", new
+            //{
+            //    PlayerId = playerId,
+            //    
+            //    SamuraiBusinessId = businessId,
+            //    
+            //});
+            return samurai;
         }
 
         public Task<List<Samurai>> DrawSamurais(int playerId, int count)
