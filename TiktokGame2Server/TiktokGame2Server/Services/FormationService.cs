@@ -124,6 +124,10 @@ namespace TiktokGame2Server.Others
         /// <returns></returns>
         public async Task<List<Formation>> UpdateFormationAsync(FormationType formationType, List<FormationDTO> newFormations, int playerId)
         {
+            //to do:检查formationDTO中的samuraiId是否有重复，数据库是否拥有
+
+
+
             // 如果没有要更新的数据，返回当前数据库中的数据
             if (newFormations == null || newFormations.Count == 0)
             {
@@ -151,7 +155,8 @@ namespace TiktokGame2Server.Others
                 var samuraiId = formationDTO.SamuraiId;
                 //从数据库中查询该玩家是否有该武将
                 var samurai = await samuraiService.GetSamuraiAsync(samuraiId);
-                if (samurai == null) throw new Exception(formationType + " samurai 不存在 " + samuraiId );
+                if (samurai == null)
+                    continue;
 
                 var newFormation = new Formation
                 {
