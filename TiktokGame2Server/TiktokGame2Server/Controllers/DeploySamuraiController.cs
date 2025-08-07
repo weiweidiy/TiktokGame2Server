@@ -7,12 +7,12 @@ namespace TiktokGame2Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DeploySamurai : Controller
+    public class DeploySamuraiController : Controller
     {
         ITokenService tokenService;
         IFormationService formationService;
         TiktokConfigService tiktokConfigService;
-        public DeploySamurai(ITokenService tokenService, TiktokConfigService tiktokConfigService, IFormationService formationService)
+        public DeploySamuraiController(ITokenService tokenService, TiktokConfigService tiktokConfigService, IFormationService formationService)
         {
             this.tokenService = tokenService;
             this.tiktokConfigService = tiktokConfigService;

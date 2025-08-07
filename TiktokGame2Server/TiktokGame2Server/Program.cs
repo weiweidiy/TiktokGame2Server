@@ -58,8 +58,7 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 builder.Services.AddSwaggerWithJwt();
-
-
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<MyDbContext>(options => options.UseNpgsql("Server=localhost;Port=5432;Database=MyDb;UserId=postgres;Password=123321qweasd;"));
 

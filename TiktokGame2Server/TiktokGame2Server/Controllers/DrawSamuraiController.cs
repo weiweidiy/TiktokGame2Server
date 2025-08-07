@@ -4,14 +4,14 @@ using TiktokGame2Server.Others;
 
 namespace TiktokGame2Server.Controllers
 {
-    [ApiController]
+   [ApiController]
     [Route("api/[controller]")]
-    public class DrawSamurai : Controller
+    public class DrawSamuraiController : Controller
     {
         ITokenService tokenService;
         IDrawSamuraiService drawSamuraiService;
         TiktokConfigService tiktokConfigService;
-        public DrawSamurai(ITokenService tokenService,IDrawSamuraiService drawSamuraiService, TiktokConfigService tiktokConfigService)
+        public DrawSamuraiController(ITokenService tokenService,IDrawSamuraiService drawSamuraiService, TiktokConfigService tiktokConfigService)
         {
             this.tokenService = tokenService;
             this.drawSamuraiService = drawSamuraiService;
@@ -19,7 +19,7 @@ namespace TiktokGame2Server.Controllers
         }
 
         [HttpPost("Draw")]
-        public async Task<IActionResult> Draw([FromBody] DrawDTO drawDTO)
+        public async Task<IActionResult> Draw([FromBody] RequestDrawSamurai request)
         {
             var token = Request.Headers["Authorization"].FirstOrDefault();
             var accountUid = tokenService.GetAccountUidFromToken(token);
@@ -39,8 +39,11 @@ namespace TiktokGame2Server.Controllers
             };
             samuraiDTOs.Add(samuraiDTO);
 
-            drawDTO.SamuraiDTOs = samuraiDTOs;
-            return Ok(drawDTO);
+            var response = new DrawDTO
+            {
+                SamuraiDTOs = samuraiDTOs
+            };
+            return Ok(response);
         }
     }
 }

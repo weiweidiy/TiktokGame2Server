@@ -42,7 +42,7 @@ namespace TiktokGame2Server.Controllers
         // 主要是 levelNode 可能为 null，需加上 null 检查。
 
         [HttpPost("Fight")]
-        public async Task<IActionResult> Fight([FromBody] FightDTO fightDTO)
+        public async Task<IActionResult> Fight([FromBody] RequestFight requestFight)
         {
             //从token解析中获取账号Uid
             var token = Request.Headers["Authorization"].FirstOrDefault();
@@ -51,7 +51,7 @@ namespace TiktokGame2Server.Controllers
             var playerId = tokenService.GetPlayerIdFromToken(token) ?? throw new Exception("解析token异常");
 
             //需要打的关卡节点ID
-            var levelNodeBusinessId = fightDTO.LevelNodeBusinessId;
+            var levelNodeBusinessId = requestFight.LevelNodeBusinessId;
             var levelNode = await levelNodeService.GetLevelNodeAsync(levelNodeBusinessId, playerId);
 
             //如果levelNode为null，说明关卡节点还没有解锁
@@ -177,11 +177,16 @@ namespace TiktokGame2Server.Controllers
                 Process = levelNode?.Process ?? 0,
             };
 
-            fightDTO.LevelNodeDTO = levelNodeDTO;
-            fightDTO.ReportData = reportData ?? new TiktokJCombatTurnBasedReportData();
-            fightDTO.SamuraiDTOs = samuraiDTOs;
-            fightDTO.HpPoolDTO = hpPoolDTO;
-            return Ok(fightDTO);
+            var responseFight = new FightDTO()
+            {
+                LevelNodeBusinessId = levelNodeBusinessId,
+                LevelNodeDTO = levelNodeDTO,
+                ReportData = reportData,
+                SamuraiDTOs = samuraiDTOs,
+                HpPoolDTO = hpPoolDTO,
+            };
+
+            return Ok(responseFight);
 
         }
     }

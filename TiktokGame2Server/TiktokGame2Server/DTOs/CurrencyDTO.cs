@@ -2,6 +2,7 @@
 
 namespace Tiktok
 {
+
     public class CurrencyDTO
     {
         public int Coin { get; set; }
