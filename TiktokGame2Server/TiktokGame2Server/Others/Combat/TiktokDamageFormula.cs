@@ -30,7 +30,7 @@ namespace TiktokGame2Server.Others
             //伤害= 释放者攻击力 * 释放者Power - 目标防御力 * 目标Def
             var caster = query.GetUnit(GetOwner().GetCaster());
             var hp = caster.GetAttribute(TiktokAttributesType.Hp.ToString()) as GameAttributeInt;
-            var baseDmg = (hp.CurValue / 3);
+            var baseDmg = (hp.CurValue / 4);
 
             var power = caster.GetAttribute(TiktokAttributesType.Power.ToString()) as GameAttributeInt;
             var attack = caster.GetAttribute(TiktokAttributesType.Attack.ToString()) as GameAttributeInt;
