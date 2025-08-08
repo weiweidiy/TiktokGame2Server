@@ -195,19 +195,30 @@ namespace TiktokGame2Server.Controllers
                 bagSlots = await bagService.AddBagSlotsAsync(playerId, tiktokConfigService.GetDefaultBagSlotCount());
             }
 
-            var bagSlotDTOs = bagSlots?.Select(n => new BagSlotDTO
+            var bagSlotTasks = bagSlots?.Select(async n =>
             {
-                Id = n.Id,
-                ItemDTO = n.BagItem == null ? null : new ItemDTO
+                // 先判断 BagItem 是否为 null，避免空引用异常
+                string? uid = null;
+                if (n.BagItem != null)
                 {
-                    Id = n.BagItem.Id,
-                    ItemBusinessId = n.BagItem.ItemBusinessId,
-                    Count = n.BagItem.Count,
-                    BagSlotId = n.BagItem.BagSlotId,
-                },
-            }).ToList();
+                    uid = await bagService.QueryBagItemUid(n.BagItem.Id, playerId);
+                }
+                return new BagSlotDTO
+                {
+                    Id = n.Id,
+                    ItemDTO = n.BagItem == null ? null : new ItemDTO
+                    {
+                        Uid = uid,
+                        ItemBusinessId = n.BagItem.ItemBusinessId,
+                        Count = n.BagItem.Count,
+                        BagSlotId = n.BagItem.BagSlotId,
+                    },
+                };
+            }).ToList() ?? new List<Task<BagSlotDTO>>();
 
-            return bagSlotDTOs ?? new List<BagSlotDTO>();
+            var bagSlotDTOs = await Task.WhenAll(bagSlotTasks);
+
+            return bagSlotDTOs.ToList();
 
         }
 

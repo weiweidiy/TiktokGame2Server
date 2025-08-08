@@ -231,7 +231,7 @@ namespace TiktokGame2Server.Controllers
                 {
                     result.Add(new ItemDTO
                     {
-                        Id = 0, // 如有实际Id可补充
+                        Uid = "", // 如有实际Id可补充
                         ItemBusinessId = businessId,
                         Count = count,
                         BagSlotId = 0 // 如有实际BagSlotId可补充

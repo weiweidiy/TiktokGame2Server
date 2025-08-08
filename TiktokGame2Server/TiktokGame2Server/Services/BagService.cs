@@ -97,6 +97,7 @@ namespace TiktokGame2Server.Others
                 //如果存在空的BagSlot，则创建新的BagItem并放入空的BagSlot
                 var newItem = new BagItem
                 {
+                    Uid = Guid.NewGuid().ToString(),
                     PlayerId = playerId,
                     ItemBusinessId = itemBusinessId,
                     Count = count,
@@ -116,11 +117,31 @@ namespace TiktokGame2Server.Others
 
 
 
+
+
         public Task<BagSlot> RemoveItemFromBagSlotAsync(int playerId, int itemId, int count)
         {
             throw new NotImplementedException();
         }
 
+        public Task<int> QueryBagItemId(string uid, int playerId)
+        {
+            // 查询指定UID的BagItem
+            return _dbContext.BagItems
+                .Where(bi => bi.Uid == uid && bi.PlayerId == playerId)
+                .Select(bi => bi.Id)
+                .FirstOrDefaultAsync();
 
+        }
+
+        public Task<string> QueryBagItemUid(int itemId, int playerId)
+        {
+            // 查询指定BagItem的UID
+            return _dbContext.BagItems
+                .Where(bi => bi.Id == itemId && bi.PlayerId == playerId)
+                .Select(bi => bi.Uid)
+                .FirstOrDefaultAsync();
+
+        }
     }
 }

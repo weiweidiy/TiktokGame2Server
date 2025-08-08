@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
 
+        public required string Uid { get; set; }
         public required string ItemBusinessId { get; set; }
 
         public int Count { get; set; } = 1;

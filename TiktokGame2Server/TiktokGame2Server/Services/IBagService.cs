@@ -62,7 +62,10 @@ namespace TiktokGame2Server.Others
         Task<BagSlot> RemoveItemFromBagSlotAsync(int playerId, int itemId, int count);
 
 
+        Task<int> QueryBagItemId(string uid, int playerId);
 
-        
+        Task<string> QueryBagItemUid(int itemId, int playerId);
+
+
     }
 }
