@@ -43,8 +43,8 @@ namespace TiktokGame2Server.Others
             //samurai系数
             var samuraiRate = (power.CurValue - targetDef.CurValue) / 50f;
 
-            //计算伤害
-            var damage = baseDmg * Math.Max(0, (1+ soldierRate + samuraiRate));
+            //计算伤害f
+            var damage = baseDmg * Math.Max(0.1f, (1+ soldierRate + samuraiRate));
 
             value = damage * GetDamageRate();
         }

@@ -54,7 +54,7 @@ namespace TiktokGame2Server.Others
         {
             //先查询是否存在相同的阵型和位置
             var existingFormation = await _dbContext.Formations
-                .FirstOrDefaultAsync(f => f.FormationType == formationType && f.FormationPoint == formationPoint /*&& f.SamuraiId == samuraiId*/ && f.PlayerId == playerId);
+                .FirstOrDefaultAsync(f => f.FormationType == formationType && f.FormationPoint == formationPoint /*&& f.SamuraiUid == samuraiId*/ && f.PlayerId == playerId);
 
             //如果存在，则修改对应的samuraiId, 替换武将
             if (existingFormation != null)
@@ -152,7 +152,7 @@ namespace TiktokGame2Server.Others
             var addedFormations = new List<Formation>();
             foreach (var formationDTO in newFormations)
             {
-                var samuraiId = formationDTO.SamuraiId;
+                var samuraiId = await samuraiService.QuerySamuraiId(formationDTO.SamuraiUid, playerId);
                 //从数据库中查询该玩家是否有该武将
                 var samurai = await samuraiService.GetSamuraiAsync(samuraiId);
                 if (samurai == null)
@@ -162,7 +162,7 @@ namespace TiktokGame2Server.Others
                 {
                     FormationType = formationDTO.FormationType,
                     FormationPoint = formationDTO.FormationPoint,
-                    SamuraiId = formationDTO.SamuraiId, 
+                    SamuraiId = samuraiId, 
                     PlayerId = playerId
                 };
                 _dbContext.Formations.Add(newFormation);

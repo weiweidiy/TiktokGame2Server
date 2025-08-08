@@ -6,6 +6,8 @@
 
         public required string BusinessId { get; set; }
 
+        public required string Uid { get; set; } //武士唯一标识符
+
         public int Level { get; set; } = 1; //计算值，通过经验值计算
 
         public int Experience { get; set; } = 0;

@@ -9,6 +9,6 @@ namespace Tiktok
 
         public int FormationPoint { get; set; }
 
-        public int SamuraiId { get; set; }
+        public required string SamuraiUid { get; set; }
     }
 }

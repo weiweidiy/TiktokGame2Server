@@ -49,12 +49,54 @@ namespace TiktokGame2Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BagSlots",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ItemId = table.Column<int>(type: "integer", nullable: true),
+                    PlayerId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BagSlots", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BagSlots_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Currencies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CurrencyType = table.Column<int>(type: "integer", nullable: false),
+                    Count = table.Column<int>(type: "integer", nullable: false),
+                    PlayerId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Currencies_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HpPools",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Hp = table.Column<int>(type: "integer", nullable: false),
+                    MaxHp = table.Column<int>(type: "integer", nullable: false),
                     PlayerId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -96,6 +138,7 @@ namespace TiktokGame2Server.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BusinessId = table.Column<string>(type: "text", nullable: false),
+                    Uid = table.Column<string>(type: "text", nullable: false),
                     Level = table.Column<int>(type: "integer", nullable: false),
                     Experience = table.Column<int>(type: "integer", nullable: false),
                     CurHp = table.Column<int>(type: "integer", nullable: false),
@@ -107,6 +150,34 @@ namespace TiktokGame2Server.Migrations
                     table.PrimaryKey("PK_Samurais", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Samurais_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BagItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ItemBusinessId = table.Column<string>(type: "text", nullable: false),
+                    Count = table.Column<int>(type: "integer", nullable: false),
+                    BagSlotId = table.Column<int>(type: "integer", nullable: false),
+                    PlayerId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BagItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BagItems_BagSlots_BagSlotId",
+                        column: x => x.BagSlotId,
+                        principalTable: "BagSlots",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BagItems_Players_PlayerId",
                         column: x => x.PlayerId,
                         principalTable: "Players",
                         principalColumn: "Id",
@@ -136,9 +207,32 @@ namespace TiktokGame2Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Formations_FormationType_FormationPoint_SamuraiId",
+                name: "IX_BagItems_BagSlotId",
+                table: "BagItems",
+                column: "BagSlotId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BagItems_PlayerId",
+                table: "BagItems",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BagSlots_PlayerId_ItemId",
+                table: "BagSlots",
+                columns: new[] { "PlayerId", "ItemId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Currencies_PlayerId_CurrencyType",
+                table: "Currencies",
+                columns: new[] { "PlayerId", "CurrencyType" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Formations_FormationType_FormationPoint_PlayerId",
                 table: "Formations",
-                columns: new[] { "FormationType", "FormationPoint", "SamuraiId" },
+                columns: new[] { "FormationType", "FormationPoint", "PlayerId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -149,7 +243,8 @@ namespace TiktokGame2Server.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_HpPools_PlayerId",
                 table: "HpPools",
-                column: "PlayerId");
+                column: "PlayerId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_LevelNodes_BusinessId_PlayerId",
@@ -169,20 +264,26 @@ namespace TiktokGame2Server.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Samurais_BusinessId_PlayerId",
-                table: "Samurais",
-                columns: new[] { "BusinessId", "PlayerId" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Samurais_PlayerId",
                 table: "Samurais",
                 column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Samurais_Uid_PlayerId",
+                table: "Samurais",
+                columns: new[] { "Uid", "PlayerId" },
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "BagItems");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
+
             migrationBuilder.DropTable(
                 name: "Formations");
 
@@ -191,6 +292,9 @@ namespace TiktokGame2Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "LevelNodes");
+
+            migrationBuilder.DropTable(
+                name: "BagSlots");
 
             migrationBuilder.DropTable(
                 name: "Samurais");

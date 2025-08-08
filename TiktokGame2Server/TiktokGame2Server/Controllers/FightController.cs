@@ -91,7 +91,7 @@ namespace TiktokGame2Server.Controllers
             var samuraiDTOs = new List<SamuraiDTO>();
             foreach (var unit in lstSamurai)
             {
-                var samuraiId = int.Parse(unit.Uid);
+                var samuraiId = await samuraiService.QuerySamuraiId(unit.Uid, playerId);
                 var curHp = unit.CurHp;
                 var maxHp = unit.MaxHp;
                 //如果curHp不满，则尝试从hppool中补充
@@ -116,7 +116,7 @@ namespace TiktokGame2Server.Controllers
                     var samurai = await samuraiService.UpdateSamuraiHpAsync(samuraiId, curHp);
                     var samuraiDTO = new SamuraiDTO
                     {
-                        Id = samuraiId,
+                        Uid = samurai.Uid,
                         BusinessId = unit.SamuraiBusinessId,
                         CurHp = samurai.CurHp,
                         //MaxHp = maxHp

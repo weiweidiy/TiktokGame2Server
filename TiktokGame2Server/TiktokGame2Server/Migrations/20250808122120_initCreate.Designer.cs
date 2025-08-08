@@ -12,8 +12,8 @@ using TiktokGame2Server.Entities;
 namespace TiktokGame2Server.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250807050454_updateFormationDataBase")]
-    partial class updateFormationDataBase
+    [Migration("20250808122120_initCreate")]
+    partial class initCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,10 +108,10 @@ namespace TiktokGame2Server.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Coin")
+                    b.Property<int>("Count")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Pan")
+                    b.Property<int>("CurrencyType")
                         .HasColumnType("integer");
 
                     b.Property<int>("PlayerId")
@@ -119,7 +119,7 @@ namespace TiktokGame2Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerId")
+                    b.HasIndex("PlayerId", "CurrencyType")
                         .IsUnique();
 
                     b.ToTable("Currencies");
@@ -262,9 +262,16 @@ namespace TiktokGame2Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Uid")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PlayerId");
+
+                    b.HasIndex("Uid", "PlayerId")
+                        .IsUnique();
 
                     b.ToTable("Samurais");
                 });

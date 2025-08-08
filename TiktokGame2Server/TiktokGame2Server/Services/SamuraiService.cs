@@ -13,6 +13,7 @@ namespace TiktokGame2Server.Others
             this.tiktokConfigService = tiktokConfigService ?? throw new ArgumentNullException(nameof(tiktokConfigService));
         }
 
+
         /// <summary>
         /// 获取玩家的所有武士
         /// </summary>
@@ -52,18 +53,19 @@ namespace TiktokGame2Server.Others
         /// <summary>
         /// 新添加一个武士
         /// </summary>
-        /// <param name="samuraiUid"></param>
+        /// <param name="samuraiBusinessId"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<Samurai> AddSamuraiAsync(string samuraiUid, string soldierUid, int playerId)
+        public async Task<Samurai> AddSamuraiAsync(string samuraiBusinessId, string soldierUid, int playerId)
         {
-            if(!CheckUid(samuraiUid))
-                throw new ArgumentException($"武士 {samuraiUid} 配置数据不存在或无效。");
+            if (!CheckUid(samuraiBusinessId))
+                throw new ArgumentException($"武士 {samuraiBusinessId} 配置数据不存在或无效。");
 
             var samurai = new Samurai
             {
-                BusinessId = samuraiUid,
+                Uid = Guid.NewGuid().ToString(),
+                BusinessId = samuraiBusinessId,
                 PlayerId = playerId,
                 SoldierUid = soldierUid,
                 CurHp = tiktokConfigService.FormulaMaxHpByLevel(1),//默认1级
@@ -132,7 +134,7 @@ namespace TiktokGame2Server.Others
         {
             // 检查 samuraiBusinessId 是否符合预期格式
             // 这里可以根据实际情况进行验证
-            return !string.IsNullOrEmpty(samuraiBusinessId)  && tiktokConfigService.IsValidSamurai(samuraiBusinessId);
+            return !string.IsNullOrEmpty(samuraiBusinessId) && tiktokConfigService.IsValidSamurai(samuraiBusinessId);
         }
 
         public Task<Samurai> UpdateSamuraiHpAsync(int samuraiId, int curHp)
@@ -143,6 +145,24 @@ namespace TiktokGame2Server.Others
             samurai.CurHp = curHp;
             _dbContext.Samurais.Update(samurai);
             return _dbContext.SaveChangesAsync().ContinueWith(t => samurai);
+
+        }
+
+        public Task<int> QuerySamuraiId(string samuraiUid, int playerId)
+        {
+            return _dbContext.Samurais
+                .Where(s => s.Uid == samuraiUid && s.PlayerId == playerId)
+                .Select(s => s.Id)
+                .FirstOrDefaultAsync();
+
+        }
+
+        public Task<string> QuerySamuraiUid(int samuraiId, int playerId)
+        {
+            return _dbContext.Samurais
+                .Where(s => s.Id == samuraiId && s.PlayerId == playerId)
+                .Select(s => s.Uid)
+                .FirstOrDefaultAsync();
 
         }
     }

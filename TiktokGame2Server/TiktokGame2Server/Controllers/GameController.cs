@@ -112,7 +112,7 @@ namespace TiktokGame2Server.Controllers
             }
             var samuraisDTO = samurais?.Select(n => new SamuraiDTO
             {
-                Id = n.Id,
+                Uid = n.Uid,
                 BusinessId = n.BusinessId,
                 Level = n.Level,
                 Experience = n.Experience,
@@ -237,14 +237,23 @@ namespace TiktokGame2Server.Controllers
                 var defaultFormation = await formationService.AddOrUpdateFormationSamuraiAsync(formationType, tiktokConfigService.GetDefaultFormationPoint(), first.Id, playerId);
                 formations.Add(defaultFormation);
             }
-            var formationsDTO = formations?.Select(n => new FormationDTO
+
+
+            var formationTasks = formations?.Select(async n =>
             {
-                Id = n.Id,
-                FormationType = n.FormationType,
-                FormationPoint = n.FormationPoint,
-                SamuraiId = n.SamuraiId,
-            }).ToList();
-            return formationsDTO ?? new List<FormationDTO>();
+                var samuraiUid = await samuraiService.QuerySamuraiUid(n.SamuraiId, playerId);
+                return new FormationDTO
+                {
+                    Id = n.Id,
+                    FormationType = n.FormationType,
+                    FormationPoint = n.FormationPoint,
+                    SamuraiUid = samuraiUid,
+                };
+            }).ToList() ?? new List<Task<FormationDTO>>();
+
+            var formationsDTO = await Task.WhenAll(formationTasks);
+
+            return formationsDTO.ToList();
         }
 
 

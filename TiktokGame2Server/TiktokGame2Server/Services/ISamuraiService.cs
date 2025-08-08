@@ -50,5 +50,15 @@ namespace TiktokGame2Server.Others
         /// <param name="curHp"></param>
         /// <returns></returns>
         Task<Samurai> UpdateSamuraiHpAsync(int samuraiId, int curHp);
+
+        /// <summary>
+        /// 通过武士UID查询武士ID
+        /// </summary>
+        /// <param name="samuraiUid"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        Task<int> QuerySamuraiId(string samuraiUid, int playerId);
+
+        Task<string> QuerySamuraiUid(int samuraiId, int playerId);
     }
 }
