@@ -40,27 +40,32 @@ namespace TiktokGame2Server.Controllers
             var costAmount = drawCost.Item3;
 
             //判断玩家货币是否足够
-            var currency = await currencyService.GetCurrency(playerId);
+            CurrencyDTO remainCurrencyDTO = null;
             if (resourceType == ResourceType.Currency)
             {
                 var currencyType = (CurrencyType)int.Parse(businessId);
-                if (currencyType == CurrencyType.Coin)
+
+                var currency = await currencyService.GetCurrency(playerId, currencyType);
+                if(currency.Count < costAmount)
                 {
-                    if (currency.Coin < costAmount)
-                    {
-                        return BadRequest(new { message = "金币不足" });
-                    }
-                }
-                else if (currencyType == CurrencyType.Pan)
-                {
-                    if (currency.Pan < costAmount)
-                    {
-                        return BadRequest(new { message = "小判不足" });
-                    }
+                    return BadRequest(new { message = $"货币不足，当前{currencyType}数量：{currency.Count}，需要：{costAmount}" });
                 }
 
                 //货币足够，扣除货币
                 currency = await currencyService.SpendCurrency(playerId, currencyType, costAmount);
+
+                remainCurrencyDTO = new CurrencyDTO
+                {
+                    Count = currency.Count
+                };
+            }
+            else if (resourceType == ResourceType.BagItem)
+            {
+                return BadRequest(new { message = "暂时没有实现道具抽卡" });
+            }
+            else
+            {
+                return BadRequest(new { message = "不支持的资源类型" });
             }
 
             //单抽
@@ -76,12 +81,6 @@ namespace TiktokGame2Server.Controllers
             };
             samuraiDTOs.Add(samuraiDTO);
 
-
-            var remainCurrencyDTO = new CurrencyDTO
-            {
-                Coin = currency.Coin,
-                Pan = currency.Pan
-            };
 
             var response = new DrawDTO
             {

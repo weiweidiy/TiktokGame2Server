@@ -29,7 +29,7 @@ namespace TiktokGame2Server.Entities
             //modelBuilder.Entity<Samurai>().HasIndex(c => new { c.BusinessId, c.PlayerId }).IsUnique();
             modelBuilder.Entity<Formation>().HasIndex(c => new { c.FormationType, c.FormationPoint , c.PlayerId }).IsUnique();
             modelBuilder.Entity<HpPool>().HasIndex(c => new { c.PlayerId }).IsUnique();
-            modelBuilder.Entity<Currency>().HasIndex(c => new { c.PlayerId }).IsUnique();
+            modelBuilder.Entity<Currency>().HasIndex(c => new { c.PlayerId , c.CurrencyType}).IsUnique();
             modelBuilder.Entity<BagSlot>().HasIndex(c => new { c.PlayerId, c.ItemId }).IsUnique();
             //modelBuilder.Entity<BagItem>().HasIndex(c => new {  c.PlayerId }).IsUnique();
 

@@ -132,7 +132,8 @@ namespace TiktokGame2Server.Controllers
                 MaxHp = hpPool?.MaxHp ?? 0 // 如果hpPool为null，则默认为0
             };
 
-
+            RewardDTO? winRewardDTO = null;
+            RewardDTO? achievementRewardDTO = null;
             var result = reportData.winnerTeamUid == playerUid ? true : false;
             if (result)
             {
@@ -155,7 +156,14 @@ namespace TiktokGame2Server.Controllers
                         if (rewardBusinessId != null)
                         {
                             //添加奖励
-                            await rewardService.AddReward(playerId, rewardBusinessId);
+                            var achievementReward = await rewardService.AddReward(playerId, rewardBusinessId);
+
+                            // 组装AchievementRewardDTO
+                            achievementRewardDTO = new RewardDTO
+                            {
+                                Currencies = BuildCurrencyDTOs(rewardBusinessId, achievementReward),
+                                BagItems = BuildItemDTOs(rewardBusinessId, achievementReward)
+                            };
                         }
                     }
                 }
@@ -165,10 +173,14 @@ namespace TiktokGame2Server.Controllers
                 if (victoryRewardBusinessId != null)
                 {
                     //添加奖励
-                    await rewardService.AddReward(playerId, victoryRewardBusinessId);
+                    var winReward = await rewardService.AddReward(playerId, victoryRewardBusinessId);
+                    // 组装WinRewardDTO
+                    winRewardDTO = new RewardDTO
+                    {
+                        Currencies = BuildCurrencyDTOs(victoryRewardBusinessId, winReward),
+                        BagItems = BuildItemDTOs(victoryRewardBusinessId, winReward)
+                    };
                 }
-
-
             }
 
             var levelNodeDTO = new LevelNodeDTO
@@ -184,10 +196,50 @@ namespace TiktokGame2Server.Controllers
                 ReportData = reportData,
                 SamuraiDTOs = samuraiDTOs,
                 HpPoolDTO = hpPoolDTO,
+                WinRewardDTO = winRewardDTO,
+                AchievementRewardDTO = achievementRewardDTO,
             };
 
             return Ok(responseFight);
 
         }
+
+        private List<CurrencyDTO> BuildCurrencyDTOs(string rewardBusinessId, List<(ResourceType, string, int)> rewardList)
+        {
+            var result = new List<CurrencyDTO>();
+            foreach (var (type, businessId, count) in rewardList)
+            {
+                if (type == ResourceType.Currency)
+                {
+                    result.Add(new CurrencyDTO
+                    {
+                        CurrencyType = (CurrencyType)int.Parse(businessId),
+                        Count = count
+                    });
+                }
+            }
+            return result;
+        }
+
+        private List<ItemDTO> BuildItemDTOs(string rewardBusinessId, List<(ResourceType, string, int)> rewardList)
+        {
+            var result = new List<ItemDTO>();
+            foreach (var (type, businessId, count) in rewardList)
+            {
+                // 你可以根据实际的 ResourceType 枚举名调整判断条件
+                if (type == ResourceType.BagItem )
+                {
+                    result.Add(new ItemDTO
+                    {
+                        Id = 0, // 如有实际Id可补充
+                        ItemBusinessId = businessId,
+                        Count = count,
+                        BagSlotId = 0 // 如有实际BagSlotId可补充
+                    });
+                }
+            }
+            return result;
+        }
+
     }
 }

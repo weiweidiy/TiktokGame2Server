@@ -1,8 +1,10 @@
-﻿namespace TiktokGame2Server.Others
+﻿using TiktokGame2Server.Entities;
+
+namespace TiktokGame2Server.Others
 {
     public interface IRewardService
     {
-        Task AddReward(int playerId, string rewardBusinessId);
+        Task<List<(ResourceType, string, int)>> AddReward(int playerId, string rewardBusinessId);
     }
 
 

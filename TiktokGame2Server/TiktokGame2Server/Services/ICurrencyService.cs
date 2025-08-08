@@ -5,7 +5,7 @@ namespace TiktokGame2Server.Others
 {
     public interface ICurrencyService
     {
-        Task<Currency> GetCurrency(int playerId);
+        Task<Currency> GetCurrency(int playerId, CurrencyType currencyType);
         Task<Currency> AddCurrency(int playerId, CurrencyType currencyType, int amount);
         Task<Currency> SpendCurrency(int playerId, CurrencyType currencyType, int amount);
 

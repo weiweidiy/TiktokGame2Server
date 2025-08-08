@@ -16,7 +16,8 @@ namespace TiktokGame2Server.Controllers
         , ISamuraiService samuraiService
         , IFormationService formationService
         , TiktokConfigService tiktokConfigService
-        , IBagService bagService) : Controller
+        , IBagService bagService
+        , ICurrencyService currencyService) : Controller
     {
         MyDbContext myDbContext = myDbContext;
         ITokenService tokenService = tokenService;
@@ -26,6 +27,7 @@ namespace TiktokGame2Server.Controllers
         IFormationService formationService = formationService;
         TiktokConfigService tiktokConfigService = tiktokConfigService;
         IBagService bagService = bagService;
+        ICurrencyService currencyService = currencyService;
 
         [HttpPost("EnterGame")]
         public async Task<ActionResult<GameDTO>> EnterGame()
@@ -119,24 +121,43 @@ namespace TiktokGame2Server.Controllers
             return samuraisDTO ?? new List<SamuraiDTO>();
         }
 
-        async Task<CurrencyDTO> GetCurrencyDTO(int playerId)
+        async Task<List<CurrencyDTO>> GetCurrencyDTO(int playerId)
         {
+            var result = new List<CurrencyDTO>();
+
             //获取玩家的货币
-            var currency = await myDbContext.Currencies.FirstOrDefaultAsync(c => c.PlayerId == playerId);
-            if (currency == null)
+            var currencyCoin = await myDbContext.Currencies.FirstOrDefaultAsync(c => c.PlayerId == playerId && c.CurrencyType == CurrencyType.Coin);
+            if (currencyCoin == null)
             {
                 //创建一个新的货币
-                currency = new Currency { PlayerId = playerId, Coin = tiktokConfigService.GetDefaultCurrencyCoin(), Pan = tiktokConfigService.GetDefaultCurrencyPan() };
-                myDbContext.Currencies.Add(currency);
-                myDbContext.SaveChanges();
+                currencyCoin = await currencyService.AddCurrency(playerId, CurrencyType.Coin, tiktokConfigService.GetDefaultCurrencyCoin());
+
             }
-            // 将Currency转换为DTO
-            var currencyDTO = new CurrencyDTO
+
+            //获取玩家的小判
+            var currencyPan = await myDbContext.Currencies.FirstOrDefaultAsync(c => c.PlayerId == playerId && c.CurrencyType == CurrencyType.Pan);
+            if (currencyPan == null)
             {
-                Coin = currency.Coin,
-                Pan = currency.Pan,
-            };
-            return currencyDTO;
+                //创建一个新的货币
+                currencyPan = await currencyService.AddCurrency(playerId, CurrencyType.Pan, tiktokConfigService.GetDefaultCurrencyPan());
+
+            }
+
+
+
+            // 将货币转换为DTO
+            result.Add(new CurrencyDTO
+            {
+                CurrencyType = CurrencyType.Coin,
+                Count = currencyCoin.Count,
+            });
+            result.Add(new CurrencyDTO
+            {
+                CurrencyType = CurrencyType.Pan,
+                Count = currencyPan.Count,
+            });
+
+            return result;
 
         }
 
@@ -148,7 +169,7 @@ namespace TiktokGame2Server.Controllers
             {
                 //创建一个新的生命池
                 hpPool = new HpPool { PlayerId = playerId, Hp = tiktokConfigService.GetDefaultHpPoolHp(), MaxHp = tiktokConfigService.GetDefaultHpPoolMaxHp() };
-                myDbContext.HpPools.Add(hpPool);   
+                myDbContext.HpPools.Add(hpPool);
                 myDbContext.SaveChanges();
             }
 
@@ -177,11 +198,12 @@ namespace TiktokGame2Server.Controllers
             var bagSlotDTOs = bagSlots?.Select(n => new BagSlotDTO
             {
                 Id = n.Id,
-                ItemDTO = n.BagItem == null? null : new ItemDTO
+                ItemDTO = n.BagItem == null ? null : new ItemDTO
                 {
                     Id = n.BagItem.Id,
                     ItemBusinessId = n.BagItem.ItemBusinessId,
                     Count = n.BagItem.Count,
+                    BagSlotId = n.BagItem.BagSlotId,
                 },
             }).ToList();
 
@@ -206,7 +228,7 @@ namespace TiktokGame2Server.Controllers
                 //获取所有武士
                 var samurais = await samuraiService.GetAllSamuraiAsync(playerId);
                 var first = samurais.FirstOrDefault();
-                if(first == null)
+                if (first == null)
                 {
                     first = await samuraiService.AddSamuraiAsync(tiktokConfigService.GetDefaultSamuraiBusinessId()
                             , tiktokConfigService.GetDefaultSoldierBusinessId(tiktokConfigService.GetDefaultSamuraiBusinessId()), playerId);

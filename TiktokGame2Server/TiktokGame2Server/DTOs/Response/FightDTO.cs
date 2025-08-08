@@ -19,5 +19,9 @@ namespace Tiktok
         public List<SamuraiDTO>? SamuraiDTOs { get; set; } 
 
         public HpPoolDTO? HpPoolDTO { get; set; }
+
+        public RewardDTO? WinRewardDTO { get; set; }
+
+        public RewardDTO? AchievementRewardDTO { get; set; }
     }
 }

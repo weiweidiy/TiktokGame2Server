@@ -91,7 +91,7 @@ namespace TiktokGame2Server.Others
             return achievements.Count;
         }
 
-        public string GetAchievementBusinessId(string levelNodeBusinessId, int process)
+        public string? GetAchievementBusinessId(string levelNodeBusinessId, int process)
         {
             var nodeCfgData = Get<LevelsNodesCfgData>(levelNodeBusinessId);
             var achievements = nodeCfgData.AchievementUid;
@@ -101,7 +101,8 @@ namespace TiktokGame2Server.Others
             }
             if (process < 1 || process > achievements.Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(process), "Process must be within the range of achievements.");
+                return null;
+                //throw new ArgumentOutOfRangeException(nameof(process), "Process must be within the range of achievements.");
             }
             return achievements[process - 1];
         }
@@ -769,9 +770,9 @@ namespace TiktokGame2Server.Others
         #endregion
 
         #region 奖励相关
-        public int[]? GetRewardCurrenciesTypes(string rewardBusinessId)
+        public CurrencyType[]? GetRewardCurrenciesTypes(string rewardBusinessId)
         {
-            return new int[] { 1 }; // to do: 读取配置 ， 暂时就给铜钱
+            return new CurrencyType[] { CurrencyType.Coin }; // to do: 读取配置 ， 暂时就给铜钱ss
         }
 
         public int[]? GetRewardCurrenciesCounts(string rewardBusinessId)
@@ -779,7 +780,7 @@ namespace TiktokGame2Server.Others
             return new int[] { 100 }; // to do: 读取配置 ， 暂时就给100铜钱
         }
 
-        public string[]? GetRewardItems(string rewardBusinessId)
+        public string[]? GetRewardItemsBusinessIds(string rewardBusinessId)
         {
             return new string[] { "1" }; // to do: 读取配置 ， 暂时就给1号道具
         }
