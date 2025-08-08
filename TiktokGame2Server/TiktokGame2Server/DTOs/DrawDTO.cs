@@ -3,7 +3,7 @@
 
     public class DrawDTO
     {
-        public CurrencyDTO? Currency { get; set; }
+        public CurrencyDTO? CurrencyDTO { get; set; }
         public List<SamuraiDTO>? SamuraiDTOs { get; set; }
     }
 }

@@ -1,30 +1,40 @@
-﻿using TiktokGame2Server.Entities;
+﻿using JFramework;
+using TiktokGame2Server.Entities;
 
 namespace TiktokGame2Server.Others
 {
     public class DrawSamuraiService : IDrawSamuraiService
     {
         private readonly ISamuraiService samuraiService;
-        public DrawSamuraiService(ISamuraiService samuraiService)
+        TiktokConfigService tiktokConfigService;
+        //Utility utility = new Utility();
+        public DrawSamuraiService(ISamuraiService samuraiService, TiktokConfigService tiktokConfigService)
         {
             this.samuraiService = samuraiService ?? throw new ArgumentNullException(nameof(samuraiService));
+            this.tiktokConfigService = tiktokConfigService ?? throw new ArgumentNullException(nameof(tiktokConfigService));
         }
         public async Task<Samurai> DrawSamurai(int playerId)
         {
-            var businessId = "1"; // This should be replaced with the actual business ID logic
-            var soldierBusinessId = "1"; // This should be replaced with the actual soldier UID logic
+            var samuraiBusinessId = GetRandomSamuraiBusinessIdFromSamuraiDrawPool(); // This should be replaced with the actual business ID logic
+            var soldierBusinessId = tiktokConfigService.GetDefaultSoldierBusinessId(samuraiBusinessId);
 
-            var samurai = await samuraiService.AddSamuraiAsync(businessId, soldierBusinessId, playerId);
+            var samurai = await samuraiService.AddSamuraiAsync(samuraiBusinessId, soldierBusinessId, playerId);
 
             // 广播消息到所有客户端
             //await hubContext.Clients.All.SendAsync("ReceiveDrawSamurai", new
             //{
             //    PlayerId = playerId,
             //    
-            //    SamuraiBusinessId = businessId,
+            //    SamuraiBusinessId = samuraiBusinessId,
             //    
             //});
             return samurai;
+        }
+
+        private string GetRandomSamuraiBusinessIdFromSamuraiDrawPool()
+        {
+            var allSamuraiBusinessIds = tiktokConfigService.GetSamuraiDrawPool();
+            return allSamuraiBusinessIds.ToList().GetRandomItems(1)[0];
         }
 
         public Task<List<Samurai>> DrawSamurais(int playerId, int count)

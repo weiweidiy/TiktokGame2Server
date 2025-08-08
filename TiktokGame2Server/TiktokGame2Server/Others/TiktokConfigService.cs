@@ -788,9 +788,19 @@ namespace TiktokGame2Server.Others
         {
             return new int[] { 1 }; // to do: 读取配置 ， 暂时就给1个1号道具
         }
-
-
         #endregion
 
+        #region 抽卡池相关
+        public string[] GetSamuraiDrawPool()
+        {
+            return new string[] { "1", "2", "3" }; // to do: 读取配置
+        }
+
+        public (ResourceType, string, int) GetDrawCost(int poolType, int count)
+        {
+            return (ResourceType.Currency, "1", 100 * count); // to do: ���取配置，暂时就给100铜钱
+        }
+
+        #endregion
     }
 }
