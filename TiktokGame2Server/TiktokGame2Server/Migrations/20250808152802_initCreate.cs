@@ -138,7 +138,6 @@ namespace TiktokGame2Server.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     BusinessId = table.Column<string>(type: "text", nullable: false),
-                    Uid = table.Column<string>(type: "text", nullable: false),
                     Level = table.Column<int>(type: "integer", nullable: false),
                     Experience = table.Column<int>(type: "integer", nullable: false),
                     CurHp = table.Column<int>(type: "integer", nullable: false),
@@ -267,12 +266,6 @@ namespace TiktokGame2Server.Migrations
                 name: "IX_Samurais_PlayerId",
                 table: "Samurais",
                 column: "PlayerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Samurais_Uid_PlayerId",
-                table: "Samurais",
-                columns: new[] { "Uid", "PlayerId" },
-                unique: true);
         }
 
         /// <inheritdoc />

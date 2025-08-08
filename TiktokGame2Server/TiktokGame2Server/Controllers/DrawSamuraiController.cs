@@ -73,7 +73,7 @@ namespace TiktokGame2Server.Controllers
             var samuraiDTOs = new List<SamuraiDTO>();
             var samuraiDTO = new SamuraiDTO()
             {
-                Uid = samurai.Uid,
+                Id = samurai.Id,
                 BusinessId = samurai.BusinessId,
                 Level = 1,
                 Experience = 0,

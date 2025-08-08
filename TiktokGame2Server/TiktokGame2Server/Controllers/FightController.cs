@@ -91,7 +91,7 @@ namespace TiktokGame2Server.Controllers
             var samuraiDTOs = new List<SamuraiDTO>();
             foreach (var unit in lstSamurai)
             {
-                var samuraiId = await samuraiService.QuerySamuraiId(unit.Uid, playerId);
+                //var samuraiId = await samuraiService.QuerySamuraiId(unit.Uid, playerId);
                 var curHp = unit.CurHp;
                 var maxHp = unit.MaxHp;
                 //如果curHp不满，则尝试从hppool中补充
@@ -113,10 +113,10 @@ namespace TiktokGame2Server.Controllers
                     }
 
                     //更新samurai的血量
-                    var samurai = await samuraiService.UpdateSamuraiHpAsync(samuraiId, curHp);
+                    var samurai = await samuraiService.UpdateSamuraiHpAsync(int.Parse(unit.Uid), curHp);
                     var samuraiDTO = new SamuraiDTO
                     {
-                        Uid = samurai.Uid,
+                        Id = samurai.Id,
                         BusinessId = unit.SamuraiBusinessId,
                         CurHp = samurai.CurHp,
                         //MaxHp = maxHp
@@ -231,7 +231,7 @@ namespace TiktokGame2Server.Controllers
                 {
                     result.Add(new ItemDTO
                     {
-                        Uid = "", // 如有实际Id可补充
+                        Id = 0, // 如有实际Id可补充
                         ItemBusinessId = businessId,
                         Count = count,
                         BagSlotId = 0 // 如有实际BagSlotId可补充

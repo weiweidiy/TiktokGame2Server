@@ -65,10 +65,6 @@ namespace TiktokGame2Server.Migrations
                     b.Property<int>("PlayerId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Uid")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BagSlotId")
@@ -263,16 +259,9 @@ namespace TiktokGame2Server.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Uid")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PlayerId");
-
-                    b.HasIndex("Uid", "PlayerId")
-                        .IsUnique();
 
                     b.ToTable("Samurais");
                 });

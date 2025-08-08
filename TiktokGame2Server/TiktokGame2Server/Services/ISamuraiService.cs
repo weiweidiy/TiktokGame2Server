@@ -57,8 +57,8 @@ namespace TiktokGame2Server.Others
         /// <param name="samuraiUid"></param>
         /// <param name="playerId"></param>
         /// <returns></returns>
-        Task<int> QuerySamuraiId(string samuraiUid, int playerId);
+        //Task<int> QuerySamuraiId(string samuraiUid, int playerId);
 
-        Task<string> QuerySamuraiUid(int samuraiId, int playerId);
+        //Task<string> QuerySamuraiUid(int samuraiId, int playerId);
     }
 }

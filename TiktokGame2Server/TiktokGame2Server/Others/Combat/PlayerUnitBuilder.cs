@@ -16,7 +16,7 @@ namespace TiktokGame2Server.Others
         {
             var unitInfo = new TiktokJCombatUnitInfo
             {
-                Uid = samurai.Uid,
+                Uid = samurai.Id.ToString(),
                 AttrList = attrBuilder.Create(),
                 Actions = actionBuilder.Create(),
                 SamuraiBusinessId = samurai.BusinessId,

@@ -112,7 +112,7 @@ namespace TiktokGame2Server.Controllers
             }
             var samuraisDTO = samurais?.Select(n => new SamuraiDTO
             {
-                Uid = n.Uid,
+                Id = n.Id,
                 BusinessId = n.BusinessId,
                 Level = n.Level,
                 Experience = n.Experience,
@@ -195,30 +195,21 @@ namespace TiktokGame2Server.Controllers
                 bagSlots = await bagService.AddBagSlotsAsync(playerId, tiktokConfigService.GetDefaultBagSlotCount());
             }
 
-            var bagSlotTasks = bagSlots?.Select(async n =>
+            // 简单映射 BagSlot -> BagSlotDTO
+            var bagSlotDTOs = bagSlots.Select(slot => new BagSlotDTO
             {
-                // 先判断 BagItem 是否为 null，避免空引用异常
-                string? uid = null;
-                if (n.BagItem != null)
-                {
-                    uid = await bagService.QueryBagItemUid(n.BagItem.Id, playerId);
-                }
-                return new BagSlotDTO
-                {
-                    Id = n.Id,
-                    ItemDTO = n.BagItem == null ? null : new ItemDTO
+                Id = slot.Id,
+                ItemDTO = slot.ItemId.HasValue
+                    ? new ItemDTO
                     {
-                        Uid = uid,
-                        ItemBusinessId = n.BagItem.ItemBusinessId,
-                        Count = n.BagItem.Count,
-                        BagSlotId = n.BagItem.BagSlotId,
-                    },
-                };
-            }).ToList() ?? new List<Task<BagSlotDTO>>();
+                        Id = slot.ItemId.Value,
+                        ItemBusinessId = slot.BagItem?.ItemBusinessId,
+                        Count = slot.BagItem?.Count ?? 0
+                    }
+                    : null,
+            }).ToList();
 
-            var bagSlotDTOs = await Task.WhenAll(bagSlotTasks);
-
-            return bagSlotDTOs.ToList();
+            return bagSlotDTOs;
 
         }
 
@@ -249,22 +240,17 @@ namespace TiktokGame2Server.Controllers
                 formations.Add(defaultFormation);
             }
 
-
-            var formationTasks = formations?.Select(async n =>
+            // 将Formation转换为DTO
+            var formationDTOs = formations.Select(f => new FormationDTO
             {
-                var samuraiUid = await samuraiService.QuerySamuraiUid(n.SamuraiId, playerId);
-                return new FormationDTO
-                {
-                    Id = n.Id,
-                    FormationType = n.FormationType,
-                    FormationPoint = n.FormationPoint,
-                    SamuraiUid = samuraiUid,
-                };
-            }).ToList() ?? new List<Task<FormationDTO>>();
+                Id = f.Id,
+                FormationType = f.FormationType,
+                FormationPoint = f.FormationPoint,
+                SamuraiId = f.SamuraiId,
+            }).ToList();
 
-            var formationsDTO = await Task.WhenAll(formationTasks);
+            return formationDTOs ?? new List<FormationDTO>();
 
-            return formationsDTO.ToList();
         }
 
 

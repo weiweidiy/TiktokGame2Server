@@ -64,7 +64,6 @@ namespace TiktokGame2Server.Others
 
             var samurai = new Samurai
             {
-                Uid = Guid.NewGuid().ToString(),
                 BusinessId = samuraiBusinessId,
                 PlayerId = playerId,
                 SoldierUid = soldierUid,
@@ -148,22 +147,22 @@ namespace TiktokGame2Server.Others
 
         }
 
-        public Task<int> QuerySamuraiId(string samuraiUid, int playerId)
-        {
-            return _dbContext.Samurais
-                .Where(s => s.Uid == samuraiUid && s.PlayerId == playerId)
-                .Select(s => s.Id)
-                .FirstOrDefaultAsync();
+        //public Task<int> QuerySamuraiId(string samuraiUid, int playerId)
+        //{
+        //    return _dbContext.Samurais
+        //        .Where(s => s.Uid == samuraiUid && s.PlayerId == playerId)
+        //        .Select(s => s.Id)
+        //        .FirstOrDefaultAsync();
 
-        }
+        //}
 
-        public Task<string> QuerySamuraiUid(int samuraiId, int playerId)
-        {
-            return _dbContext.Samurais
-                .Where(s => s.Id == samuraiId && s.PlayerId == playerId)
-                .Select(s => s.Uid)
-                .FirstOrDefaultAsync();
+        //public Task<string> QuerySamuraiUid(int samuraiId, int playerId)
+        //{
+        //    return _dbContext.Samurais
+        //        .Where(s => s.Id == samuraiId && s.PlayerId == playerId)
+        //        .Select(s => s.Uid)
+        //        .FirstOrDefaultAsync();
 
-        }
+        //}
     }
 }
