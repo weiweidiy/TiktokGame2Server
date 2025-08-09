@@ -443,8 +443,8 @@ namespace TiktokGame2Server.Others
         {
             var result = new List<string>();
             //to do: 根据武士等级和武士BusinessId获取武士解锁的action列表
-            result.Add("1");
-            result.Add("2");
+            //result.Add("1");
+            //result.Add("2");
             return result;
         }
 

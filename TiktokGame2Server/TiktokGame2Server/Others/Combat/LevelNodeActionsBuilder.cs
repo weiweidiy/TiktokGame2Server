@@ -21,9 +21,15 @@ namespace TiktokGame2Server.Others
         {
             var result = new List<string>();
 
+            var level = tiktokConfigService.GetFormationUnitExtraLevel(formationUnitBusinessId);
             var soldierBusinessId = tiktokConfigService.GetFormationUnitSoldierBusinessId(formationUnitBusinessId);
-            var actions = tiktokConfigService.GetSoldierActions(soldierBusinessId);
-            result.AddRange(actions);
+            var soldierActions = tiktokConfigService.GetSoldierActions(soldierBusinessId);
+            var samuraiActions = tiktokConfigService.GetSamuraiActions(level, formationUnitBusinessId);
+            result.AddRange(soldierActions);
+            if(samuraiActions!= null && samuraiActions.Count >0)
+            {
+                result.AddRange(samuraiActions);
+            }
             return result;
         }
 
