@@ -12,12 +12,15 @@ namespace TiktokGame2Server.Controllers
         ISamuraiService samuraiService;
         TiktokConfigService tiktokConfigService;
         IHpPoolService hpPoolService;
-        public SamuraiController(ITokenService tokenService, ISamuraiService samuraiService, IHpPoolService hpPoolService, TiktokConfigService tiktokConfigService)
+        IFormationService formationService;
+        public SamuraiController(ITokenService tokenService, ISamuraiService samuraiService
+            , IHpPoolService hpPoolService, IFormationService formationService, TiktokConfigService tiktokConfigService)
         {
             this.tokenService = tokenService;
             this.samuraiService = samuraiService;
             this.tiktokConfigService = tiktokConfigService;
             this.hpPoolService = hpPoolService ?? throw new ArgumentNullException(nameof(hpPoolService));
+            this.formationService = formationService ?? throw new ArgumentNullException(nameof(formationService));
         }
 
         [HttpPost("AddExperience")]
@@ -51,6 +54,15 @@ namespace TiktokGame2Server.Controllers
             {
                 return NotFound("One or more experience samurai IDs are invalid or do not belong to the player.");
             }
+
+            //检查经验武将是否在formation中，如果是，则不能作为经验武将
+            var formationSamuraiIds = await formationService.GetFormationSamuraiIdsAsync(playerId);
+            var invalidExpSamuraiIds = expSamuraiIds.Where(id => formationSamuraiIds.Contains(id)).ToList();
+            if (invalidExpSamuraiIds.Count > 0)
+            {
+                return BadRequest($"The following samurai IDs are in formation and cannot be used for experience: {string.Join(", ", invalidExpSamuraiIds)}");
+            }
+
 
             //获取所有经验值武将的经验值总和
             var totalExp = 0;

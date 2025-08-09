@@ -181,6 +181,17 @@ namespace TiktokGame2Server.Others
             await _dbContext.SaveChangesAsync();
             return addedFormations;
         }
+
+        public Task<List<int>> GetFormationSamuraiIdsAsync(int playerId)
+        {
+            // 获取指定玩家的所有阵型中的武将ID
+            return _dbContext.Formations
+                .Where(f => f.PlayerId == playerId)
+                .Select(f => f.SamuraiId)
+                .Distinct()
+                .ToListAsync();
+
+        }
     }
 }
 

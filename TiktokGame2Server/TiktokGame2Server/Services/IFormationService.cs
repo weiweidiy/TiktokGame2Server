@@ -33,5 +33,6 @@ namespace TiktokGame2Server.Others
         Task UpdateFormationAsync(Formation existingFormation);
 
         Task<List<Formation>> UpdateFormationAsync(FormationType formationType, List<FormationDTO> newFormations, int playerId);
+        Task<List<int>> GetFormationSamuraiIdsAsync(int playerId);
     }
 }

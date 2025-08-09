@@ -125,6 +125,9 @@ namespace TiktokGame2Server.Others
             var reportData = report.GetCombatReportData<TiktokJCombatUnitData>() as TiktokJCombatTurnBasedReportData;
             reportData.CombatSceneBusinessId = tiktokConfigService.GetLevelNodeCombatSceneBusinessId(levelNodeBusinessId);
             reportData.Evaluation = evaluationService.GetEvaluation(playerUid, reportData);
+            //将reportData中的events按sortIndex升序排序
+            reportData.events = reportData.events.OrderBy(e => e.SortIndex).ToList();
+
             return reportData;
         }
 
