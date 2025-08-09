@@ -117,8 +117,11 @@ namespace TiktokGame2Server.Controllers
                     var samuraiDTO = new SamuraiDTO
                     {
                         Id = samurai.Id,
-                        BusinessId = unit.SamuraiBusinessId,
+                        BusinessId = samurai.BusinessId,
+                        SoldierBusinessId = samurai.SoldierBusinessId,
                         CurHp = samurai.CurHp,
+                        Level = samurai.Level,
+                        Experience = samurai.Experience
                         //MaxHp = maxHp
                     };
                     samuraiDTOs.Add(samuraiDTO);

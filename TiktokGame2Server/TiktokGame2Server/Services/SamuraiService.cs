@@ -35,6 +35,14 @@ namespace TiktokGame2Server.Others
 
         }
 
+        public Task<List<Samurai>> GetSamuraisAsync(List<int> samuraiIds)
+        {
+            return _dbContext.Samurais
+                .Where(s => samuraiIds.Contains(s.Id))
+                .ToListAsync();
+
+        }
+
         /// <summary>
         /// 删除指定武士
         /// </summary>
@@ -47,6 +55,15 @@ namespace TiktokGame2Server.Others
                 return Task.FromResult(false);
             _dbContext.Samurais.Remove(samurai);
             return _dbContext.SaveChangesAsync().ContinueWith(t => t.Result > 0);
+
+        }
+
+
+        public Task DeleteSamuraisAsync(List<int> expSamuraiIds)
+        {
+            var samurais = _dbContext.Samurais.Where(s => expSamuraiIds.Contains(s.Id));
+            _dbContext.Samurais.RemoveRange(samurais);
+            return _dbContext.SaveChangesAsync();
 
         }
 
@@ -66,7 +83,7 @@ namespace TiktokGame2Server.Others
             {
                 BusinessId = samuraiBusinessId,
                 PlayerId = playerId,
-                SoldierUid = soldierUid,
+                SoldierBusinessId = soldierUid,
                 CurHp = tiktokConfigService.FormulaMaxHpByLevel(1),//默认1级
             };
             _dbContext.Samurais.Add(samurai);
@@ -147,22 +164,17 @@ namespace TiktokGame2Server.Others
 
         }
 
-        //public Task<int> QuerySamuraiId(string samuraiUid, int playerId)
-        //{
-        //    return _dbContext.Samurais
-        //        .Where(s => s.Uid == samuraiUid && s.PlayerId == playerId)
-        //        .Select(s => s.Id)
-        //        .FirstOrDefaultAsync();
+        public Task<bool> CheckSamurais(List<int> samuraisIds, int playerId)
+        {
+            return _dbContext.Samurais
+                .Where(s => samuraisIds.Contains(s.Id) && s.PlayerId == playerId)
+                .CountAsync()
+                .ContinueWith(t => t.Result == samuraisIds.Count);
 
-        //}
 
-        //public Task<string> QuerySamuraiUid(int samuraiId, int playerId)
-        //{
-        //    return _dbContext.Samurais
-        //        .Where(s => s.Id == samuraiId && s.PlayerId == playerId)
-        //        .Select(s => s.Uid)
-        //        .FirstOrDefaultAsync();
+        }
 
-        //}
+
+
     }
 }

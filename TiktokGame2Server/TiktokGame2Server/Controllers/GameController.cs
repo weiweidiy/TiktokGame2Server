@@ -114,8 +114,10 @@ namespace TiktokGame2Server.Controllers
             {
                 Id = n.Id,
                 BusinessId = n.BusinessId,
+                SoldierBusinessId = n.SoldierBusinessId,
                 Level = n.Level,
                 Experience = n.Experience,
+                CurHp = n.CurHp,
             }).ToList();
 
             return samuraisDTO ?? new List<SamuraiDTO>();

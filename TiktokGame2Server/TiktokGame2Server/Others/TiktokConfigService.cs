@@ -372,6 +372,17 @@ namespace TiktokGame2Server.Others
         }
 
         /// <summary>
+        /// 获取武将作为经验武将时，增加的经验值
+        /// </summary>
+        /// <param name="businessId"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public int GetSamuraiExpAddValue(string businessId)
+        {
+            return 100; // to do: 读取配置
+        }
+
+        /// <summary>
         /// 获取武士的战斗力
         /// </summary>
         /// <param name="samuraiBusinessId"></param>
@@ -738,7 +749,7 @@ namespace TiktokGame2Server.Others
         public int FormulaLevel(int experience)
         {
             //to do: 计算等级
-            return (int)(Math.Sqrt(experience / 100f)) + 1;
+            return (int)(experience / 100f) + 1;
         }
 
         #endregion
@@ -801,6 +812,8 @@ namespace TiktokGame2Server.Others
         {
             return (ResourceType.Currency, "1", 100 * count); // to do: ���取配置，暂时就给100铜钱
         }
+
+
 
         #endregion
     }

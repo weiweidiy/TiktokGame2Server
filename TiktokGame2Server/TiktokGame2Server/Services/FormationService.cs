@@ -136,6 +136,15 @@ namespace TiktokGame2Server.Others
                     .ToListAsync();
             }
 
+            //检查阵型点位和武将ID是否合法
+            foreach (var formationDTO in newFormations)
+            {
+                if (formationDTO.FormationPoint < 0 || formationDTO.SamuraiId <= 0)
+                {
+                    throw new ArgumentException("Invalid formation point or samurai ID in the provided data.");
+                }
+            }
+
 
             // 首先删除所有旧的指定类型的阵型数据
             var existingFormations = await _dbContext.Formations

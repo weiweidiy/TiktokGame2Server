@@ -23,7 +23,15 @@ namespace TiktokGame2Server.Others
         {
             return playerFormation.Select(f =>
             {
-                var builder = new PlayerUnitBuilder(new TiktokAttributesBuilder(new PlayerAttributeService(f.Samurai, tiktokConfigService)), new PlayerActionsBuilder(f.Samurai,tiktokConfigService, context), f.Samurai);
+                var s = new Samurai()
+                {
+                    SoldierBusinessId = f.Samurai.SoldierBusinessId,
+                    CurHp = f.Samurai.CurHp,
+                    BusinessId = f.Samurai.BusinessId,
+                    Experience = f.Samurai.Experience,
+                    Level = f.Samurai.Level,
+                };
+                var builder = new PlayerUnitBuilder(new TiktokAttributesBuilder(new PlayerAttributeService(s, tiktokConfigService)), new PlayerActionsBuilder(f.Samurai,tiktokConfigService, context), f.Samurai);
                 var info = new JCombatFormationInfo
                 {
                     Point = f.FormationPoint,

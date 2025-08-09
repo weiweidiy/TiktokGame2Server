@@ -19,8 +19,9 @@ namespace TiktokGame2Server.Others
             var formationUnitDefence = attributeService.GetDefence();//soldider + formation
             var formationUnitSpeed = attributeService.GetSpeed(); //samurai + soldier
             var formationUnitHp = attributeService.GetHp(); //formula + formation
+            var formationUnitMaxHp = attributeService.GetMaxHp(); //formula + formation
             var hp = new GameAttributeInt(TiktokAttributesType.Hp.ToString(), formationUnitHp, formationUnitHp);
-            var maxHp = new GameAttributeInt(TiktokAttributesType.MaxHp.ToString(), formationUnitHp, formationUnitHp);
+            var maxHp = new GameAttributeInt(TiktokAttributesType.MaxHp.ToString(), formationUnitMaxHp, formationUnitMaxHp);
             var attack = new GameAttributeInt(TiktokAttributesType.Attack.ToString(), formationUnitAttack, formationUnitAttack);
             var defence = new GameAttributeInt(TiktokAttributesType.Defence.ToString(), formationUnitDefence, formationUnitDefence);
             var speed = new GameAttributeInt(TiktokAttributesType.Speed.ToString(), formationUnitSpeed, formationUnitSpeed);

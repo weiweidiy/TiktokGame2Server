@@ -75,6 +75,7 @@ namespace TiktokGame2Server.Controllers
             {
                 Id = samurai.Id,
                 BusinessId = samurai.BusinessId,
+                SoldierBusinessId = samurai.SoldierBusinessId,
                 Level = 1,
                 Experience = 0,
                 CurHp = tiktokConfigService.FormulaMaxHpByLevel(1)

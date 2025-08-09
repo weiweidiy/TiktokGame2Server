@@ -16,7 +16,7 @@
         /// </summary>
         public int CurHp { get; set; }
 
-        public required string SoldierUid { get; set; } 
+        public required string SoldierBusinessId { get; set; } 
 
         /// <summary>
         /// 外键，关联玩家

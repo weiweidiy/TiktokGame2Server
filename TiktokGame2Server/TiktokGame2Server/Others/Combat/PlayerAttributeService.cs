@@ -26,12 +26,12 @@ namespace TiktokGame2Server.Others
 
         public int GetSpeed()
         {
-            return tiktokConfigService.GetSamuraiSpeed(samurai.BusinessId) + tiktokConfigService.GetSoldierSpeed(samurai.SoldierUid);
+            return tiktokConfigService.GetSamuraiSpeed(samurai.BusinessId) + tiktokConfigService.GetSoldierSpeed(samurai.SoldierBusinessId);
         }
         public int GetLevel()
         {
-            var experience = samurai.Experience;
-            return tiktokConfigService.FormulaLevel(experience);
+            //var experience = samurai.Experience;
+            return samurai.Level;
         }
 
         public int GetSex()
@@ -50,11 +50,11 @@ namespace TiktokGame2Server.Others
 
         public int GetAttack()
         {
-            return tiktokConfigService.GetSoldierAttack(samurai.SoldierUid); //+ 其他比如装备
+            return tiktokConfigService.GetSoldierAttack(samurai.SoldierBusinessId); //+ 其他比如装备
         }
         public int GetDefence()
         {
-            return tiktokConfigService.GetSoldierDefence(samurai.SoldierUid); //+ 其他比如装备
+            return tiktokConfigService.GetSoldierDefence(samurai.SoldierBusinessId); //+ 其他比如装备
         }
     }
 }

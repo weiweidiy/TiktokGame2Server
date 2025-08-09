@@ -19,6 +19,23 @@ namespace TiktokGame2Server.Others
         /// <returns></returns>
         Task<Samurai?> GetSamuraiAsync(int samuraiId);
 
+
+        /// <summary>
+        /// 获取指定玩家的武士列表
+        /// </summary>
+        /// <param name="samuraiIds"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        Task<List<Samurai>> GetSamuraisAsync(List<int> samuraiIds);
+
+        /// <summary>
+        /// 检查ID是否合法，是否是当前玩家的武士
+        /// </summary>
+        /// <param name="samuraisIds"></param>
+        /// <param name="playerId"></param>
+        /// <returns></returns>
+        Task<bool> CheckSamurais(List<int> samuraisIds, int playerId);
+
         /// <summary>
         /// 添加一个新的武士
         /// </summary>
@@ -52,13 +69,12 @@ namespace TiktokGame2Server.Others
         Task<Samurai> UpdateSamuraiHpAsync(int samuraiId, int curHp);
 
         /// <summary>
-        /// 通过武士UID查询武士ID
+        /// 给指定武士添加经验值
         /// </summary>
-        /// <param name="samuraiUid"></param>
-        /// <param name="playerId"></param>
+        /// <param name="samuraiId"></param>
+        /// <param name="experience"></param>
         /// <returns></returns>
-        //Task<int> QuerySamuraiId(string samuraiUid, int playerId);
-
-        //Task<string> QuerySamuraiUid(int samuraiId, int playerId);
+        Task<Samurai> AddSamuraiExperience(int samuraiId, int experience);
+        Task DeleteSamuraisAsync(List<int> expSamuraiIds);
     }
 }

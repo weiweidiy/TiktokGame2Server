@@ -20,7 +20,7 @@ namespace TiktokGame2Server.Others
                 AttrList = attrBuilder.Create(),
                 Actions = actionBuilder.Create(),
                 SamuraiBusinessId = samurai.BusinessId,
-                SoldierBusinessId = samurai.SoldierUid,
+                SoldierBusinessId = samurai.SoldierBusinessId,
             };
 
             return unitInfo;
