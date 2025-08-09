@@ -134,12 +134,24 @@ namespace TiktokGame2Server.Controllers
                 MaxHp = hpPool?.MaxHp ?? tiktokConfigService.GetDefaultHpPoolMaxHp()
             };
 
+            ////获取所有武将信息，客户端需要更新
+            //var allSamurais = await samuraiService.GetAllSamuraiAsync(playerId);
+            //var samuraiDTOs = allSamurais.Select(s => new SamuraiDTO
+            //{
+            //    Id = s.Id,
+            //    BusinessId = s.BusinessId,
+            //    SoldierBusinessId = s.SoldierBusinessId,
+            //    Level = s.Level,
+            //    Experience = s.Experience,
+            //    CurHp = s.CurHp
+            //}).ToList();
 
             //返回ResponseAddSamuraiExp
             var response = new ResponseAddSamuraiExp
             {
                 SamuraiDTO = samuraiDTO,
-                HpPoolDTO = hpPoolDTO
+                HpPoolDTO = hpPoolDTO,
+                //AllSamuraiDTOs = samuraiDTOs
             };
             return Ok(response);
         }

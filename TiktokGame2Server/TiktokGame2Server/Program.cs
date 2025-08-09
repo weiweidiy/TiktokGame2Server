@@ -10,8 +10,7 @@ using System;
 using System.Text;
 using TiktokGame2Server.Entities;
 using TiktokGame2Server.Others;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,22 +83,12 @@ builder.Services.AddScoped<IRewardService, RewardService>();
 builder.Services.AddScoped<IDrawSamuraiService, DrawSamuraiService>();
 
 
-// 配置JWT认证
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = true,
-//            ValidateIssuerSigningKey = true,
-//            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-//            ValidAudience = builder.Configuration["Jwt:Audience"],
-//            IssuerSigningKey = new SymmetricSecurityKey(
-//                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
-//        };
-//    });
+builder.Services.AddSingleton<JFramework.ILogger, ConsoleLogger>();
+
+
+
+builder.Services.AddHostedService<TimedTaskService>();
+
 
 // 添加日志（默认已包含Console、Debug等）
 builder.Logging.ClearProviders();
