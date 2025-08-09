@@ -24,7 +24,7 @@ namespace TiktokGame2Server.Others
             return hpPool.Hp;
         }
 
-        public async Task<bool> AddHpPoolAsync(int playerId, int amount)
+        public async Task<HpPool> AddHpPoolAsync(int playerId, int amount)
         {
             var hpPool = await _dbContext.HpPools
                 .FirstOrDefaultAsync(hp => hp.PlayerId == playerId);
@@ -37,24 +37,37 @@ namespace TiktokGame2Server.Others
             {
                 hpPool.Hp += amount;
             }
-            return await _dbContext.SaveChangesAsync() > 0;
+
+            if (hpPool.Hp < 0)
+            {
+                hpPool.Hp = 0; // 确保生命池不会小于0
+            }
+
+            if (hpPool.Hp > hpPool.MaxHp)
+            {
+                hpPool.Hp = hpPool.MaxHp; // 确保生命池不会超过最大值
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return hpPool;
         }
 
-        public async Task<bool> SubtractHpPoolAsync(int playerId, int amount)
+        public async Task<HpPool> SubtractHpPoolAsync(int playerId, int amount)
         {
             var hpPool = await _dbContext.HpPools
                 .FirstOrDefaultAsync(hp => hp.PlayerId == playerId);
             if (hpPool == null)
             {
-                //如果没有找到，返回false
-                return false;
+                return null;
             }
             hpPool.Hp -= amount;
             if (hpPool.Hp < 0)
             {
                 hpPool.Hp = 0; // 确保生命池不会小于0
             }
-            return await _dbContext.SaveChangesAsync() > 0;
+            await _dbContext.SaveChangesAsync();
+            return hpPool;
         }
 
         public async Task<HpPool> GetHpPoolAsync(int playerId)

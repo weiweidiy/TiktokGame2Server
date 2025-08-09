@@ -11,11 +11,13 @@ namespace TiktokGame2Server.Controllers
         ITokenService tokenService;
         ISamuraiService samuraiService;
         TiktokConfigService tiktokConfigService;
-        public SamuraiController(ITokenService tokenService, ISamuraiService samuraiService, TiktokConfigService tiktokConfigService)
+        IHpPoolService hpPoolService;
+        public SamuraiController(ITokenService tokenService, ISamuraiService samuraiService, IHpPoolService hpPoolService, TiktokConfigService tiktokConfigService)
         {
             this.tokenService = tokenService;
             this.samuraiService = samuraiService;
             this.tiktokConfigService = tiktokConfigService;
+            this.hpPoolService = hpPoolService ?? throw new ArgumentNullException(nameof(hpPoolService));
         }
 
         [HttpPost("AddExperience")]
@@ -40,6 +42,9 @@ namespace TiktokGame2Server.Controllers
             {
                 return NotFound("Target samurai not found or does not belong to the player.");
             }
+            //添加经验前的武将等级
+            var targetSamuraiLevel = targetSamurai.Level;
+
             //检查经验武将是否存在
             var expSamuraisValid = await samuraiService.CheckSamurais(expSamuraiIds, playerId);
             if (!expSamuraisValid)
@@ -49,7 +54,7 @@ namespace TiktokGame2Server.Controllers
 
             //获取所有经验值武将的经验值总和
             var totalExp = 0;
-            var expSamurais = await samuraiService.GetSamuraisAsync(expSamuraiIds);  
+            var expSamurais = await samuraiService.GetSamuraisAsync(expSamuraiIds);
             foreach (var expSamurai in expSamurais)
             {
                 totalExp += expSamurai.Experience;
@@ -67,6 +72,37 @@ namespace TiktokGame2Server.Controllers
             // 删除经验武将
             await samuraiService.DeleteSamuraisAsync(expSamuraiIds);
 
+            var hpPool = await hpPoolService.GetHpPoolAsync(playerId);
+
+            // 检查武将是否升级,如果升级了，则更新武将的当前血量
+            if (updatedSamurai.Level != targetSamuraiLevel)
+            {
+                //从hpPool数据库中补充HP给武将
+                var maxHp = tiktokConfigService.FormulaMaxHpByLevel(updatedSamurai.Level);
+                if (updatedSamurai.CurHp < maxHp)
+                {
+                    var offset = maxHp - updatedSamurai.CurHp;
+                    //检查hpPool中是否有足够的血量
+                    
+                    var finalValue = 0;
+                    if (hpPool != null && hpPool.Hp >= offset)
+                    {
+                        finalValue = offset;
+                    }
+                    else if (hpPool != null && hpPool.Hp < offset)
+                    {
+                        finalValue = hpPool.Hp;
+                    }
+
+                    // 从hpPool中扣除血量
+                    var result = await hpPoolService.SubtractHpPoolAsync(playerId, finalValue);
+                    // 更新武将的当前血量
+                    updatedSamurai.CurHp += finalValue;
+                    //保存更新后的武将信息
+                    updatedSamurai = await samuraiService.UpdateSamuraiHpAsync(updatedSamurai.Id, updatedSamurai.CurHp);
+                }
+            }
+
             // 返回更新后的武将信息 samuraiDTO
             var samuraiDTO = new SamuraiDTO
             {
@@ -79,9 +115,21 @@ namespace TiktokGame2Server.Controllers
                 SoldierBusinessId = updatedSamurai.SoldierBusinessId,
             };
 
-            // 返回结果
-            return Ok(samuraiDTO);
+            //构建hpPoolDTO
+            var hpPoolDTO = new HpPoolDTO
+            {
+                Hp = hpPool?.Hp ?? 0,
+                MaxHp = hpPool?.MaxHp ?? tiktokConfigService.GetDefaultHpPoolMaxHp()
+            };
 
+
+            //返回ResponseAddSamuraiExp
+            var response = new ResponseAddSamuraiExp
+            {
+                SamuraiDTO = samuraiDTO,
+                HpPoolDTO = hpPoolDTO
+            };
+            return Ok(response);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace TiktokGame2Server.Others
     {
         Task<HpPool> GetHpPoolAsync(int playerId);
         Task<int> GetHpPoolCurHpAsync(int playerId);
-        Task<bool> AddHpPoolAsync(int playerId, int amount);
-        Task<bool> SubtractHpPoolAsync(int playerId, int amount);
+        Task<HpPool> AddHpPoolAsync(int playerId, int amount);
+        Task<HpPool> SubtractHpPoolAsync(int playerId, int amount);
     }
 }
